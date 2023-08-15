@@ -6,6 +6,7 @@ import { ApolloServer } from '@apollo/server'
 import fastifyApollo, {
     fastifyApolloDrainPlugin,
 } from '@as-integrations/fastify'
+import { fastifyOauth2 } from '@fastify/oauth2'
 import { fastify } from 'fastify'
 
 import type { Config } from '../config.js'
@@ -27,6 +28,8 @@ export async function initApi(
         disableRequestLogging: !config.logRequests,
         bodyLimit: 1_048_576, // 1 MiB
     })
+
+    await server.register(fastifyOauth2, {})
 
     const typeDefs = await readFile(
         path.join(__dirname, '..', '..', 'schema.gql'),
