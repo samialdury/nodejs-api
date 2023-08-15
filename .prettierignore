@@ -10,3 +10,5 @@ coverage
 
 pnpm-lock.yaml
 *.md
+
+__generated__

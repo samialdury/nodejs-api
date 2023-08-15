@@ -21,11 +21,24 @@ install: ## install all dependencies
 
 .PHONY: dev
 dev: ## run TS and watch for changes
+	@$(BIN)/gql-gen --config codegen.ts
 	@node --no-warnings --require dotenv/config --loader tsx --watch --watch-preserve-output $(SRC_DIR)/main.ts | $(BIN)/pino-pretty
 
 .PHONY: run
 run: ## run JS
 	@node --require dotenv/config $(BUILD_DIR)/$(SRC_DIR)/main.js | $(BIN)/pino-pretty
+
+.PHONY: migrate-new
+migrate-new: ## create a new migration (name=<string>)
+	@./db/migrate.cjs create $(name)
+
+.PHONY: migrate-up
+migrate-up: ## run migrations up
+	@./db/migrate.cjs up
+
+.PHONY: migrate-down
+migrate-down: ## run migrations down
+	@./db/migrate.cjs down
 
 ##@ Build
 

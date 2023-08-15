@@ -2,7 +2,9 @@ import { pino } from 'pino'
 
 import type { Config } from './config.js'
 
-export let logger: pino.Logger
+export type Logger = pino.Logger
+
+export let logger: Logger
 
 export function initLogger(config: Config): void {
     logger = pino({
