@@ -1,23 +1,12 @@
-import { readFile } from 'node:fs/promises'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
-
-import { ApolloServer } from '@apollo/server'
-import fastifyApollo, {
-    fastifyApolloDrainPlugin,
-} from '@as-integrations/fastify'
-import { fastifyOauth2 } from '@fastify/oauth2'
 import { fastify } from 'fastify'
 
 import type { Config } from '../config.js'
 import type { Logger } from '../logger.js'
 
-import type { Context } from './graphql/context.js'
-import { resolvers } from './graphql/resolvers.js'
 import type { APIServer } from './types.js'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+import { graphqlPlugin } from './plugins/graphql.js'
+import { authPlugin } from './plugins/auth.js'
+import { restPlugin } from './plugins/api.js'
 
 export async function initApi(
     config: Config,
@@ -29,22 +18,11 @@ export async function initApi(
         bodyLimit: 1_048_576, // 1 MiB
     })
 
-    await server.register(fastifyOauth2, {})
+    await server.register(authPlugin)
 
-    const typeDefs = await readFile(
-        path.join(__dirname, '..', '..', 'schema.gql'),
-        'utf8',
-    )
+    await server.register(graphqlPlugin)
 
-    const apollo = new ApolloServer<Context>({
-        typeDefs,
-        resolvers,
-        plugins: [fastifyApolloDrainPlugin(server)],
-    })
-
-    await apollo.start()
-
-    await server.register(fastifyApollo(apollo))
+    await server.register(restPlugin)
 
     await server.listen({
         host: config.host,

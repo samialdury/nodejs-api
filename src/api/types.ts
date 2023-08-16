@@ -15,12 +15,15 @@ import type {
     FastifyReply,
     ContextConfigDefault,
     FastifyPluginAsync,
+    RouteOptions,
+    HTTPMethods,
 } from 'fastify'
 
 import type { Logger } from '../logger.js'
 
 import { Status } from './constants.js'
 import { T } from './validation.js'
+import { isAsyncFunction } from 'util/types'
 
 export type APIServer = FastifyInstance<
     RawServerDefault,
@@ -31,6 +34,8 @@ export type APIServer = FastifyInstance<
 >
 
 export type HandlerSchema = FastifySchema
+
+export type ControllerSchema = FastifySchema
 
 export type ServerPluginRaw = FastifyPluginAsync
 export type ServerPlugin = FastifyPluginAsyncTypebox
@@ -73,19 +78,19 @@ export type PreHandler<TSchema extends HandlerSchema> = (
     response: Response<TSchema>,
 ) => Promise<void>
 
-export interface Controller<S extends HandlerSchema> {
-    method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
-    url: `/${string}`
-    schema: HandlerSchema
-    handler: Handler<S>
-}
+// export interface Controller<S extends HandlerSchema> {
+//     method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
+//     url: `/${string}`
+//     schema: HandlerSchema
+//     handler: Handler<S>
+// }
 
 type Unwrap<T> = T[keyof T]
 
 // @ts-expect-error idc it works
 type GetStatic<S extends FastifySchema, T extends keyof S> = Static<S[T]>
 
-export type ControllerDefinition<Schema extends FastifySchema> = (
+export type Controller<Schema extends FastifySchema> = (
     params: Readonly<
         {
             body: Readonly<GetStatic<Schema, 'body'>>
@@ -93,13 +98,18 @@ export type ControllerDefinition<Schema extends FastifySchema> = (
             query: Readonly<GetStatic<Schema, 'querystring'>>
             headers: Readonly<GetStatic<Schema, 'headers'>>
         } & {
-            context: APIServer
+            context: { server: FastifyInstance }
         }
     >,
-) => {
-    status: Status
-    body: Static<Unwrap<Schema['response']>>
-}
+) =>
+    | {
+          status: Status
+          body: Static<Unwrap<Schema['response']>>
+      }
+    | Promise<{
+          status: Status
+          body: Static<Unwrap<Schema['response']>>
+      }>
 
 const schema = {
     body: T.Object({
@@ -124,7 +134,7 @@ const schema = {
     },
 } satisfies FastifySchema
 
-export const controller: ControllerDefinition<typeof schema> = ({
+export const controller: Controller<typeof schema> = ({
     body,
     params,
     headers,
@@ -136,6 +146,37 @@ export const controller: ControllerDefinition<typeof schema> = ({
             email: 'hello',
             name: body.name,
             id: '1234567890abcdef',
+        },
+    }
+}
+
+export const createController = (
+    {
+        method,
+        url,
+    }: {
+        method: HTTPMethods
+        url: `/${string}`
+    },
+    server: FastifyInstance,
+    controller: Controller<any>,
+): RouteOptions => {
+    return {
+        method,
+        url,
+        schema,
+        handler: async (request, response) => {
+            const { status, body } = await controller({
+                context: {
+                    server,
+                },
+                body: request.body,
+                params: request.params,
+                query: request.query,
+                headers: request.headers,
+            })
+
+            return response.status(status).send(body)
         },
     }
 }
