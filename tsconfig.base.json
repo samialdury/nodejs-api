@@ -29,8 +29,6 @@
         "sourceMap": true,
         "sourceRoot": "/",
         "rootDir": ".",
-        "outDir": "./build",
-        "allowJs": true,
-        "maxNodeModuleJsDepth": 10
+        "outDir": "./build"
     }
 }

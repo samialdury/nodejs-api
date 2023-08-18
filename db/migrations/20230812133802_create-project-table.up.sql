@@ -1,10 +1,10 @@
-CREATE TABLE IF NOT EXISTS 'project' (
-    id INTEGER PRIMARY KEY NOT NULL,
-    oid TEXT NOT NULL UNIQUE,
-    name TEXT NOT NULL,
-    createdAt TEXT NOT NULL,
-    updatedAt TEXT NOT NULL,
-    deletedAt TEXT,
-    authorOid TEXT NOT NULL,
-    FOREIGN KEY (authorOid) REFERENCES user(oid)
+CREATE TABLE IF NOT EXISTS "project" (
+    id SERIAL PRIMARY KEY NOT NULL,
+    oid CHAR(21) NOT NULL UNIQUE,
+    name VARCHAR(255) NOT NULL,
+    "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "deletedAt" TIMESTAMP,
+    "authorOid" CHAR(21) NOT NULL,
+    FOREIGN KEY ("authorOid") REFERENCES "user"("oid")
 );

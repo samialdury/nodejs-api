@@ -22,7 +22,7 @@ install: ## install all dependencies
 .PHONY: dev
 dev: ## run TS and watch for changes
 	@$(BIN)/gql-gen --config codegen.ts
-	@node --no-warnings --require dotenv/config --loader tsx --watch --watch-preserve-output $(SRC_DIR)/main.ts | $(BIN)/pino-pretty
+	@DEBUG=*simple-oauth2* node --no-warnings --require dotenv/config --loader tsx --watch --watch-preserve-output $(SRC_DIR)/main.ts | $(BIN)/pino-pretty
 
 .PHONY: run
 run: ## run JS
@@ -46,6 +46,7 @@ migrate-down: ## run migrations down
 build: ## build the project
 	@rm -rf $(BUILD_DIR)
 	@$(BIN)/tsc
+	@cp ./schema.gql $(BUILD_DIR)/schema.gql
 
 .PHONY: build-image
 build-image: ## build Docker image (args=<build args>, tag=<string>)

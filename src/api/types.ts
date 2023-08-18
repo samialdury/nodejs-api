@@ -1,96 +1,45 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable func-style */
-import type {
-    TypeBoxTypeProvider,
-    FastifyPluginAsyncTypebox,
-    Static,
-} from '@fastify/type-provider-typebox'
+import type { BaseContext } from '@apollo/server'
+import type { OAuth2Namespace } from '@fastify/oauth2'
+import type { Static } from '@fastify/type-provider-typebox'
 import type {
     FastifyInstance,
-    RawReplyDefaultExpression,
-    RawRequestDefaultExpression,
-    RawServerDefault,
     FastifySchema,
     FastifyRequest,
-    RouteGenericInterface,
     FastifyReply,
-    ContextConfigDefault,
     FastifyPluginAsync,
     RouteOptions,
     HTTPMethods,
 } from 'fastify'
 
-import type { Logger } from '../logger.js'
-
 import { Status } from './constants.js'
-import { T } from './validation.js'
-import { isAsyncFunction } from 'util/types'
 
-export type APIServer = FastifyInstance<
-    RawServerDefault,
-    RawRequestDefaultExpression,
-    RawReplyDefaultExpression,
-    Logger,
-    TypeBoxTypeProvider
->
-
-export type HandlerSchema = FastifySchema
-
+export type Server = FastifyInstance
+export type ServerPlugin = FastifyPluginAsync
+export type ServerRequest = FastifyRequest
+export type ServerResponse = FastifyReply
 export type ControllerSchema = FastifySchema
 
-export type ServerPluginRaw = FastifyPluginAsync
-export type ServerPlugin = FastifyPluginAsyncTypebox
-
-export type Request<TSchema extends HandlerSchema> = FastifyRequest<
-    RouteGenericInterface,
-    RawServerDefault,
-    RawRequestDefaultExpression,
-    TSchema,
-    TypeBoxTypeProvider
->
-
-export type Response<TSchema extends HandlerSchema> = FastifyReply<
-    RawServerDefault,
-    RawRequestDefaultExpression,
-    RawReplyDefaultExpression,
-    RouteGenericInterface,
-    ContextConfigDefault,
-    TSchema,
-    TypeBoxTypeProvider
->
-
-export type Handler<TSchema extends HandlerSchema> = (
-    request: Request<TSchema>,
-    response: Response<TSchema>,
-) => Promise<
-    FastifyReply<
-        RawServerDefault,
-        RawRequestDefaultExpression,
-        RawReplyDefaultExpression,
-        RouteGenericInterface,
-        ContextConfigDefault,
-        TSchema,
-        TypeBoxTypeProvider
-    >
->
-
-export type PreHandler<TSchema extends HandlerSchema> = (
-    request: Request<TSchema>,
-    response: Response<TSchema>,
-) => Promise<void>
-
-// export interface Controller<S extends HandlerSchema> {
-//     method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
-//     url: `/${string}`
-//     schema: HandlerSchema
-//     handler: Handler<S>
-// }
+export interface GraphQLContext extends BaseContext {
+    dummy?: string
+}
 
 type Unwrap<T> = T[keyof T]
 
-// @ts-expect-error idc it works
+// @ts-expect-error it's fine
 type GetStatic<S extends FastifySchema, T extends keyof S> = Static<S[T]>
 
-export type Controller<Schema extends FastifySchema> = (
+interface RequestContext {
+    server: Server
+    request: ServerRequest
+    auth: {
+        github: OAuth2Namespace
+    }
+}
+
+export type Controller<Schema extends FastifySchema = never> = (
     params: Readonly<
         {
             body: Readonly<GetStatic<Schema, 'body'>>
@@ -98,68 +47,25 @@ export type Controller<Schema extends FastifySchema> = (
             query: Readonly<GetStatic<Schema, 'querystring'>>
             headers: Readonly<GetStatic<Schema, 'headers'>>
         } & {
-            context: { server: FastifyInstance }
+            context: RequestContext
         }
     >,
 ) =>
     | {
           status: Status
-          body: Static<Unwrap<Schema['response']>>
+          body?: Static<Unwrap<Schema['response']>>
       }
     | Promise<{
           status: Status
-          body: Static<Unwrap<Schema['response']>>
+          body?: Static<Unwrap<Schema['response']>>
       }>
 
-const schema = {
-    body: T.Object({
-        name: T.String({ minLength: 2, maxLength: 50 }),
-        email: T.String({ format: 'email' }),
-    }),
-    headers: T.Object({
-        authorization: T.String({ minLength: 2, maxLength: 50 }),
-    }),
-    querystring: T.Object({
-        lastName: T.String({ minLength: 2, maxLength: 50 }),
-    }),
-    params: T.Object({
-        oid: T.String({ minLength: 2, maxLength: 50 }),
-    }),
-    response: {
-        [Status.CREATED]: T.Object({
-            id: T.String({ minLength: 16, maxLength: 16 }),
-            name: T.String({ minLength: 2, maxLength: 50 }),
-            email: T.String({ format: 'email' }),
-        }),
-    },
-} satisfies FastifySchema
-
-export const controller: Controller<typeof schema> = ({
-    body,
-    params,
-    headers,
-    query,
-}) => {
-    return {
-        status: Status.OK,
-        body: {
-            email: 'hello',
-            name: body.name,
-            id: '1234567890abcdef',
-        },
-    }
-}
-
-export const createController = (
-    {
-        method,
-        url,
-    }: {
-        method: HTTPMethods
-        url: `/${string}`
-    },
-    server: FastifyInstance,
-    controller: Controller<any>,
+export const createController = <S extends FastifySchema>(
+    server: Server,
+    method: HTTPMethods,
+    url: `/${string}`,
+    schema: S,
+    controller: Controller<S>,
 ): RouteOptions => {
     return {
         method,
@@ -169,12 +75,21 @@ export const createController = (
             const { status, body } = await controller({
                 context: {
                     server,
+                    request,
+                    auth: {
+                        // @ts-expect-error it's fine
+                        github: server.githubOAuth2,
+                    },
                 },
-                body: request.body,
-                params: request.params,
-                query: request.query,
-                headers: request.headers,
+                body: request.body as never,
+                params: request.params as never,
+                query: request.query as never,
+                headers: request.headers as never,
             })
+
+            if (status === Status.NO_CONTENT) {
+                return response.status(status).send()
+            }
 
             return response.status(status).send(body)
         },

@@ -1,12 +1,16 @@
-import type { DatabaseConnection, SQLQuery } from '@databases/sqlite'
-import { default as connect, sql } from '@databases/sqlite'
+import type {
+    ConnectionPool,
+    SQLQuery,
+    ConnectionPoolConfig,
+} from '@databases/pg'
+import { default as createConnectionPool, sql } from '@databases/pg'
 
 import type { Config } from './config.js'
 import { logger, type Logger } from './logger.js'
 
-export { sql } from '@databases/sqlite'
+export { sql } from '@databases/pg'
 
-export let database: DatabaseConnection & {
+export let database: ConnectionPool & {
     queryOne: typeof queryOne
     queryMultiple: typeof queryMultiple
 }
@@ -36,12 +40,15 @@ async function queryMultiple<T = unknown>(query: SQLQuery): Promise<T[]> {
 }
 
 export async function initDatabase(
-    _config: Config,
-    _logger: Logger,
+    config: Config,
+    logger: Logger,
 ): Promise<void> {
     // @ts-expect-error Incorrect type definition
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    database = connect('dev.sqlite')
+    database = createConnectionPool({
+        connectionString: config.databaseUrl,
+        bigIntMode: 'bigint',
+    } satisfies ConnectionPoolConfig)
 
     database.queryOne = queryOne
     database.queryMultiple = queryMultiple
@@ -49,4 +56,6 @@ export async function initDatabase(
     await database.queryOne(sql`
       SELECT 1;
     `)
+
+    logger.debug('Database initialized')
 }

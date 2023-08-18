@@ -9,6 +9,7 @@ function bool(defaultValue: boolean): z.ZodBoolean {
 }
 
 const schema = {
+    // Common
     commitSha: {
         env: 'COMMIT_SHA',
         format: z.string(),
@@ -33,6 +34,7 @@ const schema = {
         env: 'PROJECT_NAME',
         format: z.string(),
     },
+    // API
     host: {
         env: 'HOST',
         format: z.string().default('0.0.0.0'),
@@ -44,6 +46,29 @@ const schema = {
     logRequests: {
         env: 'LOG_REQUESTS',
         format: bool(false),
+    },
+    publicHost: {
+        env: 'PUBLIC_HOST',
+        format: z.string().default('http://localhost:8080'),
+    },
+    // Database
+    databaseUrl: {
+        env: 'DATABASE_URL',
+        format: z.string(),
+    },
+    // Auth
+    // GitHub
+    githubLoginPath: {
+        env: 'GITHUB_LOGIN_PATH',
+        format: z.string().default('/login/github'),
+    },
+    githubClientId: {
+        env: 'GITHUB_CLIENT_ID',
+        format: z.string(),
+    },
+    githubClientSecret: {
+        env: 'GITHUB_CLIENT_SECRET',
+        format: z.string(),
     },
 } satisfies EnveySchema
 

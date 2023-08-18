@@ -9,7 +9,7 @@ const config: CodegenConfig = {
                 useIndexSignature: true,
                 useTypeImports: true,
                 maybeValue: 'T | null | undefined',
-                contextType: '../api/graphql/context.js#Context',
+                contextType: '../api/types.js#GraphQLContext',
             },
         },
     },

@@ -12,3 +12,4 @@ pnpm-lock.yaml
 *.md
 
 __generated__
+db_data

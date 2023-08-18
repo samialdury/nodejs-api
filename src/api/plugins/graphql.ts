@@ -1,5 +1,4 @@
-import { fastifyPlugin } from 'fastify-plugin'
-
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -9,31 +8,31 @@ import fastifyApollo, {
     fastifyApolloDrainPlugin,
 } from '@as-integrations/fastify'
 
-import type { Context } from '../graphql/context.js'
-import { resolvers } from '../graphql/resolvers.js'
+import { logger } from '../../logger.js'
+import { resolvers } from '../../modules/resolvers.js'
+import type { GraphQLContext, ServerPlugin } from '../types.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-export const graphqlPlugin = fastifyPlugin(
-    async (server) => {
-        const typeDefs = await readFile(
-            path.join(__dirname, '../../../', 'schema.gql'),
-            'utf8',
-        )
+export const graphqlPlugin: ServerPlugin = async (server) => {
+    const typeDefs = await readFile(
+        path.join(__dirname, '../../../', 'schema.gql'),
+        'utf8',
+    )
 
-        const apollo = new ApolloServer<Context>({
-            typeDefs,
-            resolvers,
-            plugins: [fastifyApolloDrainPlugin(server)],
-        })
+    const apollo = new ApolloServer<GraphQLContext>({
+        typeDefs,
+        resolvers,
+        plugins: [fastifyApolloDrainPlugin(server)],
+    })
 
-        await apollo.start()
+    await apollo.start()
 
-        await server.register(fastifyApollo(apollo))
-    },
-    {
-        name: 'graphql-plugin',
-        fastify: '4.x',
-    },
-)
+    await server.register(fastifyApollo(apollo), {
+        context: async (request, _reply) => {
+            logger.debug(request.headers.authorization, 'Request headers')
+            return {}
+        },
+    })
+}

@@ -1,7 +1,8 @@
-import type { Resolvers } from '../../__generated__/resolvers-types.js'
-import { config } from '../../config.js'
-import * as projectService from '../../modules/project/service.js'
-import * as userService from '../../modules/user/service.js'
+import type { Resolvers } from '../__generated__/resolvers-types.js'
+import { config } from '../config.js'
+
+import * as projectService from './project/service.js'
+import * as userService from './user/service.js'
 
 export const resolvers: Resolvers = {
     Query: {

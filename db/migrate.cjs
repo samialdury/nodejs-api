@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 const path = require('node:path')
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') })
 const fs = require('node:fs/promises')
 const { exec } = require('node:child_process')
 const { promisify } = require('node:util')
 
-const { Database } = require('sqlite3')
+const { Client } = require('pg')
 const which = require('which')
 const colors = require('colors')
 
@@ -20,7 +21,14 @@ async function isCmdAvailable(cmd) {
 }
 
 async function runMigrations(direction) {
-    const db = new Database(DB_PATH)
+    const db = new Client({
+        connectionString: process.env.DATABASE_URL,
+    })
+
+    await db.connect()
+
+    // disable foreign key checks
+    await db.query("SET session_replication_role = 'replica';")
 
     let migrations = await fs.readdir(MIGRATIONS_DIR)
 
@@ -46,21 +54,23 @@ async function runMigrations(direction) {
 
         console.log('\nRunning\n\n', sqlString.yellow)
 
-        const queryPromise = new Promise((resolve, _reject) => {
-            db.run(sqlString, (err) => {
-                console.log('\n')
-                if (err) {
-                    console.error(err.message.red)
-                    process.exit(1)
-                } else {
-                    console.log('Done'.green)
-                    resolve()
-                }
+        await db
+            .query(sqlString)
+            .then(() => {
+                console.log('Done'.green)
             })
-        })
-
-        await queryPromise
+            .catch(async (err) => {
+                console.error(err.message.red)
+                // enable foreign key checks
+                await db.query("SET session_replication_role = 'origin';")
+                process.exit(1)
+            })
     }
+
+    // enable foreign key checks
+    await db.query("SET session_replication_role = 'origin';")
+
+    await db.end()
 }
 
 async function createMigration(name) {

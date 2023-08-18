@@ -10,8 +10,6 @@ async function main(): Promise<void> {
     await initDatabase(config, logger)
 
     await initApi(config, logger)
-
-    logger.info('Hello from main()')
 }
 
 await main()

@@ -7,6 +7,7 @@ ARG COMMIT_SHA="unknown"
 
 ARG LOG_LEVEL="info"
 ARG PROJECT_NAME="nodejs-project"
+ARG PORT=8080
 
 ################################################################
 #                                                              #
@@ -54,9 +55,11 @@ RUN pnpm fetch
 COPY tsconfig.base.json tsconfig.base.json
 COPY tsconfig.prod.json tsconfig.prod.json
 COPY src src
+COPY schema.gql schema.gql
 
 RUN pnpm install --offline --frozen-lockfile
 RUN ./node_modules/.bin/tsc --project ./tsconfig.prod.json
+RUN cp schema.gql build/schema.gql
 
 ################################################################
 #                                                              #
@@ -91,6 +94,7 @@ ARG WORK_DIR
 ARG COMMIT_SHA
 ARG LOG_LEVEL
 ARG PROJECT_NAME
+ARG PORT
 
 WORKDIR ${WORK_DIR}
 
@@ -99,6 +103,7 @@ ENV NODE_ENV="production"
 ENV COMMIT_SHA=${COMMIT_SHA}
 ENV LOG_LEVEL=${LOG_LEVEL}
 ENV PROJECT_NAME=${PROJECT_NAME}
+ENV PORT=${PORT}
 
 COPY --from=node-alpine --chown=nonroot:nonroot /tini /tini
 
@@ -110,5 +115,7 @@ COPY --from=install-prod-deps --chown=nonroot:nonroot ${WORK_DIR}/node_modules n
 USER nonroot:nonroot
 
 ENTRYPOINT ["/tini", "--"]
+
+EXPOSE ${PORT}
 
 CMD ["/nodejs/bin/node", "./build/src/main.js"]
