@@ -1,6 +1,6 @@
 import { Octokit } from 'octokit'
 
-import { logger } from '../../../../logger.js'
+import { logger } from '../../../logger.js'
 
 export async function getGithubUserInfo(accessToken: string): Promise<{
     id: number
@@ -26,6 +26,7 @@ export async function getGithubUserInfo(accessToken: string): Promise<{
                     emails.find((email) => email.primary)?.email ??
                     emails[0]!.email // eslint-disable-line @typescript-eslint/no-non-null-assertion
             } else {
+                logger.error('No email found')
                 throw new Error('No email found')
             }
         }

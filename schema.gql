@@ -2,13 +2,10 @@ type Query {
     status: StatusResponse!
     user(oid: ID!): User
     users: [User]
-    project(oid: ID!): Project
-    projects: [Project]
 }
 
 type Mutation {
     createUser(name: String!): User!
-    createProject(name: String!, authorOid: ID!): Project!
 }
 
 type StatusResponse {
@@ -23,17 +20,4 @@ type User {
     createdAt: String!
     updatedAt: String!
     deletedAt: String
-
-    projects: [Project]
-}
-
-type Project {
-    oid: ID!
-    name: String!
-    createdAt: String!
-    updatedAt: String!
-    deletedAt: String
-
-    authorOid: ID!
-    author: User!
 }

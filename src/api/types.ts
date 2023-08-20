@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable func-style */
 import type { BaseContext } from '@apollo/server'
 import type { OAuth2Namespace } from '@fastify/oauth2'
 import type { Static } from '@fastify/type-provider-typebox'
@@ -10,11 +7,9 @@ import type {
     FastifyRequest,
     FastifyReply,
     FastifyPluginAsync,
-    RouteOptions,
-    HTTPMethods,
 } from 'fastify'
 
-import { Status } from './constants.js'
+import type { Status } from './constants.js'
 
 export type Server = FastifyInstance
 export type ServerPlugin = FastifyPluginAsync
@@ -31,7 +26,7 @@ type Unwrap<T> = T[keyof T]
 // @ts-expect-error it's fine
 type GetStatic<S extends FastifySchema, T extends keyof S> = Static<S[T]>
 
-interface RequestContext {
+export interface ControllerContext {
     server: Server
     request: ServerRequest
     auth: {
@@ -47,7 +42,7 @@ export type Controller<Schema extends FastifySchema = never> = (
             query: Readonly<GetStatic<Schema, 'querystring'>>
             headers: Readonly<GetStatic<Schema, 'headers'>>
         } & {
-            context: RequestContext
+            context: ControllerContext
         }
     >,
 ) =>
@@ -59,39 +54,3 @@ export type Controller<Schema extends FastifySchema = never> = (
           status: Status
           body?: Static<Unwrap<Schema['response']>>
       }>
-
-export const createController = <S extends FastifySchema>(
-    server: Server,
-    method: HTTPMethods,
-    url: `/${string}`,
-    schema: S,
-    controller: Controller<S>,
-): RouteOptions => {
-    return {
-        method,
-        url,
-        schema,
-        handler: async (request, response) => {
-            const { status, body } = await controller({
-                context: {
-                    server,
-                    request,
-                    auth: {
-                        // @ts-expect-error it's fine
-                        github: server.githubOAuth2,
-                    },
-                },
-                body: request.body as never,
-                params: request.params as never,
-                query: request.query as never,
-                headers: request.headers as never,
-            })
-
-            if (status === Status.NO_CONTENT) {
-                return response.status(status).send()
-            }
-
-            return response.status(status).send(body)
-        },
-    }
-}

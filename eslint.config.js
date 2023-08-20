@@ -6,7 +6,7 @@ export default [
         ignores: ['**/__generated__/**', '**/db/**', '**/codegen.*'],
     }),
     {
-        files: ['src/**/plugins/*.ts', 'src/**/plugin.ts'],
+        files: ['src/**/plugins/*.ts', 'src/**/router.ts'],
         rules: {
             'func-style': 'off',
             '@typescript-eslint/require-await': 'off',
@@ -17,6 +17,12 @@ export default [
         files: ['src/**/controller.ts'],
         rules: {
             'func-style': 'off',
+        },
+    },
+    {
+        files: ['src/**/*.d.ts'],
+        rules: {
+            'import/no-extraneous-dependencies': 'off',
         },
     },
 ]

@@ -6,7 +6,7 @@ ARG WORK_DIR="/app"
 ARG COMMIT_SHA="unknown"
 
 ARG LOG_LEVEL="info"
-ARG PROJECT_NAME="nodejs-project"
+ARG PROJECT_NAME="nodejs-api"
 ARG PORT=8080
 
 ################################################################

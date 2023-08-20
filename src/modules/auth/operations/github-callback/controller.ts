@@ -1,8 +1,8 @@
-import { logger } from '../../../../../../logger.js'
-import { encodeJWT } from '../../../../../../modules/auth/service/jwt.js'
-import { Status } from '../../../../../constants.js'
-import type { Controller } from '../../../../../types.js'
-import { getGithubUserInfo } from '../../service.js'
+import { Status } from '../../../../api/constants.js'
+import type { Controller } from '../../../../api/types.js'
+import { logger } from '../../../../logger.js'
+import { getGithubUserInfo } from '../../service/github.js'
+import { encodeJWT } from '../../service/jwt.js'
 
 import type { schema } from './schema.js'
 
@@ -19,7 +19,6 @@ export const controller: Controller<typeof schema> = async ({ context }) => {
     logger.debug(user, 'Received user info from GitHub')
 
     const jwt = await encodeJWT({
-        secret: 'test',
         token: {
             email: user.email,
             sub: user.id.toString(),

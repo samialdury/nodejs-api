@@ -5,10 +5,9 @@ import { fastifyPlugin } from 'fastify-plugin'
 
 import { config } from '../../config.js'
 import { logger } from '../../logger.js'
+import { authRouter } from '../../modules/auth/router.js'
 import { decodeJWT } from '../../modules/auth/service/jwt.js'
 import type { ServerPlugin } from '../types.js'
-
-import { githubAuthPlugin } from './auth/github/plugin.js'
 
 export const authPlugin: ServerPlugin = fastifyPlugin(
     async (server) => {
@@ -24,7 +23,6 @@ export const authPlugin: ServerPlugin = fastifyPlugin(
             auth: async (key, _request) => {
                 try {
                     const value = await decodeJWT({
-                        secret: 'test',
                         token: key,
                     })
 
@@ -53,7 +51,7 @@ export const authPlugin: ServerPlugin = fastifyPlugin(
             callbackUri: `${config.publicHost}${config.githubLoginPath}/callback`,
         })
 
-        await server.register(githubAuthPlugin)
+        await server.register(authRouter)
     },
     {
         name: 'auth-plugin',

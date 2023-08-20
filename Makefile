@@ -6,10 +6,16 @@ BIN := node_modules/.bin
 SRC_DIR := src
 BUILD_DIR := build
 CACHE_DIR := .cache
+MIGRATIONS_DIR := db/migrations
+
+DATABASE_URL := postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable
+
+.DEFAULT_GOAL := help
+
+##@ Misc
 
 .PHONY: help
-## Display this help
-help:
+help: ## Display this help
 	@awk 'BEGIN {FS = ":.*##"; printf "Usage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_0-9-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
 ##@ Development
@@ -30,15 +36,27 @@ run: ## run JS
 
 .PHONY: migrate-new
 migrate-new: ## create a new migration (name=<string>)
-	@./db/migrate.cjs create $(name)
+	@migrate create -ext sql -dir $(MIGRATIONS_DIR) $(name)
 
 .PHONY: migrate-up
-migrate-up: ## run migrations up
-	@./db/migrate.cjs up
+migrate-up: ## run migrations up (n=<int>)
+	@migrate -path $(MIGRATIONS_DIR) -database "$(DATABASE_URL)" up $(n)
 
 .PHONY: migrate-down
-migrate-down: ## run migrations down
-	@./db/migrate.cjs down
+migrate-down: ## run migrations down (n=<int>)
+	@migrate -path $(MIGRATIONS_DIR) -database "$(DATABASE_URL)" down $(n)
+
+.PHONY: migrate-drop
+migrate-drop: ## drop the database schema
+	@migrate -path $(MIGRATIONS_DIR) -database "$(DATABASE_URL)" drop
+
+.PHONY: migrate-force
+migrate-force: ## force migration version (v=<string>)
+	@migrate -path $(MIGRATIONS_DIR) -database "$(DATABASE_URL)" force $(version)
+
+.PHONY: migrate-version
+migrate-version: ## print current migration version
+	@migrate -path $(MIGRATIONS_DIR) -database "$(DATABASE_URL)" version
 
 ##@ Build
 

@@ -19,14 +19,7 @@ export type Scalars = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createProject: Project;
   createUser: User;
-};
-
-
-export type MutationCreateProjectArgs = {
-  authorOid: Scalars['ID']['input'];
-  name: Scalars['String']['input'];
 };
 
 
@@ -34,29 +27,11 @@ export type MutationCreateUserArgs = {
   name: Scalars['String']['input'];
 };
 
-export type Project = {
-  __typename?: 'Project';
-  author: User;
-  authorOid: Scalars['ID']['output'];
-  createdAt: Scalars['String']['output'];
-  deletedAt?: Maybe<Scalars['String']['output']>;
-  name: Scalars['String']['output'];
-  oid: Scalars['ID']['output'];
-  updatedAt: Scalars['String']['output'];
-};
-
 export type Query = {
   __typename?: 'Query';
-  project?: Maybe<Project>;
-  projects?: Maybe<Array<Maybe<Project>>>;
   status: StatusResponse;
   user?: Maybe<User>;
   users?: Maybe<Array<Maybe<User>>>;
-};
-
-
-export type QueryProjectArgs = {
-  oid: Scalars['ID']['input'];
 };
 
 
@@ -77,7 +52,6 @@ export type User = {
   deletedAt?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
   oid: Scalars['ID']['output'];
-  projects?: Maybe<Array<Maybe<Project>>>;
   updatedAt: Scalars['String']['output'];
 };
 
@@ -156,7 +130,6 @@ export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
-  Project: ResolverTypeWrapper<Project>;
   Query: ResolverTypeWrapper<{}>;
   StatusResponse: ResolverTypeWrapper<StatusResponse>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
@@ -168,7 +141,6 @@ export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean']['output'];
   ID: Scalars['ID']['output'];
   Mutation: {};
-  Project: Project;
   Query: {};
   StatusResponse: StatusResponse;
   String: Scalars['String']['output'];
@@ -176,24 +148,10 @@ export type ResolversParentTypes = ResolversObject<{
 }>;
 
 export type MutationResolvers<ContextType = GraphQLContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
-  createProject?: Resolver<ResolversTypes['Project'], ParentType, ContextType, RequireFields<MutationCreateProjectArgs, 'authorOid' | 'name'>>;
   createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'name'>>;
 }>;
 
-export type ProjectResolvers<ContextType = GraphQLContext, ParentType extends ResolversParentTypes['Project'] = ResolversParentTypes['Project']> = ResolversObject<{
-  author?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
-  authorOid?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  deletedAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  oid?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  updatedAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
 export type QueryResolvers<ContextType = GraphQLContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  project?: Resolver<Maybe<ResolversTypes['Project']>, ParentType, ContextType, RequireFields<QueryProjectArgs, 'oid'>>;
-  projects?: Resolver<Maybe<Array<Maybe<ResolversTypes['Project']>>>, ParentType, ContextType>;
   status?: Resolver<ResolversTypes['StatusResponse'], ParentType, ContextType>;
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'oid'>>;
   users?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
@@ -211,14 +169,12 @@ export type UserResolvers<ContextType = GraphQLContext, ParentType extends Resol
   deletedAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   oid?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  projects?: Resolver<Maybe<Array<Maybe<ResolversTypes['Project']>>>, ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = GraphQLContext> = ResolversObject<{
   Mutation?: MutationResolvers<ContextType>;
-  Project?: ProjectResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   StatusResponse?: StatusResponseResolvers<ContextType>;
   User?: UserResolvers<ContextType>;

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type {
     ConnectionPool,
     SQLQuery,
@@ -10,48 +12,55 @@ import { logger, type Logger } from './logger.js'
 
 export { sql } from '@databases/pg'
 
-export let database: ConnectionPool & {
-    queryOne: typeof queryOne
-    queryMultiple: typeof queryMultiple
-}
+let pool: ConnectionPool
 
-async function queryOne<T = unknown>(query: SQLQuery): Promise<T | undefined> {
-    logger.debug(query, 'Executing query')
-    try {
-        const [result] = (await database.query(query)) as unknown as T[]
+// @databases/pg doesn't support generics, so this is a workaround for now
+export const database = {
+    queryOne: async <T = unknown>(query: SQLQuery): Promise<T | undefined> => {
+        logger.debug(query, 'Executing query')
+        try {
+            const [result] = await pool.query(query)
 
-        return result
-    } catch (err) {
-        logger.error(err, 'Error executing query')
-        throw new Error('Error executing query')
-    }
-}
+            return result as unknown as T | undefined
+        } catch (err) {
+            logger.error(err, 'Error executing query')
+            throw new Error('Error executing query')
+        }
+    },
+    queryMultiple: async <T = unknown>(query: SQLQuery): Promise<T[]> => {
+        logger.debug(query, 'Executing query')
+        try {
+            const result = await pool.query(query)
 
-async function queryMultiple<T = unknown>(query: SQLQuery): Promise<T[]> {
-    logger.debug(query, 'Executing query')
-    try {
-        const result = (await database.query(query)) as unknown as T[]
-
-        return result
-    } catch (err) {
-        logger.error(err, 'Error executing query')
-        throw new Error('Error executing query')
-    }
+            return result as unknown as T[]
+        } catch (err) {
+            logger.error(err, 'Error executing query')
+            throw new Error('Error executing query')
+        }
+    },
 }
 
 export async function initDatabase(
     config: Config,
     logger: Logger,
 ): Promise<void> {
-    // @ts-expect-error Incorrect type definition
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    database = createConnectionPool({
+    // @ts-expect-error Types are not inferred correctly
+    pool = createConnectionPool({
         connectionString: config.databaseUrl,
         bigIntMode: 'bigint',
+        onConnectionClosed: () => {
+            logger.debug('DB connection closed')
+        },
+        onConnectionOpened: () => {
+            logger.debug('DB connection opened')
+        },
+        onQueryStart: (_query, formattedQuery) => {
+            logger.trace({ formattedQuery }, 'Executing DB query')
+        },
+        onQueryError: (_query, formattedQuery, err) => {
+            logger.error({ formattedQuery, err }, 'Error executing DB query')
+        },
     } satisfies ConnectionPoolConfig)
-
-    database.queryOne = queryOne
-    database.queryMultiple = queryMultiple
 
     await database.queryOne(sql`
       SELECT 1;

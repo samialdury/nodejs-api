@@ -1,13 +1,13 @@
-# Node.js project template
+# Node.js API template
 
-This is a template repository for setting up new Node.js project based on my personal preference.
+This is a template repository for setting up new Node.js API based on my personal preference.
 
 ## Usage
 
-You can create a new GitHub repository from this template directly by clicking [here](https://github.com/new?template_name=nodejs-project&template_owner=samialdury), or by running the following command:
+You can create a new GitHub repository from this template directly by clicking [here](https://github.com/new?template_name=nodejs-api&template_owner=samialdury), or by running the following command:
 
 ```sh
-pnpm create @samialdury/nodejs-project
+pnpm create @samialdury/nodejs-api
 ```
 
 ## Stack

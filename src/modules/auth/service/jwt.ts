@@ -16,8 +16,8 @@ function now(): number {
 export async function encodeJWT<Payload = JWT>(
     params: JWTEncodeParams<Payload>,
 ): Promise<string> {
-    const { token = {}, secret, maxAge = DEFAULT_MAX_AGE } = params
-    const encryptionSecret = await getDerivedEncryptionKey(secret)
+    const { token = {}, maxAge = DEFAULT_MAX_AGE } = params
+    const encryptionSecret = await getDerivedEncryptionKey(config.jwtSecret)
 
     // @ts-expect-error `jose` allows any object as payload.
     const jwt = await new EncryptJWT(token)
@@ -34,13 +34,13 @@ export async function encodeJWT<Payload = JWT>(
 export async function decodeJWT<Payload = JWT>(
     params: JWTDecodeParams,
 ): Promise<Payload | undefined> {
-    const { token, secret } = params
+    const { token } = params
 
     if (!token) {
         return undefined
     }
 
-    const encryptionSecret = await getDerivedEncryptionKey(secret)
+    const encryptionSecret = await getDerivedEncryptionKey(config.jwtSecret)
 
     const { payload } = await jwtDecrypt(token, encryptionSecret, {
         clockTolerance: 15,
