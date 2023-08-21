@@ -4,5 +4,5 @@
     "compilerOptions": {
         "noErrorTruncation": true
     },
-    "include": ["./src", "./test"]
+    "include": ["./src", "./test", "./iac"]
 }

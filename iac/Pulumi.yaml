@@ -1,0 +1,7 @@
+name: nodejs-api
+description: Node.js API template
+runtime:
+    name: nodejs
+    options:
+        nodeargs: '--no-warnings --loader tsx'
+main: index.ts

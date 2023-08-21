@@ -20,7 +20,7 @@ export default [
         },
     },
     {
-        files: ['src/**/*.d.ts'],
+        files: ['src/**/*.d.ts', 'iac/**/*.ts'],
         rules: {
             'import/no-extraneous-dependencies': 'off',
         },
