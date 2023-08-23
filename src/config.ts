@@ -8,8 +8,6 @@ function bool(defaultValue: boolean): z.ZodBoolean {
         .default(defaultValue.toString() as never) as unknown as z.ZodBoolean
 }
 
-const DEFAULT_PORT = 8080
-
 const schema = {
     // Common
     commitSha: {
@@ -38,27 +36,20 @@ const schema = {
     },
     // API
     host: {
-        env: 'HOST',
+        env: 'INTERNAL_HOST',
         format: z.string().default('0.0.0.0'),
     },
     port: {
         env: 'PORT',
-        format: z.coerce
-            .number()
-            .int()
-            .min(1024)
-            .max(65_535)
-            .default(DEFAULT_PORT),
+        format: z.coerce.number().int().min(1024).max(65_535).default(8080),
     },
     logRequests: {
         env: 'LOG_REQUESTS',
         format: bool(false),
     },
     publicHost: {
-        env: 'PUBLIC_HOST',
-        format: z
-            .string()
-            .default(`http://localhost:${process.env['PORT'] ?? DEFAULT_PORT}`),
+        env: 'HOST',
+        format: z.string(),
     },
     // Database
     databaseUrl: {
