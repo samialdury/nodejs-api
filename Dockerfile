@@ -33,7 +33,7 @@ RUN npm install --global pnpm@${PNPM_VERSION}
 #                                                              #
 ################################################################
 
-FROM gcr.io/distroless/nodejs${NODE_VERSION}-debian11:nonroot as node-distroless
+FROM gcr.io/distroless/nodejs${NODE_VERSION}-debian11:debug-nonroot as node-distroless
 
 ################################################################
 #                                                              #
