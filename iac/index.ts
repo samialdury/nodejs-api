@@ -6,10 +6,12 @@ const sshConfig = new pulumi.Config('ssh')
 const serverConfig = new pulumi.Config('server')
 const ipConfig = new pulumi.Config('ip')
 
+const sshKeyName = sshConfig.require('key_name')
+
 const sshKey = new hcloud.SshKey(
-    'Sami-MBP',
+    sshKeyName,
     {
-        name: 'Sami-MBP',
+        name: sshKeyName,
         publicKey: sshConfig.requireSecret('public_key'),
     },
     {
@@ -114,7 +116,6 @@ const databaseServer = new hcloud.Server(
         name: 'db',
         datacenter: serverConfig.require('datacenter'),
         image: serverConfig.require('image'),
-        location: serverConfig.require('datacenter').split('-')[0]!,
         serverType: serverConfig.require('type'),
         deleteProtection: true,
         rebuildProtection: true,
@@ -140,7 +141,6 @@ const appServer = new hcloud.Server(
         name: 'app',
         datacenter: serverConfig.require('datacenter'),
         image: serverConfig.require('image'),
-        location: serverConfig.require('datacenter').split('-')[0]!,
         serverType: serverConfig.require('type'),
         deleteProtection: true,
         rebuildProtection: true,
@@ -158,6 +158,29 @@ const appServer = new hcloud.Server(
     { protect: true },
 )
 
+const adminServer = new hcloud.Server(
+    'admin',
+    {
+        name: 'admin',
+        datacenter: serverConfig.require('datacenter'),
+        image: serverConfig.require('image'),
+        serverType: serverConfig.require('type'),
+        deleteProtection: true,
+        rebuildProtection: true,
+        // @ts-expect-error Types are wrong
+        firewallIds: [sshFirewall.id, cloudflareFirewall.id],
+        sshKeys: [sshKey.id],
+        networks: [
+            {
+                // @ts-expect-error Types are wrong
+                networkId: internalNetwork.id,
+                ip: '10.0.0.4',
+            },
+        ],
+    },
+    { protect: true },
+)
+
 export const sshKeyId = sshKey.id
 export const cloudflareFirewallId = cloudflareFirewall.id
 export const sshFirewallId = sshFirewall.id
@@ -166,3 +189,4 @@ export const internalNetworkId = internalNetwork.id
 export const internalNetworkEuSubnetId = internalNetworkEuSubnet.id
 export const databaseServerId = databaseServer.id
 export const appServerId = appServer.id
+export const adminServerId = adminServer.id

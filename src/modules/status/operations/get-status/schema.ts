@@ -6,7 +6,6 @@ export const schema = {
     response: {
         [Status.OK]: T.Object({
             project: T.String(),
-            env: T.String(),
             version: T.String(),
         }),
     },

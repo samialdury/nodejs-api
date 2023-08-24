@@ -1,0 +1,10 @@
+config:
+    hcloud:token:
+        secure: <your Hetzner Cloud API token Pulumi secret>
+    ip:allow_list: 11.111.11.11/32 # separate multiple IPs with a comma
+    server:datacenter: nbg1-dc3
+    server:image: debian-12
+    server:type: cx11
+    ssh:public_key:
+        secure: <your SSH public key Pulumi secret>
+    ssh:key_name: <your SSH key name>

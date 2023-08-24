@@ -13,13 +13,9 @@ export async function getGithubUserInfo(accessToken: string): Promise<{
 
         const { data: user } = await gh.rest.users.getAuthenticated({})
 
-        logger.trace(user, 'Received GitHub user info')
-
         if (!user.email) {
             const { data: emails } =
                 await gh.rest.users.listEmailsForAuthenticatedUser()
-
-            logger.trace(emails, 'Received GitHub user emails')
 
             if (emails.length > 0) {
                 user.email =

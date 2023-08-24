@@ -41,7 +41,6 @@ export type QueryUserArgs = {
 
 export type StatusResponse = {
   __typename?: 'StatusResponse';
-  env: Scalars['String']['output'];
   project: Scalars['String']['output'];
   version: Scalars['String']['output'];
 };
@@ -158,7 +157,6 @@ export type QueryResolvers<ContextType = GraphQLContext, ParentType extends Reso
 }>;
 
 export type StatusResponseResolvers<ContextType = GraphQLContext, ParentType extends ResolversParentTypes['StatusResponse'] = ResolversParentTypes['StatusResponse']> = ResolversObject<{
-  env?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   project?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   version?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

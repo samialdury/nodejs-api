@@ -9,7 +9,6 @@ export const controller: Controller<typeof schema> = () => {
         status: Status.OK,
         body: {
             project: config.projectName,
-            env: config.nodeEnv,
             version: config.commitSha,
         },
     }

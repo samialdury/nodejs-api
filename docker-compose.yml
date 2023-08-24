@@ -2,7 +2,7 @@ version: '3'
 
 services:
     postgres:
-        image: postgres:15
+        image: postgres:15-alpine
         container_name: postgres_nodejs-api
         restart: unless-stopped
         environment:

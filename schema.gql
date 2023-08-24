@@ -10,7 +10,6 @@ type Mutation {
 
 type StatusResponse {
     project: String!
-    env: String!
     version: String!
 }
 

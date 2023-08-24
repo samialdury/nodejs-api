@@ -8,7 +8,6 @@ export const resolvers: Resolvers = {
         status: () => {
             return {
                 project: config.projectName,
-                env: config.nodeEnv,
                 version: config.commitSha,
             }
         },
