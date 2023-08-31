@@ -4,7 +4,7 @@
     "private": true,
     "type": "module",
     "dependencies": {
-        "@apollo/server": "4.9.1",
+        "@apollo/server": "4.9.3",
         "@as-integrations/fastify": "2.1.0",
         "@databases/pg": "5.4.1",
         "@fastify/auth": "4.3.0",
