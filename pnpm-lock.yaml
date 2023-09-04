@@ -30,8 +30,8 @@ dependencies:
     specifier: 1.1.1
     version: 1.1.1
   '@sinclair/typebox':
-    specifier: 0.31.1
-    version: 0.31.1
+    specifier: 0.31.8
+    version: 0.31.8
   envey:
     specifier: 1.2.0
     version: 1.2.0(zod@3.22.2)
@@ -72,7 +72,7 @@ devDependencies:
     version: 17.7.1
   '@fastify/type-provider-typebox':
     specifier: 3.5.0
-    version: 3.5.0(@sinclair/typebox@0.31.1)
+    version: 3.5.0(@sinclair/typebox@0.31.8)
   '@graphql-codegen/cli':
     specifier: 5.0.0
     version: 5.0.0(@types/node@20.5.7)(graphql@16.8.0)
@@ -90,7 +90,7 @@ devDependencies:
     version: 3.78.1
   '@samialdury/config':
     specifier: 5.6.1
-    version: 5.6.1(@commitlint/cli@17.7.1)(eslint@8.47.0)(lint-staged@14.0.0)(prettier@3.0.2)(semantic-release@21.0.7)(typescript@5.1.6)
+    version: 5.6.1(@commitlint/cli@17.7.1)(eslint@8.47.0)(lint-staged@14.0.1)(prettier@3.0.2)(semantic-release@21.0.9)(typescript@5.1.6)
   '@total-typescript/ts-reset':
     specifier: 0.5.1
     version: 0.5.1
@@ -104,8 +104,8 @@ devDependencies:
     specifier: 8.47.0
     version: 8.47.0
   glob:
-    specifier: 10.3.3
-    version: 10.3.3
+    specifier: 10.3.4
+    version: 10.3.4
   graphql-codegen-typescript-common:
     specifier: 0.18.2
     version: 0.18.2(graphql@16.8.0)
@@ -119,8 +119,8 @@ devDependencies:
     specifier: 8.0.3
     version: 8.0.3
   lint-staged:
-    specifier: 14.0.0
-    version: 14.0.0
+    specifier: 14.0.1
+    version: 14.0.1
   pino-pretty:
     specifier: 10.2.0
     version: 10.2.0
@@ -128,8 +128,8 @@ devDependencies:
     specifier: 3.0.2
     version: 3.0.2
   semantic-release:
-    specifier: 21.0.7
-    version: 21.0.7
+    specifier: 21.0.9
+    version: 21.0.9
   ts-node:
     specifier: 10.9.1
     version: 10.9.1(@types/node@20.5.7)(typescript@5.1.6)
@@ -399,12 +399,6 @@ packages:
       '@babel/highlight': 7.22.10
       chalk: 2.4.2
 
-  /@babel/code-frame@7.22.5:
-    resolution: {integrity: sha512-Xmwn266vad+6DAqEB2A6V/CcZVp62BbwVmcOJc2RPuwih1kw02TjQvWVWlcKGbBPd+8/0V5DEkOcizRGYsspYQ==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/highlight': 7.22.5
-
   /@babel/compat-data@7.22.9:
     resolution: {integrity: sha512-5UamI7xkUcJ3i9qVDS+KFDEK8/7oJ55/sJMB1Ge7IEapr7KfdfV/HErR+koZwOfd+SgtFKOKRhRakdg++DcJpQ==}
     engines: {node: '>=6.9.0'}
@@ -599,14 +593,6 @@ packages:
 
   /@babel/highlight@7.22.10:
     resolution: {integrity: sha512-78aUtVcT7MUscr0K5mIEnkwxPE0MaxkR5RxRwuHaQ+JuU5AmTPhY+do2mdzVTnIJJpyBglql2pehuBIWHug+WQ==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/helper-validator-identifier': 7.22.5
-      chalk: 2.4.2
-      js-tokens: 4.0.0
-
-  /@babel/highlight@7.22.5:
-    resolution: {integrity: sha512-BSKlD1hgnedS5XRnGOljZawtag7H1yPfQp0tdNJCHoH6AZ+Pcm9VvkrK59/Yy593Ypg0zMxH2BxD1VPYUQ7UIw==}
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/helper-validator-identifier': 7.22.5
@@ -925,7 +911,7 @@ packages:
     resolution: {integrity: sha512-X7yV7eiwAxdj9k94NEylvbVHLiVG1nvzCV2EAowhxLTwODV1jl9UzZ48leOC0sH7OnuHrIkllaBgneUykIcZaw==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/code-frame': 7.22.5
+      '@babel/code-frame': 7.22.10
       '@babel/parser': 7.22.10
       '@babel/types': 7.22.10
     dev: true
@@ -1555,12 +1541,12 @@ packages:
       - supports-color
     dev: false
 
-  /@fastify/type-provider-typebox@3.5.0(@sinclair/typebox@0.31.1):
+  /@fastify/type-provider-typebox@3.5.0(@sinclair/typebox@0.31.8):
     resolution: {integrity: sha512-f48uGzvLflE/y4pvXOS8qjAC+mZmlqev9CPHnB8NDsBSL4EbeydO61IgPuzOkeNlAYeRP9Y56UOKj1XWFibgMw==}
     peerDependencies:
       '@sinclair/typebox': '>=0.26 <=0.31'
     dependencies:
-      '@sinclair/typebox': 0.31.1
+      '@sinclair/typebox': 0.31.8
     dev: true
 
   /@graphql-codegen/cli@5.0.0(@types/node@20.5.7)(graphql@16.8.0):
@@ -2793,7 +2779,7 @@ packages:
     resolution: {integrity: sha512-AW8PKd6iX3vAZ0vA43nOUOnbq/X5ihgU+mSXXqunMkeQADGiqw/PY0JNeYtD5sr0PAy51YPgAPbDoeapv9r8WA==}
     dev: true
 
-  /@samialdury/config@5.6.1(@commitlint/cli@17.7.1)(eslint@8.47.0)(lint-staged@14.0.0)(prettier@3.0.2)(semantic-release@21.0.7)(typescript@5.1.6):
+  /@samialdury/config@5.6.1(@commitlint/cli@17.7.1)(eslint@8.47.0)(lint-staged@14.0.1)(prettier@3.0.2)(semantic-release@21.0.9)(typescript@5.1.6):
     resolution: {integrity: sha512-HXBb0WEZ3fyQ2r5kcpLQWbf+kZa1M/BR+fVwlrbXStOLZeAQ4N7wzzi8RFHd+MyF4oCf+PWC9zh02a1lyM11Fw==}
     peerDependencies:
       '@commitlint/cli': ^17.0.0
@@ -2805,8 +2791,8 @@ packages:
       '@commitlint/cli': 17.7.1
       '@commitlint/config-conventional': 17.7.0
       '@eslint/js': 8.46.0
-      '@semantic-release/changelog': 6.0.3(semantic-release@21.0.7)
-      '@semantic-release/git': 10.0.1(semantic-release@21.0.7)
+      '@semantic-release/changelog': 6.0.3(semantic-release@21.0.9)
+      '@semantic-release/git': 10.0.1(semantic-release@21.0.9)
       '@typescript-eslint/eslint-plugin': 6.3.0(@typescript-eslint/parser@6.3.0)(eslint@8.47.0)(typescript@5.1.6)
       '@typescript-eslint/parser': 6.3.0(eslint@8.47.0)(typescript@5.1.6)
       eslint: 8.47.0
@@ -2816,13 +2802,13 @@ packages:
       eslint-plugin-import: 2.28.0(@typescript-eslint/parser@6.3.0)(eslint-import-resolver-typescript@3.6.0)(eslint@8.47.0)
       eslint-plugin-unicorn: 48.0.1(eslint@8.47.0)
       globals: 13.20.0
-      lint-staged: 14.0.0
+      lint-staged: 14.0.1
       prettier: 3.0.2
       prettier-plugin-astro: 0.11.0
       prettier-plugin-packagejson: 2.4.5(prettier@3.0.2)
       prettier-plugin-sh: 0.13.1(prettier@3.0.2)
       prettier-plugin-tailwindcss: 0.5.1(prettier-plugin-astro@0.11.0)(prettier@3.0.2)
-      semantic-release: 21.0.7
+      semantic-release: 21.0.9
     transitivePeerDependencies:
       - '@ianvs/prettier-plugin-sort-imports'
       - '@prettier/plugin-pug'
@@ -2844,7 +2830,7 @@ packages:
       - typescript
     dev: true
 
-  /@semantic-release/changelog@6.0.3(semantic-release@21.0.7):
+  /@semantic-release/changelog@6.0.3(semantic-release@21.0.9):
     resolution: {integrity: sha512-dZuR5qByyfe3Y03TpmCvAxCyTnp7r5XwtHRf/8vD9EAn4ZWbavUX8adMtXYzE86EVh0gyLA7lm5yW4IV30XUag==}
     engines: {node: '>=14.17'}
     peerDependencies:
@@ -2854,10 +2840,10 @@ packages:
       aggregate-error: 3.1.0
       fs-extra: 11.1.1
       lodash: 4.17.21
-      semantic-release: 21.0.7
+      semantic-release: 21.0.9
     dev: true
 
-  /@semantic-release/commit-analyzer@10.0.1(semantic-release@21.0.7):
+  /@semantic-release/commit-analyzer@10.0.1(semantic-release@21.0.9):
     resolution: {integrity: sha512-9ejHzTAijYs9z246sY/dKBatmOPcd0GQ7lH4MgLCkv1q4GCiDZRkjHJkaQZXZVaK7mJybS+sH3Ng6G8i3pYMGQ==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -2870,7 +2856,7 @@ packages:
       import-from: 4.0.0
       lodash-es: 4.17.21
       micromatch: 4.0.5
-      semantic-release: 21.0.7
+      semantic-release: 21.0.9
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2885,7 +2871,7 @@ packages:
     engines: {node: '>=18'}
     dev: true
 
-  /@semantic-release/git@10.0.1(semantic-release@21.0.7):
+  /@semantic-release/git@10.0.1(semantic-release@21.0.9):
     resolution: {integrity: sha512-eWrx5KguUcU2wUPaO6sfvZI0wPafUKAMNC18aXY4EnNcrZL86dEmpNVnC9uMpGZkmZJ9EfCVJBQx4pV4EMGT1w==}
     engines: {node: '>=14.17'}
     peerDependencies:
@@ -2899,12 +2885,12 @@ packages:
       lodash: 4.17.21
       micromatch: 4.0.5
       p-reduce: 2.1.0
-      semantic-release: 21.0.7
+      semantic-release: 21.0.9
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@semantic-release/github@9.0.4(semantic-release@21.0.7):
+  /@semantic-release/github@9.0.4(semantic-release@21.0.9):
     resolution: {integrity: sha512-kQCGFAsBErvCR6hzNuzu63cj4erQN2krm9zQlg8vl4j5X0mL0d/Ras0wmL5Gkr1TuSS2lweME7M4J5zvtDDDSA==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -2925,13 +2911,13 @@ packages:
       lodash-es: 4.17.21
       mime: 3.0.0
       p-filter: 3.0.0
-      semantic-release: 21.0.7
+      semantic-release: 21.0.9
       url-join: 5.0.0
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@semantic-release/npm@10.0.4(semantic-release@21.0.7):
+  /@semantic-release/npm@10.0.4(semantic-release@21.0.9):
     resolution: {integrity: sha512-6R3timIQ7VoL2QWRkc9DG8v74RQtRp7UOe/2KbNaqwJ815qOibAv65bH3RtTEhs4axEaHoZf7HDgFs5opaZ9Jw==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -2948,12 +2934,12 @@ packages:
       rc: 1.2.8
       read-pkg: 8.0.0
       registry-auth-token: 5.0.2
-      semantic-release: 21.0.7
+      semantic-release: 21.0.9
       semver: 7.5.4
       tempy: 3.1.0
     dev: true
 
-  /@semantic-release/release-notes-generator@11.0.4(semantic-release@21.0.7):
+  /@semantic-release/release-notes-generator@11.0.4(semantic-release@21.0.9):
     resolution: {integrity: sha512-j0Znnwq9IdWTCGzqSlkLv4MpALTsVDZxcVESzJCNN8pK2BYQlYaKsdZ1Ea/+7RlppI3vjhEi33ZKmjSGY1FLKw==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -2969,7 +2955,7 @@ packages:
       into-stream: 7.0.0
       lodash-es: 4.17.21
       read-pkg-up: 10.0.0
-      semantic-release: 21.0.7
+      semantic-release: 21.0.9
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2988,8 +2974,8 @@ packages:
     resolution: {integrity: sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==}
     dev: false
 
-  /@sinclair/typebox@0.31.1:
-    resolution: {integrity: sha512-oAGsVU6u4k7pNGfDZG1ujFuku25yV3lFmyxZXXLylm0Pf2Qh9pgGFpGwPbyyFZl9PYH4thS9qRcfs3C2Sn3/SA==}
+  /@sinclair/typebox@0.31.8:
+    resolution: {integrity: sha512-1FdxgmuUqQWprlAHzGKTH3qSeNzbYnHXD65WIZOI037hcCZVw+r8SoFd8OIFUrbQxEI+MhHArCvKlndLvfw/bg==}
 
   /@total-typescript/ts-reset@0.5.1:
     resolution: {integrity: sha512-AqlrT8YA1o7Ff5wPfMOL0pvL+1X+sw60NN6CcOCqs658emD6RfiXhF7Gu9QcfKBH7ELY2nInLhKSCWVoNL70MQ==}
@@ -5249,6 +5235,21 @@ packages:
       strip-final-newline: 3.0.0
     dev: true
 
+  /execa@8.0.1:
+    resolution: {integrity: sha512-VyhnebXciFV2DESc+p6B+y0LjSm0krU4OgJN44qFAhBY0TJ+1V61tYD2+wHusZ6F9n5K+vl8k0sTy7PEfV4qpg==}
+    engines: {node: '>=16.17'}
+    dependencies:
+      cross-spawn: 7.0.3
+      get-stream: 8.0.1
+      human-signals: 5.0.0
+      is-stream: 3.0.0
+      merge-stream: 2.0.0
+      npm-run-path: 5.1.0
+      onetime: 6.0.0
+      signal-exit: 4.1.0
+      strip-final-newline: 3.0.0
+    dev: true
+
   /express@4.18.2:
     resolution: {integrity: sha512-5/PsL6iGPdfQ/lKM1UuielYgv3BUoJfz1aUwU9vHZ+J7gyvwdQXFEBIEIaxeGf0GIcreATNyBExtalisDbuMqQ==}
     engines: {node: '>= 0.10.0'}
@@ -5677,6 +5678,11 @@ packages:
     engines: {node: '>=16'}
     dev: true
 
+  /get-stream@8.0.1:
+    resolution: {integrity: sha512-VaUJspBffn/LMCJVoMvSAdmscJyS1auj5Zulnn5UoYcY531UWmdwhRWkcGKnGU93m5HSXP9LP2usOryrBtQowA==}
+    engines: {node: '>=16'}
+    dev: true
+
   /get-symbol-description@1.0.0:
     resolution: {integrity: sha512-2EmdH1YvIQiZpltCNgkuiUnyukzxM/R6NDJX31Ke3BG1Nq5b0S2PhX59UKi9vZpPDQVdqn+1IcaAwnzTT5vCjw==}
     engines: {node: '>= 0.4'}
@@ -5738,8 +5744,8 @@ packages:
       is-glob: 4.0.3
     dev: true
 
-  /glob@10.3.3:
-    resolution: {integrity: sha512-92vPiMb/iqpmEgsOoIDvTjc50wf9CCCvMzsi6W0JLPeUKE8TWP1a73PgqSrqy7iAZxaSD1YdzU7QZR5LF51MJw==}
+  /glob@10.3.4:
+    resolution: {integrity: sha512-6LFElP3A+i/Q8XQKEvZjkEWEOTgAIALR9AO2rwT8bgPhDd1anmqDJDZ6lLddI4ehxxxR1S5RIqKe1uapMQfYaQ==}
     engines: {node: '>=16 || 14 >=14.17'}
     hasBin: true
     dependencies:
@@ -5958,7 +5964,7 @@ packages:
       graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0
     dependencies:
       graphql: 16.8.0
-      lodash: 4.17.11
+      lodash: 4.17.21
       resolve-from: 4.0.0
     dev: true
 
@@ -6173,6 +6179,13 @@ packages:
       lru-cache: 7.18.3
     dev: true
 
+  /hosted-git-info@7.0.0:
+    resolution: {integrity: sha512-ICclEpTLhHj+zCuSb2/usoNXSVkxUSIopre+b1w8NDY9Dntp9LO4vLdHYI336TH8sAqwrRgnSfdkBG2/YpisHA==}
+    engines: {node: ^16.14.0 || >=18.0.0}
+    dependencies:
+      lru-cache: 10.0.1
+    dev: true
+
   /http-errors@2.0.0:
     resolution: {integrity: sha512-FtwrG/euBzaEjYeRqOgly7G0qviiXoJWnvEH2Z1plBdXgbyjv34pHTSb9zoeHMyDy33+DWy5Wt9Wo+TURtOYSQ==}
     engines: {node: '>= 0.8'}
@@ -6225,6 +6238,11 @@ packages:
   /human-signals@4.3.1:
     resolution: {integrity: sha512-nZXjEF2nbo7lIw3mgYjItAfgQXog3OjJogSbKa2CQIIvSGWcKgeJnQlNXip6NglNzYH45nSRiEVimMvYL8DDqQ==}
     engines: {node: '>=14.18.0'}
+    dev: true
+
+  /human-signals@5.0.0:
+    resolution: {integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ==}
+    engines: {node: '>=16.17.0'}
     dev: true
 
   /husky@8.0.3:
@@ -6952,8 +6970,8 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: true
 
-  /lint-staged@14.0.0:
-    resolution: {integrity: sha512-0tLf0pqZYkar/wu3nTctk4rVIG+d7PanDYv4/IQR4qwdqfQkTDziLRFnqMcLuLBTuUqmcLwsHPD2EjQ18d/oaA==}
+  /lint-staged@14.0.1:
+    resolution: {integrity: sha512-Mw0cL6HXnHN1ag0mN/Dg4g6sr8uf8sn98w2Oc1ECtFto9tvRF7nkXGJRbx8gPlHyoR0pLyBr2lQHbWwmUHe1Sw==}
     engines: {node: ^16.14.0 || >=18.0.0}
     hasBin: true
     dependencies:
@@ -7203,15 +7221,9 @@ packages:
       tslib: 2.6.1
     dev: true
 
-  /lru-cache@10.0.0:
-    resolution: {integrity: sha512-svTf/fzsKHffP42sujkO/Rjs37BCIsQVRCeNYIm9WN8rgT7ffoUnRtZCqU+6BqcSBdv8gwJeTz8knJpgACeQMw==}
-    engines: {node: 14 || >=16.14}
-    dev: true
-
   /lru-cache@10.0.1:
     resolution: {integrity: sha512-IJ4uwUTi2qCccrioU6g9g/5rvvVl13bsdczUUcqbciD9iLr095yj8DQKdObriEvuNSx325N1rV1O0sJFszx75g==}
     engines: {node: 14 || >=16.14}
-    dev: false
 
   /lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
@@ -7959,7 +7971,7 @@ packages:
     resolution: {integrity: sha512-ayCKvm/phCGxOkYRSCM82iDwct8/EonSEgCSxWxD7ve6jHggsFl4fZVQBPRNgQoKiuV/odhFrGzQXZwbifC8Rg==}
     engines: {node: '>=8'}
     dependencies:
-      '@babel/code-frame': 7.22.5
+      '@babel/code-frame': 7.22.10
       error-ex: 1.3.2
       json-parse-even-better-errors: 2.3.1
       lines-and-columns: 1.2.4
@@ -7968,7 +7980,7 @@ packages:
     resolution: {integrity: sha512-kP+TQYAzAiVnzOlWOe0diD6L35s9bJh0SCn95PIbZFKrOYuIRQsQkeWEYxzVDuHTt9V9YqvYCJ2Qo4z9wdfZPw==}
     engines: {node: '>=16'}
     dependencies:
-      '@babel/code-frame': 7.22.5
+      '@babel/code-frame': 7.22.10
       error-ex: 1.3.2
       json-parse-even-better-errors: 3.0.0
       lines-and-columns: 2.0.3
@@ -8058,7 +8070,7 @@ packages:
     resolution: {integrity: sha512-MkhCqzzBEpPvxxQ71Md0b1Kk51W01lrYvlMzSUaIzNsODdd7mqhiimSZlr+VegAz5Z6Vzt9Xg2ttE//XBhH3EQ==}
     engines: {node: '>=16 || 14 >=14.17'}
     dependencies:
-      lru-cache: 10.0.0
+      lru-cache: 10.0.1
       minipass: 7.0.2
     dev: true
 
@@ -8869,27 +8881,27 @@ packages:
   /secure-json-parse@2.7.0:
     resolution: {integrity: sha512-6aU+Rwsezw7VR8/nyvKTx8QpWH9FrcYiXXlqC4z5d5XQBDRqtbfsRjnwGyqbi3gddNtWHuEk9OANUotL26qKUw==}
 
-  /semantic-release@21.0.7:
-    resolution: {integrity: sha512-peRDSXN+hF8EFSKzze90ff/EnAmgITHQ/a3SZpRV3479ny0BIZWEJ33uX6/GlOSKdaSxo9hVRDyv2/u2MuF+Bw==}
+  /semantic-release@21.0.9:
+    resolution: {integrity: sha512-EnylO0+UcKbVFaHeMbCjJpxqpgJPnze4zoOwmj34Kv4GnuyTV9MkNKrwmdZPFbmom9PpMj+9JN/8eyZzKkKyZQ==}
     engines: {node: '>=18'}
     hasBin: true
     dependencies:
-      '@semantic-release/commit-analyzer': 10.0.1(semantic-release@21.0.7)
+      '@semantic-release/commit-analyzer': 10.0.1(semantic-release@21.0.9)
       '@semantic-release/error': 4.0.0
-      '@semantic-release/github': 9.0.4(semantic-release@21.0.7)
-      '@semantic-release/npm': 10.0.4(semantic-release@21.0.7)
-      '@semantic-release/release-notes-generator': 11.0.4(semantic-release@21.0.7)
+      '@semantic-release/github': 9.0.4(semantic-release@21.0.9)
+      '@semantic-release/npm': 10.0.4(semantic-release@21.0.9)
+      '@semantic-release/release-notes-generator': 11.0.4(semantic-release@21.0.9)
       aggregate-error: 4.0.1
       cosmiconfig: 8.2.0
       debug: 4.3.4
       env-ci: 9.1.1
-      execa: 7.2.0
+      execa: 8.0.1
       figures: 5.0.0
       find-versions: 5.1.0
       get-stream: 6.0.1
       git-log-parser: 1.2.0
       hook-std: 3.0.0
-      hosted-git-info: 6.1.1
+      hosted-git-info: 7.0.0
       lodash-es: 4.17.21
       marked: 5.1.2
       marked-terminal: 5.2.0(marked@5.1.2)
