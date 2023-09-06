@@ -48,9 +48,11 @@ export type Controller<Schema extends FastifySchema = never> = (
 ) =>
     | {
           status: Status
+          // @ts-expect-error it's fine
           body?: Static<Unwrap<Schema['response']>>
       }
     | Promise<{
           status: Status
+          // @ts-expect-error it's fine
           body?: Static<Unwrap<Schema['response']>>
       }>
