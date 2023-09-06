@@ -97,9 +97,6 @@ devDependencies:
   '@types/node':
     specifier: 20.5.7
     version: 20.5.7
-  dotenv:
-    specifier: 16.3.1
-    version: 16.3.1
   eslint:
     specifier: 8.48.0
     version: 8.48.0
