@@ -1,4 +1,4 @@
 export {
-    StatusCodes as Status,
     ReasonPhrases as Reason,
+    StatusCodes as Status,
 } from 'http-status-codes'

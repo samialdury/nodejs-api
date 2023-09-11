@@ -1,10 +1,9 @@
-import { Status } from '../../../../api/constants.js'
 import type { Controller } from '../../../../api/types.js'
+import type { schema } from './schema.js'
+import { Status } from '../../../../api/constants.js'
 import { logger } from '../../../../logger.js'
 import { getGithubUserInfo } from '../../service/github.js'
 import { encodeJWT } from '../../service/jwt.js'
-
-import type { schema } from './schema.js'
 
 export const controller: Controller<typeof schema> = async ({ context }) => {
     const { token } =
@@ -21,16 +20,16 @@ export const controller: Controller<typeof schema> = async ({ context }) => {
     const jwt = await encodeJWT({
         token: {
             email: user.email,
-            sub: user.id.toString(),
             name: user.name,
             picture: user.avatarUrl,
+            sub: user.id.toString(),
         },
     })
 
     return {
-        status: Status.OK,
         body: {
             accessToken: jwt,
         },
+        status: Status.OK,
     }
 }

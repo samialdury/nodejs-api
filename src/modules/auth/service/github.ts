@@ -1,12 +1,11 @@
 import { Octokit } from 'octokit'
-
 import { logger } from '../../../logger.js'
 
 export async function getGithubUserInfo(accessToken: string): Promise<{
+    avatarUrl: string
+    email: string
     id: number
     name: string
-    email: string
-    avatarUrl: string
 }> {
     try {
         const gh = new Octokit({ auth: accessToken })
@@ -28,10 +27,10 @@ export async function getGithubUserInfo(accessToken: string): Promise<{
         }
 
         return {
+            avatarUrl: user.avatar_url,
+            email: user.email,
             id: user.id,
             name: user.name ?? user.login,
-            email: user.email,
-            avatarUrl: user.avatar_url,
         }
     } catch (err) {
         logger.error(err, 'Error while getting GitHub user info')

@@ -1,4 +1,4 @@
-import { createConfig, type EnveySchema, type InferEnveyConfig } from 'envey'
+import { type EnveySchema, type InferEnveyConfig, createConfig } from 'envey'
 import { z } from 'zod'
 
 function bool(defaultValue: boolean): z.ZodBoolean {
@@ -14,6 +14,34 @@ const schema = {
         env: 'COMMIT_SHA',
         format: z.string(),
     },
+    // Database
+    databaseUrl: {
+        env: 'DATABASE_URL',
+        format: z.string(),
+    },
+    githubClientId: {
+        env: 'GITHUB_CLIENT_ID',
+        format: z.string(),
+    },
+    githubClientSecret: {
+        env: 'GITHUB_CLIENT_SECRET',
+        format: z.string(),
+    },
+    // GitHub
+    githubLoginPath: {
+        env: 'GITHUB_LOGIN_PATH',
+        format: z.string().default('/login/github'),
+    },
+    // API
+    host: {
+        env: 'INTERNAL_HOST',
+        format: z.string().default('0.0.0.0'),
+    },
+    // Auth
+    jwtSecret: {
+        env: 'JWT_SECRET',
+        format: z.string(),
+    },
     logLevel: {
         env: 'LOG_LEVEL',
         format: z.enum([
@@ -26,48 +54,20 @@ const schema = {
             'silent',
         ]),
     },
-    projectName: {
-        env: 'PROJECT_NAME',
-        format: z.string(),
-    },
-    // API
-    host: {
-        env: 'INTERNAL_HOST',
-        format: z.string().default('0.0.0.0'),
+    logRequests: {
+        env: 'LOG_REQUESTS',
+        format: bool(false),
     },
     port: {
         env: 'PORT',
         format: z.coerce.number().int().min(1024).max(65_535).default(8080),
     },
-    logRequests: {
-        env: 'LOG_REQUESTS',
-        format: bool(false),
+    projectName: {
+        env: 'PROJECT_NAME',
+        format: z.string(),
     },
     publicHost: {
         env: 'HOST',
-        format: z.string(),
-    },
-    // Database
-    databaseUrl: {
-        env: 'DATABASE_URL',
-        format: z.string(),
-    },
-    // Auth
-    jwtSecret: {
-        env: 'JWT_SECRET',
-        format: z.string(),
-    },
-    // GitHub
-    githubLoginPath: {
-        env: 'GITHUB_LOGIN_PATH',
-        format: z.string().default('/login/github'),
-    },
-    githubClientId: {
-        env: 'GITHUB_CLIENT_ID',
-        format: z.string(),
-    },
-    githubClientSecret: {
-        env: 'GITHUB_CLIENT_SECRET',
         format: z.string(),
     },
 } satisfies EnveySchema

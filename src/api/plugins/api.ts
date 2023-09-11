@@ -1,6 +1,5 @@
-import { statusRouter } from '../../modules/status/router.js'
 import type { ServerPlugin } from '../types.js'
-
+import { statusRouter } from '../../modules/status/router.js'
 import { authPlugin } from './auth.js'
 import { graphqlPlugin } from './graphql.js'
 import { restPlugin } from './rest.js'
