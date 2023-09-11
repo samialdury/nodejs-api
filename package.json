@@ -13,7 +13,7 @@
         "@fastify/oauth2": "7.4.0",
         "@panva/hkdf": "1.1.1",
         "@sinclair/typebox": "0.31.14",
-        "envey": "1.2.0",
+        "envey": "2.0.0",
         "fastify": "4.22.2",
         "fastify-plugin": "4.5.1",
         "graphql": "16.8.0",
