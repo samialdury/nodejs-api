@@ -36,15 +36,15 @@ const cloudflareFirewall = new hcloud.Firewall(
             {
                 description: 'Allow HTTP access from Cloudflare IPs',
                 direction: 'in',
-                protocol: 'tcp',
                 port: '80',
+                protocol: 'tcp',
                 sourceIps: [...cloudflareIpV4Ranges, ...cloudflareIpV6Ranges],
             },
             {
                 description: 'Allow HTTPS access from Cloudflare IPs',
                 direction: 'in',
-                protocol: 'tcp',
                 port: '443',
+                protocol: 'tcp',
                 sourceIps: [...cloudflareIpV4Ranges, ...cloudflareIpV6Ranges],
             },
         ],
@@ -62,8 +62,8 @@ const sshFirewall = new hcloud.Firewall(
             {
                 description: 'IP whitelist for SSH access',
                 direction: 'in',
-                protocol: 'tcp',
                 port: '22',
+                protocol: 'tcp',
                 sourceIps: ipConfig.require('allow_list').split(','),
             },
         ],
@@ -79,8 +79,8 @@ const postgresFirewall = new hcloud.Firewall(
             {
                 description: 'IP whitelist for Postgres access',
                 direction: 'in',
-                protocol: 'tcp',
                 port: '5432',
+                protocol: 'tcp',
                 sourceIps: ipConfig.require('allow_list').split(','),
             },
         ],
@@ -91,9 +91,9 @@ const postgresFirewall = new hcloud.Firewall(
 const internalNetwork = new hcloud.Network(
     'internal',
     {
-        name: 'internal',
-        ipRange: '10.0.0.0/16',
         deleteProtection: true,
+        ipRange: '10.0.0.0/16',
+        name: 'internal',
     },
     { protect: true },
 )
@@ -101,11 +101,11 @@ const internalNetwork = new hcloud.Network(
 const internalNetworkEuSubnet = new hcloud.NetworkSubnet(
     'internal-eu',
     {
+        ipRange: '10.0.0.0/24',
         // @ts-expect-error Types are wrong
         networkId: internalNetwork.id,
-        ipRange: '10.0.0.0/24',
-        type: 'cloud',
         networkZone: 'eu-central',
+        type: 'cloud',
     },
     { protect: true },
 )
@@ -113,22 +113,22 @@ const internalNetworkEuSubnet = new hcloud.NetworkSubnet(
 const databaseServer = new hcloud.Server(
     'db',
     {
-        name: 'db',
         datacenter: serverConfig.require('datacenter'),
-        image: serverConfig.require('image'),
-        serverType: serverConfig.require('type'),
         deleteProtection: true,
-        rebuildProtection: true,
         // @ts-expect-error Types are wrong
         firewallIds: [sshFirewall.id, postgresFirewall.id],
+        image: serverConfig.require('image'),
+        name: 'db',
         // sshKeys: [sshKey.id],
         networks: [
             {
+                ip: '10.0.0.2',
                 // @ts-expect-error Types are wrong
                 networkId: internalNetwork.id,
-                ip: '10.0.0.2',
             },
         ],
+        rebuildProtection: true,
+        serverType: serverConfig.require('type'),
     },
     {
         protect: true,
@@ -138,22 +138,22 @@ const databaseServer = new hcloud.Server(
 const appServer = new hcloud.Server(
     'app',
     {
-        name: 'app',
         datacenter: serverConfig.require('datacenter'),
-        image: serverConfig.require('image'),
-        serverType: serverConfig.require('type'),
         deleteProtection: true,
-        rebuildProtection: true,
         // @ts-expect-error Types are wrong
         firewallIds: [sshFirewall.id, cloudflareFirewall.id],
-        sshKeys: [sshKey.id],
+        image: serverConfig.require('image'),
+        name: 'app',
         networks: [
             {
+                ip: '10.0.0.3',
                 // @ts-expect-error Types are wrong
                 networkId: internalNetwork.id,
-                ip: '10.0.0.3',
             },
         ],
+        rebuildProtection: true,
+        serverType: serverConfig.require('type'),
+        sshKeys: [sshKey.id],
     },
     { protect: true },
 )
@@ -161,22 +161,22 @@ const appServer = new hcloud.Server(
 const adminServer = new hcloud.Server(
     'admin',
     {
-        name: 'admin',
         datacenter: serverConfig.require('datacenter'),
-        image: serverConfig.require('image'),
-        serverType: serverConfig.require('type'),
         deleteProtection: true,
-        rebuildProtection: true,
         // @ts-expect-error Types are wrong
         firewallIds: [sshFirewall.id, cloudflareFirewall.id],
-        sshKeys: [sshKey.id],
+        image: serverConfig.require('image'),
+        name: 'admin',
         networks: [
             {
+                ip: '10.0.0.4',
                 // @ts-expect-error Types are wrong
                 networkId: internalNetwork.id,
-                ip: '10.0.0.4',
             },
         ],
+        rebuildProtection: true,
+        serverType: serverConfig.require('type'),
+        sshKeys: [sshKey.id],
     },
     { protect: true },
 )

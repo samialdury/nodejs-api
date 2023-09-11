@@ -1,6 +1,6 @@
 export interface DefaultJWT extends Record<string, unknown> {
-    name: string
     email: string
+    name: string
     picture: string
     sub: string
 }
@@ -9,15 +9,15 @@ export interface JWT extends Record<string, unknown>, DefaultJWT {}
 
 export interface JWTEncodeParams<Payload = JWT> {
     /**
-     * The JWT payload
-     */
-    token: Payload
-    /**
      * The maximum age of the issued JWT in seconds
      *
      * @default 30 * 24 * 60 * 60 // 30 days
      */
     maxAge?: number
+    /**
+     * The JWT payload
+     */
+    token: Payload
 }
 
 export interface JWTDecodeParams {

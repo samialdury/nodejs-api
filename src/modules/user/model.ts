@@ -1,7 +1,7 @@
 export interface User {
-    oid: string
-    name: string
     createdAt: string
+    deletedAt: null | string
+    name: string
+    oid: string
     updatedAt: string
-    deletedAt: string | null
 }

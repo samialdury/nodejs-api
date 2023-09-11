@@ -1,5 +1,4 @@
 import { nanoid } from 'nanoid/async'
-
 import type { User } from './model.js'
 import * as repository from './repository.js'
 
@@ -14,5 +13,5 @@ export async function getUsers(): Promise<User[]> {
 export async function createUser(name: string): Promise<User> {
     const oid = await nanoid(21)
 
-    return repository.createUser({ oid, name })
+    return repository.createUser({ name, oid })
 }

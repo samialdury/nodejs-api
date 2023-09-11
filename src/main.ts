@@ -1,5 +1,5 @@
 import { initApi } from './api/bootstrap.js'
-import { initConfig, config } from './config.js'
+import { config, initConfig } from './config.js'
 import { initDatabase } from './database.js'
 import { initLogger, logger } from './logger.js'
 

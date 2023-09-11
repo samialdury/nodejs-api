@@ -2,12 +2,11 @@ import { fastifyAuth } from '@fastify/auth'
 import { fastifyBearerAuth } from '@fastify/bearer-auth'
 import { fastifyOauth2 } from '@fastify/oauth2'
 import { fastifyPlugin } from 'fastify-plugin'
-
+import type { ServerPlugin } from '../types.js'
 import { config } from '../../config.js'
 import { logger } from '../../logger.js'
 import { authRouter } from '../../modules/auth/router.js'
 import { decodeJWT } from '../../modules/auth/service/jwt.js'
-import type { ServerPlugin } from '../types.js'
 
 export const authPlugin: ServerPlugin = fastifyPlugin(
     async (server) => {
@@ -18,8 +17,6 @@ export const authPlugin: ServerPlugin = fastifyPlugin(
         // @ts-expect-error types are wrong
         await server.register(fastifyBearerAuth, {
             addHook: false,
-            verifyErrorLogLevel: 'debug',
-            logLevel: 'debug',
             auth: async (key, _request) => {
                 try {
                     const value = await decodeJWT({
@@ -34,27 +31,29 @@ export const authPlugin: ServerPlugin = fastifyPlugin(
                     return false
                 }
             },
+            logLevel: 'debug',
+            verifyErrorLogLevel: 'debug',
         })
 
         // GitHub
         await server.register(fastifyOauth2, {
-            name: 'githubOAuth2',
-            scope: ['read:user user:email'],
+            callbackUri: `${config.publicHost}${config.githubLoginPath}/callback`,
             credentials: {
+                auth: fastifyOauth2.GITHUB_CONFIGURATION,
                 client: {
                     id: config.githubClientId,
                     secret: config.githubClientSecret,
                 },
-                auth: fastifyOauth2.GITHUB_CONFIGURATION,
             },
+            name: 'githubOAuth2',
+            scope: ['read:user user:email'],
             startRedirectPath: config.githubLoginPath,
-            callbackUri: `${config.publicHost}${config.githubLoginPath}/callback`,
         })
 
         await server.register(authRouter)
     },
     {
-        name: 'auth-plugin',
         fastify: '4.x',
+        name: 'auth-plugin',
     },
 )

@@ -1,9 +1,13 @@
 import type { Resolvers } from '../__generated__/resolvers-types.js'
 import { config } from '../config.js'
-
 import * as userService from './user/service.js'
 
 export const resolvers: Resolvers = {
+    Mutation: {
+        createUser: async (_, { name }) => {
+            return userService.createUser(name)
+        },
+    },
     Query: {
         status: () => {
             return {
@@ -16,11 +20,6 @@ export const resolvers: Resolvers = {
         },
         users: async () => {
             return userService.getUsers()
-        },
-    },
-    Mutation: {
-        createUser: async (_, { name }) => {
-            return userService.createUser(name)
         },
     },
 }

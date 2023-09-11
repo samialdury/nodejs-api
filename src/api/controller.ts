@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { FastifySchema, HTTPMethods, RouteOptions } from 'fastify'
-
-import { Status } from './constants.js'
 import type { Controller, Server } from './types.js'
+import { Status } from './constants.js'
 
 export const createController = <S extends FastifySchema>(
     server: Server,
@@ -13,23 +12,20 @@ export const createController = <S extends FastifySchema>(
     controller: Controller<S>,
 ): RouteOptions => {
     return {
-        method,
-        url,
-        schema,
         handler: async (request, response) => {
-            const { status, body } = await controller({
+            const { body, status } = await controller({
+                body: request.body as never,
                 context: {
-                    server,
-                    request,
                     auth: {
                         // @ts-expect-error it's fine
                         github: server.githubOAuth2,
                     },
+                    request,
+                    server,
                 },
-                body: request.body as never,
+                headers: request.headers as never,
                 params: request.params as never,
                 query: request.query as never,
-                headers: request.headers as never,
             })
 
             if (status === Status.NO_CONTENT) {
@@ -38,5 +34,8 @@ export const createController = <S extends FastifySchema>(
 
             return response.status(status).send(body)
         },
+        method,
+        schema,
+        url,
     }
 }

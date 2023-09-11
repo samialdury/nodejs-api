@@ -1,6 +1,5 @@
-import { database, sql } from '../../database.js'
-
 import type { User } from './model.js'
+import { database, sql } from '../../database.js'
 
 export async function getUserByOid(oid: string): Promise<User | undefined> {
     const user = await database.queryOne<User>(sql`
@@ -32,9 +31,9 @@ export async function getUsersByOids(oids: string[]): Promise<User[]> {
 }
 
 export async function createUser({
-    oid,
     name,
-}: Omit<User, 'id' | 'createdAt' | 'updatedAt' | 'deletedAt'>): Promise<User> {
+    oid,
+}: Omit<User, 'createdAt' | 'deletedAt' | 'id' | 'updatedAt'>): Promise<User> {
     const now = new Date().toISOString()
 
     await database.queryOne(sql`

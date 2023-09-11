@@ -3,12 +3,11 @@ import type { OAuth2Namespace } from '@fastify/oauth2'
 import type { Static } from '@fastify/type-provider-typebox'
 import type {
     FastifyInstance,
-    FastifySchema,
-    FastifyRequest,
-    FastifyReply,
     FastifyPluginAsync,
+    FastifyReply,
+    FastifyRequest,
+    FastifySchema,
 } from 'fastify'
-
 import type { Status } from './constants.js'
 
 export type Server = FastifyInstance
@@ -27,32 +26,32 @@ type Unwrap<T> = T[keyof T]
 type GetStatic<S extends FastifySchema, T extends keyof S> = Static<S[T]>
 
 export interface ControllerContext {
-    server: Server
-    request: ServerRequest
     auth: {
         github: OAuth2Namespace
     }
+    request: ServerRequest
+    server: Server
 }
 
 export type Controller<Schema extends FastifySchema = never> = (
     params: Readonly<
         {
             body: Readonly<GetStatic<Schema, 'body'>>
+            headers: Readonly<GetStatic<Schema, 'headers'>>
             params: Readonly<GetStatic<Schema, 'params'>>
             query: Readonly<GetStatic<Schema, 'querystring'>>
-            headers: Readonly<GetStatic<Schema, 'headers'>>
         } & {
             context: ControllerContext
         }
     >,
 ) =>
     | {
-          status: Status
           // @ts-expect-error it's fine
           body?: Static<Unwrap<Schema['response']>>
+          status: Status
       }
     | Promise<{
-          status: Status
           // @ts-expect-error it's fine
           body?: Static<Unwrap<Schema['response']>>
+          status: Status
       }>
