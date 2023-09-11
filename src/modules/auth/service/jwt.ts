@@ -1,8 +1,8 @@
 import { randomUUID } from 'node:crypto'
 import { hkdf } from '@panva/hkdf'
 import { EncryptJWT, jwtDecrypt } from 'jose'
+import type { Context } from '../../../api/types.js'
 import type { JWT, JWTDecodeParams, JWTEncodeParams } from './jwt.types.js'
-import { config } from '../../../config.js'
 
 const DEFAULT_MAX_AGE = 30 * 24 * 60 * 60 // 30 days
 
@@ -11,15 +11,18 @@ function now(): number {
 }
 
 export async function encodeJWT<Payload = JWT>(
+    context: Context,
     params: JWTEncodeParams<Payload>,
 ): Promise<string> {
     const { maxAge = DEFAULT_MAX_AGE, token = {} } = params
-    const encryptionSecret = await getDerivedEncryptionKey(config.jwtSecret)
+    const encryptionSecret = await getDerivedEncryptionKey(
+        context.config.jwtSecret,
+    )
 
     // @ts-expect-error `jose` allows any object as payload.
     const jwt = await new EncryptJWT(token)
         .setProtectedHeader({ alg: 'dir', enc: 'A256GCM' })
-        .setIssuer(config.projectName)
+        .setIssuer(context.config.projectName)
         .setIssuedAt()
         .setExpirationTime(now() + maxAge)
         .setJti(randomUUID())
@@ -29,6 +32,7 @@ export async function encodeJWT<Payload = JWT>(
 }
 
 export async function decodeJWT<Payload = JWT>(
+    context: Context,
     params: JWTDecodeParams,
 ): Promise<Payload | undefined> {
     const { token } = params
@@ -37,7 +41,9 @@ export async function decodeJWT<Payload = JWT>(
         return undefined
     }
 
-    const encryptionSecret = await getDerivedEncryptionKey(config.jwtSecret)
+    const encryptionSecret = await getDerivedEncryptionKey(
+        context.config.jwtSecret,
+    )
 
     const { payload } = await jwtDecrypt(token, encryptionSecret, {
         clockTolerance: 15,

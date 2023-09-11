@@ -1,7 +1,10 @@
 import { Octokit } from 'octokit'
-import { logger } from '../../../logger.js'
+import type { Context } from '../../../api/types.js'
 
-export async function getGithubUserInfo(accessToken: string): Promise<{
+export async function getGithubUserInfo(
+    context: Context,
+    accessToken: string,
+): Promise<{
     avatarUrl: string
     email: string
     id: number
@@ -21,7 +24,7 @@ export async function getGithubUserInfo(accessToken: string): Promise<{
                     emails.find((email) => email.primary)?.email ??
                     emails[0]!.email // eslint-disable-line @typescript-eslint/no-non-null-assertion
             } else {
-                logger.error('No email found')
+                context.logger.error('No email found')
                 throw new Error('No email found')
             }
         }
@@ -33,7 +36,7 @@ export async function getGithubUserInfo(accessToken: string): Promise<{
             name: user.name ?? user.login,
         }
     } catch (err) {
-        logger.error(err, 'Error while getting GitHub user info')
+        context.logger.error(err, 'Error while getting GitHub user info')
         throw new Error('Error while getting GitHub user info')
     }
 }

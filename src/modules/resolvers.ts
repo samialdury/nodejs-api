@@ -1,25 +1,24 @@
 import type { Resolvers } from '../__generated__/resolvers-types.js'
-import { config } from '../config.js'
 import * as userService from './user/service.js'
 
 export const resolvers: Resolvers = {
     Mutation: {
-        createUser: async (_, { name }) => {
-            return userService.createUser(name)
+        createUser: async (_, { name }, context) => {
+            return userService.createUser(context, name)
         },
     },
     Query: {
-        status: () => {
+        status: (_, __, context) => {
             return {
-                project: config.projectName,
-                version: config.commitSha,
+                project: context.config.projectName,
+                version: context.config.commitSha,
             }
         },
-        user: async (_, { oid }) => {
-            return userService.getUser(oid)
+        user: async (_, { oid }, context) => {
+            return userService.getUser(context, oid)
         },
-        users: async () => {
-            return userService.getUsers()
+        users: async (_, __, context) => {
+            return userService.getUsers(context)
         },
     },
 }

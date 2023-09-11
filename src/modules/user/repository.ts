@@ -1,7 +1,10 @@
 import type { User } from './model.js'
-import { database, sql } from '../../database.js'
+import { type Database, sql } from '../../database.js'
 
-export async function getUserByOid(oid: string): Promise<User | undefined> {
+export async function getUserByOid(
+    database: Database,
+    oid: string,
+): Promise<User | undefined> {
     const user = await database.queryOne<User>(sql`
       SELECT * FROM user WHERE oid = ${oid}
         AND deletedAt IS NULL
@@ -11,7 +14,7 @@ export async function getUserByOid(oid: string): Promise<User | undefined> {
     return user
 }
 
-export async function getUsers(): Promise<User[]> {
+export async function getUsers(database: Database): Promise<User[]> {
     const users = await database.queryMultiple<User>(sql`
       SELECT * FROM user WHERE deletedAt IS NULL
       ORDER BY createdAt DESC;
@@ -20,7 +23,10 @@ export async function getUsers(): Promise<User[]> {
     return users
 }
 
-export async function getUsersByOids(oids: string[]): Promise<User[]> {
+export async function getUsersByOids(
+    database: Database,
+    oids: string[],
+): Promise<User[]> {
     const users = await database.queryMultiple<User>(sql`
       SELECT * FROM user WHERE oid IN (${oids.join(', ')})
         AND deletedAt IS NULL
@@ -30,17 +36,17 @@ export async function getUsersByOids(oids: string[]): Promise<User[]> {
     return users
 }
 
-export async function createUser({
-    name,
-    oid,
-}: Omit<User, 'createdAt' | 'deletedAt' | 'id' | 'updatedAt'>): Promise<User> {
+export async function createUser(
+    database: Database,
+    { name, oid }: Omit<User, 'createdAt' | 'deletedAt' | 'id' | 'updatedAt'>,
+): Promise<User> {
     const now = new Date().toISOString()
 
     await database.queryOne(sql`
       INSERT INTO user (oid, name, createdAt, updatedAt) VALUES (${oid}, ${name}, ${now}, ${now});
     `)
 
-    const user = await getUserByOid(oid)
+    const user = await getUserByOid(database, oid)
 
     if (!user) {
         throw new Error('User not found')

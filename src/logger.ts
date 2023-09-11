@@ -3,13 +3,13 @@ import type { Config } from './config.js'
 
 export type Logger = pino.Logger
 
-export let logger: Logger
-
-export function initLogger(config: Config): void {
-    logger = pino({
+export function initLogger(config: Config): Logger {
+    const logger = pino({
         level: config.logLevel,
         name: config.projectName,
     })
 
     logger.debug('Logger initialized')
+
+    return logger
 }

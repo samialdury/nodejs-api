@@ -74,9 +74,7 @@ const schema = {
 
 export type Config = InferEnveyConfig<typeof schema>
 
-export let config: Config
-
-export function initConfig(): void {
+export function initConfig(): Config {
     const result = createConfig(z, schema, { validate: true })
 
     if (!result.success) {
@@ -85,5 +83,5 @@ export function initConfig(): void {
         throw new Error('Invalid config')
     }
 
-    config = result.config
+    return result.config
 }

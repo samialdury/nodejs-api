@@ -6,7 +6,6 @@ import fastifyApollo, {
     fastifyApolloDrainPlugin,
 } from '@as-integrations/fastify'
 import type { GraphQLContext, ServerPlugin } from '../types.js'
-import { logger } from '../../logger.js'
 import { resolvers } from '../../modules/resolvers.js'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -28,8 +27,16 @@ export const graphqlPlugin: ServerPlugin = async (server) => {
 
     await server.register(fastifyApollo(apollo), {
         context: async (request, _reply) => {
-            logger.debug(request.headers.authorization, 'Request headers')
-            return {}
+            server.context.logger.debug(
+                request.headers.authorization,
+                'Request headers',
+            )
+
+            return {
+                config: server.context.config,
+                database: server.context.database,
+                logger: server.context.logger,
+            }
         },
     })
 }

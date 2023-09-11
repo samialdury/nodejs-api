@@ -1,15 +1,21 @@
+import { onExit } from 'gracy'
 import { initApi } from './api/bootstrap.js'
-import { config, initConfig } from './config.js'
+import { initConfig } from './config.js'
 import { initDatabase } from './database.js'
-import { initLogger, logger } from './logger.js'
+import { initLogger } from './logger.js'
 
 async function main(): Promise<void> {
-    initConfig()
-    initLogger(config)
+    const config = initConfig()
+    const logger = initLogger(config)
 
-    await initDatabase(config, logger)
+    const database = await initDatabase(config, logger)
 
-    await initApi(config, logger)
+    const server = await initApi(config, logger, database)
+
+    onExit({ logger }, async () => {
+        await server.close()
+        await database.close()
+    })
 }
 
 await main()

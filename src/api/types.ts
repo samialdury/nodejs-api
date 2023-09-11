@@ -8,6 +8,9 @@ import type {
     FastifyRequest,
     FastifySchema,
 } from 'fastify'
+import type { Config } from '../config.js'
+import type { Database } from '../database.js'
+import type { Logger } from '../logger.js'
 import type { Status } from './constants.js'
 
 export type Server = FastifyInstance
@@ -16,16 +19,20 @@ export type ServerRequest = FastifyRequest
 export type ServerResponse = FastifyReply
 export type ControllerSchema = FastifySchema
 
-export interface GraphQLContext extends BaseContext {
-    dummy?: string
+export interface Context {
+    config: Config
+    database: Database
+    logger: Logger
 }
+
+export interface GraphQLContext extends BaseContext, Context {}
 
 type Unwrap<T> = T[keyof T]
 
 // @ts-expect-error it's fine
 type GetStatic<S extends FastifySchema, T extends keyof S> = Static<S[T]>
 
-export interface ControllerContext {
+export interface ControllerContext extends Context {
     auth: {
         github: OAuth2Namespace
     }

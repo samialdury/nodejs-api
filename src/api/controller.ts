@@ -20,6 +20,9 @@ export const createController = <S extends FastifySchema>(
                         // @ts-expect-error it's fine
                         github: server.githubOAuth2,
                     },
+                    config: server.context.config,
+                    database: server.context.database,
+                    logger: server.context.logger,
                     request,
                     server,
                 },

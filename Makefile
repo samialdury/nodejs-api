@@ -8,7 +8,7 @@ BUILD_DIR := build
 CACHE_DIR := .cache
 MIGRATIONS_DIR := db/migrations
 
-DATABASE_URL := postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable
+DATABASE_URL := postgres://nodejs-api:nodejs-api@localhost:5432/nodejs-api?sslmode=disable
 
 .DEFAULT_GOAL := help
 

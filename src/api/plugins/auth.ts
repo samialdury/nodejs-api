@@ -3,8 +3,6 @@ import { fastifyBearerAuth } from '@fastify/bearer-auth'
 import { fastifyOauth2 } from '@fastify/oauth2'
 import { fastifyPlugin } from 'fastify-plugin'
 import type { ServerPlugin } from '../types.js'
-import { config } from '../../config.js'
-import { logger } from '../../logger.js'
 import { authRouter } from '../../modules/auth/router.js'
 import { decodeJWT } from '../../modules/auth/service/jwt.js'
 
@@ -19,15 +17,15 @@ export const authPlugin: ServerPlugin = fastifyPlugin(
             addHook: false,
             auth: async (key, _request) => {
                 try {
-                    const value = await decodeJWT({
+                    const value = await decodeJWT(server.context, {
                         token: key,
                     })
 
-                    logger.info(value, 'Decoded JWT')
+                    server.context.logger.info(value, 'Decoded JWT')
 
                     return true
                 } catch (err) {
-                    logger.debug(err, 'Failed to decode JWT')
+                    server.context.logger.debug(err, 'Failed to decode JWT')
                     return false
                 }
             },
@@ -37,17 +35,17 @@ export const authPlugin: ServerPlugin = fastifyPlugin(
 
         // GitHub
         await server.register(fastifyOauth2, {
-            callbackUri: `${config.publicHost}${config.githubLoginPath}/callback`,
+            callbackUri: `${server.context.config.publicHost}${server.context.config.githubLoginPath}/callback`,
             credentials: {
                 auth: fastifyOauth2.GITHUB_CONFIGURATION,
                 client: {
-                    id: config.githubClientId,
-                    secret: config.githubClientSecret,
+                    id: server.context.config.githubClientId,
+                    secret: server.context.config.githubClientSecret,
                 },
             },
             name: 'githubOAuth2',
             scope: ['read:user user:email'],
-            startRedirectPath: config.githubLoginPath,
+            startRedirectPath: server.context.config.githubLoginPath,
         })
 
         await server.register(authRouter)
