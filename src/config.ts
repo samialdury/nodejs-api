@@ -77,5 +77,13 @@ export type Config = InferEnveyConfig<typeof schema>
 export let config: Config
 
 export function initConfig(): void {
-    config = createConfig(z, schema, { validate: true })
+    const result = createConfig(z, schema, { validate: true })
+
+    if (!result.success) {
+        // eslint-disable-next-line no-console
+        console.error(result.error.issues)
+        throw new Error('Invalid config')
+    }
+
+    config = result.config
 }
