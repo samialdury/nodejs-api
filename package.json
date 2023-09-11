@@ -1,6 +1,6 @@
 {
     "name": "nodejs-api",
-    "version": "1.5.2",
+    "version": "1.0.0",
     "private": true,
     "type": "module",
     "dependencies": {
