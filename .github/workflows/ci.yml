@@ -31,7 +31,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               timeout-minutes: 2
 
             - name: Set up pnpm
@@ -97,7 +97,7 @@ jobs:
             contents: read
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               timeout-minutes: 2
 
             - name: Set up QEMU
