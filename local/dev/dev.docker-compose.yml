@@ -1,0 +1,39 @@
+services:
+    service:
+        build:
+            context: ../../
+            dockerfile: local/local.Dockerfile
+        command: ['make', 'dev-docker']
+        container_name: nodejs-api_dev
+        restart: unless-stopped
+        env_file:
+            - .dev.env
+        labels:
+            traefik.enable: true
+            traefik.http.routers.nodejs-api-dev.rule: Host(`nodejs-api.dev.sami.codes`)
+            traefik.http.routers.nodejs-api-dev.entrypoints: websecure
+            traefik.http.routers.nodejs-api-dev.tls: true
+        expose:
+            - 8080
+        volumes:
+            - ../../:/app
+        profiles:
+            - app
+    postgres:
+        image: postgres:15-alpine
+        container_name: postgres_nodejs-api_dev
+        restart: unless-stopped
+        env_file:
+            - .dev.env
+        ports:
+            - 5432:5432
+        volumes:
+            - ./db_data/postgres:/var/lib/postgresql/data
+            - ./db_data/init.sql:/docker-entrypoint-initdb.d/init.sql
+        profiles:
+            - support
+
+networks:
+    default:
+        name: nodejs-api
+        external: true

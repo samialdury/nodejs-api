@@ -25,10 +25,5 @@ export async function initApi(
 
     await server.register(apiPlugin)
 
-    await server.listen({
-        host: config.host,
-        port: config.port,
-    })
-
     return server as unknown as Server
 }

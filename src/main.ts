@@ -16,6 +16,11 @@ async function main(): Promise<void> {
         await server.close()
         await database.close()
     })
+
+    await server.listen({
+        host: config.host,
+        port: config.port,
+    })
 }
 
 await main()

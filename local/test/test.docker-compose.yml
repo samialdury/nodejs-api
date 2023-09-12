@@ -1,0 +1,38 @@
+services:
+    service:
+        build:
+            context: ../../
+            dockerfile: local/local.Dockerfile
+        container_name: nodejs-api_test
+        restart: unless-stopped
+        env_file:
+            - .test.env
+        labels:
+            traefik.enable: true
+            traefik.http.routers.nodejs-api-test.rule: Host(`nodejs-api.test.sami.codes`)
+            traefik.http.routers.nodejs-api-test.entrypoints: websecure
+            traefik.http.routers.nodejs-api-test.tls: true
+        expose:
+            - 8080
+        volumes:
+            - ../../:/app
+        profiles:
+            - app
+    postgres_test:
+        image: postgres:15-alpine
+        container_name: postgres_nodejs-api_test
+        restart: unless-stopped
+        env_file:
+            - .test.env
+        ports:
+            - 5433:5432
+        volumes:
+            - ./db_data/postgres:/var/lib/postgresql/data
+            - ./db_data/init.sql:/docker-entrypoint-initdb.d/init.sql
+        profiles:
+            - support
+
+networks:
+    default:
+        name: nodejs-api
+        external: true

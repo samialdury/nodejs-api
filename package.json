@@ -28,6 +28,8 @@
     },
     "devDependencies": {
         "@commitlint/cli": "17.7.1",
+        "@esbuild/darwin-arm64": "0.18.20",
+        "@esbuild/linux-arm64": "0.18.20",
         "@fastify/type-provider-typebox": "3.5.0",
         "@graphql-codegen/cli": "5.0.0",
         "@graphql-codegen/typescript": "4.0.1",

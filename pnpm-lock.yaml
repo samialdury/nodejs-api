@@ -73,6 +73,12 @@ devDependencies:
   '@commitlint/cli':
     specifier: 17.7.1
     version: 17.7.1
+  '@esbuild/darwin-arm64':
+    specifier: 0.18.20
+    version: 0.18.20
+  '@esbuild/linux-arm64':
+    specifier: 0.18.20
+    version: 0.18.20
   '@fastify/type-provider-typebox':
     specifier: 3.5.0
     version: 3.5.0(@sinclair/typebox@0.31.14)
@@ -1277,7 +1283,6 @@ packages:
     os: [darwin]
     requiresBuild: true
     dev: true
-    optional: true
 
   /@esbuild/darwin-x64@0.18.20:
     resolution: {integrity: sha512-pc5gxlMDxzm513qPGbCbDukOdsGtKhfxD1zJKXjCCcU7ju50O7MeAZ8c4krSJcOIJGFR+qx21yMMVYwiQvyTyQ==}
@@ -1313,7 +1318,6 @@ packages:
     os: [linux]
     requiresBuild: true
     dev: true
-    optional: true
 
   /@esbuild/linux-arm@0.18.20:
     resolution: {integrity: sha512-/5bHkMWnq1EgKr1V+Ybz3s1hWXok7mDFUMQ4cG10AfW3wL02PSZi5kFpYKrptDsgb2WAJIvRcDm+qIvXf/apvg==}

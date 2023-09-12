@@ -1,0 +1,28 @@
+services:
+    traefik:
+        image: traefik:2.10
+        container_name: traefik_nodejs-api
+        restart: unless-stopped
+        healthcheck:
+            test:
+                - CMD
+                - traefik
+                - healthcheck
+            interval: 10s
+            timeout: 5s
+            retries: 3
+        ports:
+            - 80:80
+            - 443:443
+            - 8080:8080
+        volumes:
+            - ./traefik.yml:/etc/traefik/traefik.yml:ro
+            - ./certs/:/certs/:ro
+            - /var/run/docker.sock:/var/run/docker.sock
+        profiles:
+            - support
+
+networks:
+    default:
+        name: nodejs-api
+        external: true
