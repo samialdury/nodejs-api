@@ -8,6 +8,6 @@ coverage
 
 .env
 
-certs/*.pem
+*.pem
 
 db_data
