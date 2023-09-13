@@ -46,9 +46,13 @@ prepare: ## Prepare template (name=<string>)
 ##@ Development
 
 .PHONY: install
-install: ## install all dependencies
+install: ## install all dependencies (skip-postinstall=<boolean>?)
 	@pnpm install
+ifeq ($(skip-postinstall),true)
+	@echo "Skipping postinstall"
+else
 	@$(BIN)/husky install
+endif
 
 .PHONY: gql-gen
 gql-gen: ## generate GraphQL types
