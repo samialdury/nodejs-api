@@ -78,27 +78,27 @@ migrate-new: ## create a new migration (name=<string>)
 	@$(RUN_IN_DOCKER) 'migrate create -ext sql -dir $(MIGRATIONS_DIR) $(name)'
 
 .PHONY: migrate-up
-migrate-up: ## run migrations up (compose=<string>, n=<int>)
+migrate-up: ## run migrations up (compose=<string>?, n=<int>)
 	@$(RUN_IN_DOCKER) $(or $(compose), $(DEV_COMPOSE_FILE)) \
 		'migrate -path $(MIGRATIONS_DIR) -database $$DATABASE_URL up $(n)'
 
 .PHONY: migrate-down
-migrate-down: ## run migrations down (compose=<string>, n=<int>)
+migrate-down: ## run migrations down (compose=<string>?, n=<int>)
 	@$(RUN_IN_DOCKER) $(or $(compose), $(DEV_COMPOSE_FILE)) \
 		'migrate -path $(MIGRATIONS_DIR) -database $$DATABASE_URL down $(n)'
 
 .PHONY: migrate-drop
-migrate-drop: ## drop the database schema (compose=<string>)
+migrate-drop: ## drop the database schema (compose=<string>?)
 	@$(RUN_IN_DOCKER) $(or $(compose), $(DEV_COMPOSE_FILE)) \
 		'migrate -path $(MIGRATIONS_DIR) -database $$DATABASE_URL drop'
 
 .PHONY: migrate-force
-migrate-force: ## force migration version (compose=<string>, v=<string>)
+migrate-force: ## force migration version (compose=<string>?, v=<string>)
 	@$(RUN_IN_DOCKER) $(or $(compose), $(DEV_COMPOSE_FILE)) \
 		'migrate -path $(MIGRATIONS_DIR) -database $$DATABASE_URL force $(v)'
 
 .PHONY: migrate-version
-migrate-version: ## print current migration version (compose=<string>)
+migrate-version: ## print current migration version (compose=<string>?)
 	@$(RUN_IN_DOCKER) $(or $(compose), $(DEV_COMPOSE_FILE)) \
 		'migrate -path $(MIGRATIONS_DIR) -database $$DATABASE_URL version'
 
@@ -109,9 +109,10 @@ build: ## build the project
 	@rm -rf $(BUILD_DIR)
 	@$(BIN)/tsc
 	@cp ./schema.gql $(BUILD_DIR)/schema.gql
+	@echo "=== $(GREEN)build successful$(NC) ==="
 
 .PHONY: build-image
-build-image: ## build Docker image (args=<build args>, tag=<string>)
+build-image: ## build Docker image (args=<build args>?, tag=<string>?)
 	@docker build $(args) --build-arg COMMIT_SHA='dev,$(COMMIT_SHA)' -t $(or $(tag), $(PROJECT_NAME)) . -f ./Dockerfile
 
 ##@ Test
