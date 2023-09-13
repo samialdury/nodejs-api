@@ -27,6 +27,13 @@ reset=$(tput sgr0)
 domain_name_dev=$1
 domain_name_test=$2
 
+# Check if domain names are provided
+if [ -z "$domain_name_dev" ] || [ -z "$domain_name_test" ]; then
+    echo "${red}Please provide the domain names for the dev and test environments.${reset}"
+    echo "Usage: ./gen-certs.sh <domain_name_dev> <domain_name_test>"
+    exit 1
+fi
+
 certs_dir=$dir/../certs
 
 dev_cert_file_name=dev.cert.pem
