@@ -183,7 +183,8 @@ test-ci: ## run tests (CI)
 
 .PHONY: format-ci
 format-ci: ## format the code (CI)
-	@$(BIN)/prettier --check .
+# https://github.com/prettier/prettier/issues/11568
+	@$(BIN)/prettier --check . "!**/docker_data/**/*"
 
 .PHONY: lint-ci
 lint-ci: ## lint the code (CI)
