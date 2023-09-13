@@ -3,6 +3,7 @@
 COMMIT_SHA ?= $(shell git rev-parse --short HEAD)
 PROJECT_NAME ?= nodejs-api
 
+TERM ?= $(or $(TERM), xterm-256color)
 RED ?= $(shell tput setaf 1)
 GREEN ?= $(shell tput setaf 2)
 YELLOW ?= $(shell tput setaf 3)
