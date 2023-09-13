@@ -133,6 +133,7 @@ test-prepare: ## prepare the test environment
 # @$(WAIT_UNTIL) '$(RUN_IN_DOCKER) $(TEST_COMPOSE_FILE) '\''pg_isready --host postgres_test'\'' postgres_test'
 	@echo "=== $(GREEN)database ready$(NC) ==="
 	@echo "=== $(CYAN)running migrations$(NC) ==="
+	@sleep 15
 	@make migrate-up compose=$(TEST_COMPOSE_FILE)
 	@echo "=== $(GREEN)migrations ran successfully$(NC) ==="
 	@echo "=== $(YELLOW)current version$(NC) ==="
