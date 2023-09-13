@@ -3,7 +3,6 @@
 COMMIT_SHA ?= $(shell git rev-parse --short HEAD)
 PROJECT_NAME ?= nodejs-api
 
-TERM ?= $(or $(TERM), xterm-256color)
 RED ?= $(shell tput setaf 1)
 GREEN ?= $(shell tput setaf 2)
 YELLOW ?= $(shell tput setaf 3)
@@ -134,7 +133,6 @@ test-prepare: ## prepare the test environment
 # @$(WAIT_UNTIL) '$(RUN_IN_DOCKER) $(TEST_COMPOSE_FILE) '\''pg_isready --host postgres_test'\'' postgres_test'
 	@echo "=== $(GREEN)database ready$(NC) ==="
 	@echo "=== $(CYAN)running migrations$(NC) ==="
-	@sleep 15
 	@make migrate-up compose=$(TEST_COMPOSE_FILE)
 	@echo "=== $(GREEN)migrations ran successfully$(NC) ==="
 	@echo "=== $(YELLOW)current version$(NC) ==="
