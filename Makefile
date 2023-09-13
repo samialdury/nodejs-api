@@ -1,17 +1,20 @@
-COMMIT_SHA ?= $(shell git rev-parse --short HEAD)
-PROJECT_NAME ?= $(shell basename "$(PWD)")
+.DEFAULT_GOAL ?= help
 
-RED ?= \033[0;31m
-GREEN ?= \033[0;32m
-YELLOW ?= \033[0;33m
-CYAN ?= \033[0;36m
-NC ?= \033[0m
+COMMIT_SHA ?= $(shell git rev-parse --short HEAD)
+PROJECT_NAME ?= nodejs-api
+
+RED ?= $(shell tput setaf 1)
+GREEN ?= $(shell tput setaf 2)
+YELLOW ?= $(shell tput setaf 3)
+CYAN ?= $(shell tput setaf 6)
+NC ?= $(shell tput sgr0)
 
 BIN := node_modules/.bin
 
 LOCAL_DIR ?= local
 DEV_DIR ?= $(LOCAL_DIR)/dev
 TEST_DIR ?= $(LOCAL_DIR)/test
+SCRIPTS_DIR ?= $(LOCAL_DIR)/scripts
 SRC_DIR ?= src
 BUILD_DIR ?= build
 CACHE_DIR ?= .cache
@@ -25,11 +28,8 @@ COMPOSE_PROXY ?= docker compose -f $(PROXY_COMPOSE_FILE)
 COMPOSE_DEV ?= docker compose -f $(DEV_COMPOSE_FILE)
 COMPOSE_TEST ?= docker compose -f $(TEST_COMPOSE_FILE)
 
-RUN_IN_DOCKER ?= $(LOCAL_DIR)/run-cmd.sh
-
-# DATABASE_URL ?= postgres://nodejs-api:nodejs-api@localhost:5432/nodejs-api
-
-.DEFAULT_GOAL ?= help
+RUN_IN_DOCKER ?= $(SCRIPTS_DIR)/run-cmd.sh
+WAIT_UNTIL ?= $(SCRIPTS_DIR)/wait-until.sh
 
 ##@ Misc
 
@@ -54,20 +54,17 @@ dev-local: ## run TS and watch for changes
 	@node --env-file $(DEV)/.dev.env --no-warnings --loader tsx --watch --watch-preserve-output $(SRC_DIR)/main.ts | $(BIN)/pino-pretty
 
 .PHONY: dev-docker
-dev-docker: ## run TS and watch for changes
+dev-docker: ## run TS and watch for changes (docker)
 	@make gql-gen
 	@node --no-warnings --loader tsx --watch --watch-preserve-output $(SRC_DIR)/main.ts | $(BIN)/pino-pretty --colorize
 
-.PHONY: up-proxy
-up-proxy: ## start the proxy
-	@$(COMPOSE_PROXY) --profile support up -d
+.PHONY: dev-support
+dev-support: ## start the support services
+	@$(COMPOSE_PROXY) up --detach --wait
+	@$(COMPOSE_DEV) --profile support up --detach --wait
 
-.PHONY: up-support
-up-support: ## start the support services
-	@$(COMPOSE_DEV) --profile support up -d
-
-.PHONY: up-app
-up-app: ## start the development environment (app services)
+.PHONY: dev
+dev: ## start the app in dev mode
 	@$(COMPOSE_DEV) --profile app up
 
 .PHONY: run
@@ -126,18 +123,18 @@ test-prepare: ## prepare the test environment
 	@echo "=== $(CYAN)preparing docker network$(NC) ==="
 	@docker network create $(PROJECT_NAME) || true
 	@echo "=== $(GREEN)docker network ready$(NC) ==="
-	@echo
 	@echo "=== $(CYAN)preparing database$(NC) ==="
-	@$(COMPOSE_TEST) --profile support up -d
-	@echo "=== $(CYAN)waiting for database to accept connections$(NC) ==="
-	@sleep 10
+	@$(COMPOSE_TEST) --profile support up --detach --wait
+# @echo "=== $(CYAN)waiting for database to accept connections$(NC) ==="
+# @$(WAIT_UNTIL) '$(RUN_IN_DOCKER) $(TEST_COMPOSE_FILE) '\''pg_isready --host postgres_test'\'' postgres_test'
 	@echo "=== $(GREEN)database ready$(NC) ==="
-	@echo
 	@echo "=== $(CYAN)running migrations$(NC) ==="
 	@make migrate-up compose=$(TEST_COMPOSE_FILE)
-	@echo "=== $(GREEN)migrations ready$(NC) ==="
+	@echo "=== $(GREEN)migrations ran successfully$(NC) ==="
+	@echo "=== $(YELLOW)current version$(NC) ==="
+	@make migrate-version compose=$(TEST_COMPOSE_FILE)
 	@echo
-	@echo "=== $(GREEN)preparing test environment done$(NC) ==="
+	@echo "=== $(GREEN)test environment ready$(NC) ==="
 
 .PHONY: test
 test: ## run tests
@@ -168,8 +165,17 @@ build-ci: build ## build the project (CI)
 
 .PHONY: test-ci
 test-ci: ## run tests (CI)
-	make test-prepare
-	make test
+	@echo "=== $(CYAN)preparing CI environment$(NC) ==="
+	@node $(SCRIPTS_DIR)/prepare-ci-env.js
+	@echo "=== $(GREEN)CI environment ready$(NC) ==="
+	@echo
+	@make test-prepare
+	@echo
+	@echo "=== $(CYAN)running tests$(NC) ==="
+	@echo
+	@make test
+	@echo
+	@echo "=== $(GREEN)tests ran successfully$(NC) ==="
 
 .PHONY: format-ci
 format-ci: ## format the code (CI)

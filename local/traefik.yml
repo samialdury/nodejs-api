@@ -1,24 +1,24 @@
 ## STATIC CONFIG (restart traefik to update)
 
-# shows you a log msg if a newer image tag can be used
+# Shows you a log msg if a newer image tag can be used
 global:
     checkNewVersion: true
     sendAnonymousUsage: false
 
-# log default is ERROR, but WARN is more helpful
+# Log default is ERROR, but WARN is more helpful
 log:
     level: WARN
     # level: INFO
 
-# enable dashboard on 8080 with NO AUTH
+# Enable dashboard on 8080 with NO AUTH
 api:
     insecure: true
     dashboard: true
 
-# enable ping so the `traefik healthcheck` works
+# Enable ping so the `traefik healthcheck` works
 ping: {}
 
-# auto-proxy containers if they have proper labels
+# Auto-proxy containers if they have proper labels
 # and also use this file for dynamic config (tls)
 providers:
     docker:
@@ -28,11 +28,11 @@ providers:
         filename: /etc/traefik/traefik.yml
         watch: true
 
-# listen on 80/443, and redirect all 80 to 443 via 301
+# Listen on 80/443, and redirect all 80 to 443 via 301
 entryPoints:
     web:
         address: :80
-        # comment out these lins if you don't want to redirect everything
+        # Comment out these lins if you don't want to redirect everything
         http:
             redirections:
                 entryPoint:
@@ -42,15 +42,15 @@ entryPoints:
     websecure:
         address: :443
 
-## DYNAMIC CONFIG
+## DYNAMIC CONFIG (no restart needed)
 
 tls:
     certificates:
-        - certFile: /certs/nodejs-api.dev.cert.pem
-          keyFile: /certs/nodejs-api.dev.key.pem
-        - certFile: /certs/nodejs-api.test.cert.pem
-          keyFile: /certs/nodejs-api.test.key.pem
-    # when troubleshooting certs, enable this so traefik doesn't use
+        - certFile: /certs/dev.cert.pem
+          keyFile: /certs/dev.key.pem
+        - certFile: /certs/test.cert.pem
+          keyFile: /certs/test.key.pem
+    # When troubleshooting certs, enable this so traefik doesn't use
     # its own self-signed. By default if it can't find a matching
     # cert, it'll just create its own which will cause cert warnings
     # in browser and can be confusing to troubleshoot

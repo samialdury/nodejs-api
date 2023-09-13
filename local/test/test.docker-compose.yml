@@ -1,5 +1,5 @@
 services:
-    service:
+    app_test:
         build:
             context: ../../
             dockerfile: local/local.Dockerfile
@@ -9,9 +9,9 @@ services:
             - .test.env
         labels:
             traefik.enable: true
-            traefik.http.routers.nodejs-api-test.rule: Host(`nodejs-api.test.sami.codes`)
-            traefik.http.routers.nodejs-api-test.entrypoints: websecure
-            traefik.http.routers.nodejs-api-test.tls: true
+            traefik.http.routers.test.rule: Host(`nodejs-api.test.sami.codes`)
+            traefik.http.routers.test.entrypoints: websecure
+            traefik.http.routers.test.tls: true
         expose:
             - 8080
         volumes:
@@ -22,6 +22,14 @@ services:
         image: postgres:15-alpine
         container_name: postgres_nodejs-api_test
         restart: unless-stopped
+        healthcheck:
+            test:
+                - CMD
+                - pg_isready
+            start_period: 10s
+            interval: 3s
+            timeout: 1s
+            retries: 5
         env_file:
             - .test.env
         ports:
