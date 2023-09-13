@@ -35,8 +35,7 @@ services:
         ports:
             - 5433:5432
         volumes:
-            - ./db_data/postgres:/var/lib/postgresql/data
-            - ./db_data/init.sql:/docker-entrypoint-initdb.d/init.sql
+            - postgres_data:/var/lib/postgresql/data
         profiles:
             - support
 
@@ -44,3 +43,7 @@ networks:
     default:
         name: nodejs-api
         external: true
+
+volumes:
+    postgres_data:
+        name: postgres_nodejs-api_test_data
