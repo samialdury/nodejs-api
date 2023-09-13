@@ -6,7 +6,12 @@ export default [
         typeScript: true,
     }),
     {
-        ignores: ['**/__generated__/**', 'codegen.*', '**/prepare-ci-env.js'],
+        ignores: [
+            '**/__generated__/**',
+            'codegen.*',
+            '**/prepare-ci-env.js',
+            '**/prepare-template.js',
+        ],
     },
     {
         files: ['src/**/plugins/*.ts', 'src/**/router.ts'],
