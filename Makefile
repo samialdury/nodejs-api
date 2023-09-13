@@ -124,9 +124,9 @@ test-prepare: ## prepare the test environment
 	@docker network create $(PROJECT_NAME) || true
 	@echo "=== $(GREEN)docker network ready$(NC) ==="
 	@echo "=== $(CYAN)preparing database$(NC) ==="
-	@$(COMPOSE_TEST) --profile support up --detach --wait
+	@$(COMPOSE_TEST) --profile support up --detach
 # @echo "=== $(CYAN)waiting for database to accept connections$(NC) ==="
-# @$(WAIT_UNTIL) '$(RUN_IN_DOCKER) $(TEST_COMPOSE_FILE) '\''pg_isready --host postgres_test'\'' postgres_test'
+	@$(WAIT_UNTIL) '$(RUN_IN_DOCKER) $(TEST_COMPOSE_FILE) '\''pg_isready --host postgres_test'\'' postgres_test'
 	@echo "=== $(GREEN)database ready$(NC) ==="
 	@echo "=== $(CYAN)running migrations$(NC) ==="
 	@make migrate-up compose=$(TEST_COMPOSE_FILE)

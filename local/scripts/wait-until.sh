@@ -17,6 +17,9 @@
 # https://github.com/nickjj/wait-until
 #
 
+red=$(tput setaf 1)
+reset=$(tput sgr0)
+
 command="${1}"
 timeout="${2:-30}"
 
@@ -25,7 +28,7 @@ until eval "${command}"; do
     ((i++))
 
     if [ "${i}" -gt "${timeout}" ]; then
-        echo "command was never successful, aborting due to ${timeout}s timeout!"
+        echo "${red}command was never successful, aborting due to ${timeout}s timeout!${reset}"
         exit 1
     fi
 
