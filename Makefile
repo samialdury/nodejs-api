@@ -120,6 +120,9 @@ build-image: ## build Docker image (args=<build args>, tag=<string>)
 test-prepare: ## prepare the test environment
 	@echo "=== $(CYAN)preparing test environment$(NC) ==="
 	@echo
+	@echo "=== $(CYAN)pulling docker images$(NC) ==="
+	@$(COMPOSE_TEST) pull
+	@echo "=== $(GREEN)docker images pulled successfully$(NC) ==="
 	@echo "=== $(CYAN)preparing docker network$(NC) ==="
 	@docker network create $(PROJECT_NAME) || true
 	@echo "=== $(GREEN)docker network ready$(NC) ==="
