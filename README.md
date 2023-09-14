@@ -1,7 +1,7 @@
 # Node.js API template
 
 [![CI status](https://github.com/samialdury/nodejs-api/actions/workflows/ci.yml/badge.svg)](https://github.com/samialdury/nodejs-api/actions/workflows/ci.yml)
-![license](https://img.shields.io/github/license/samialdury/nodejs-api)
+![license](https://img.shields.io/github/license/samialdury/nodejs-api)(LICENSE)
 
 Batteries-included Node.js API template with best practices in mind.
 
