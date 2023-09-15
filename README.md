@@ -34,7 +34,7 @@ make prepare name=your-project-name
 - REST
 - GraphQL
 - PostgreSQL
-- OAuth2 & JWT
+- OAuth2 & JWT (**work in progress**)
 - Pulumi IaC
 - local HTTPS
 
