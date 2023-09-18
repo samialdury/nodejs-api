@@ -16,7 +16,7 @@
         "envey": "2.1.0",
         "fastify": "4.23.2",
         "fastify-plugin": "4.5.1",
-        "gracy": "2.1.1",
+        "gracy": "3.0.0",
         "graphql": "16.8.0",
         "http-status-codes": "2.2.0",
         "jose": "4.14.6",
