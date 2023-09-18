@@ -73,6 +73,28 @@ dev-support: ## start the support services
 	@$(COMPOSE_PROXY) up --detach --wait
 	@$(COMPOSE_DEV) --profile support up --detach --wait
 
+.PHONY: dev-prepare
+dev-prepare: ## prepare the dev environment
+	@echo "=== $(CYAN)preparing dev environment$(NC) ==="
+	@echo
+	@echo "=== $(CYAN)pulling & building docker images$(NC) ==="
+	@$(COMPOSE_DEV) build app_dev
+	@$(COMPOSE_DEV) pull postgres_dev
+	@echo "=== $(GREEN)docker images ready$(NC) ==="
+	@echo "=== $(CYAN)preparing docker network$(NC) ==="
+	@docker network create $(PROJECT_NAME) || true
+	@echo "=== $(GREEN)docker network ready$(NC) ==="
+	@echo "=== $(CYAN)preparing database$(NC) ==="
+	@$(COMPOSE_DEV) --profile support up --detach --wait
+	@echo "=== $(GREEN)database ready$(NC) ==="
+	@echo "=== $(CYAN)running migrations$(NC) ==="
+	@make migrate-up
+	@echo "=== $(GREEN)migrations ran successfully$(NC) ==="
+	@echo "=== $(YELLOW)current version$(NC) ==="
+	@make migrate-version
+	@echo
+	@echo "=== $(GREEN)dev environment ready$(NC) ==="
+
 .PHONY: dev
 dev: ## start the app in dev mode
 	@$(COMPOSE_DEV) --profile app up
