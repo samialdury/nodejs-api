@@ -3,7 +3,7 @@ import { type Database, sql } from '../../database.js'
 
 export async function getUserByOid(
     database: Database,
-    oid: string,
+    oid: User['oid'],
 ): Promise<User | undefined> {
     const user = await database.queryOne<User>(sql`
       SELECT * FROM user WHERE oid = ${oid}
@@ -25,7 +25,7 @@ export async function getUsers(database: Database): Promise<User[]> {
 
 export async function getUsersByOids(
     database: Database,
-    oids: string[],
+    oids: User['oid'][],
 ): Promise<User[]> {
     const users = await database.queryMultiple<User>(sql`
       SELECT * FROM user WHERE oid IN (${oids.join(', ')})

@@ -1,4 +1,4 @@
-import { nanoid } from 'nanoid/async'
+import { typeid } from 'typeid-js'
 import type { Context } from '../../api/types.js'
 import type { User } from './model.js'
 import * as repository from './repository.js'
@@ -16,9 +16,9 @@ export async function getUsers(context: Context): Promise<User[]> {
 
 export async function createUser(
     context: Context,
-    name: string,
+    name: User['name'],
 ): Promise<User> {
-    const oid = await nanoid(21)
+    const oid = typeid('user').toString()
 
     return repository.createUser(context.database, { name, oid })
 }
