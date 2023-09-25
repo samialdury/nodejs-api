@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { CookieSerializeOptions } from '@fastify/cookie'
 import type { Static } from '@sinclair/typebox'
 import { Type } from '@sinclair/typebox'
@@ -111,7 +108,7 @@ export function createController<TSchema extends ControllerSchema>(
                     request,
                     response: createResponse,
                     server,
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
                     user: (request as any).user,
                 },
                 headers: request.headers as never,
@@ -147,5 +144,5 @@ export function createController<TSchema extends ControllerSchema>(
         method,
         schema,
         url,
-    }
+    } as RouteOptions
 }

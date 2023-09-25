@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import fastifyCookie from '@fastify/cookie'
 import type { ServerPlugin } from './server.js'
 import { authPlugin } from '../modules/auth/plugin.js'
@@ -37,6 +36,7 @@ export const apiPlugin: ServerPlugin = async (server) => {
     await server.register(async (private_) => {
         private_.addHook(
             'onRequest',
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             server.auth([server[VERIFY_USER_JWT], server.verifyBearerAuth!], {
                 relation: 'or',
             }),
