@@ -37,7 +37,7 @@
         "@pulumi/pulumi": "3.82.1",
         "@samialdury/config": "5.11.1",
         "@total-typescript/ts-reset": "0.5.1",
-        "@types/node": "20.6.1",
+        "@types/node": "20.6.3",
         "eslint": "8.49.0",
         "glob": "10.3.5",
         "graphql-codegen-typescript-common": "0.18.2",
