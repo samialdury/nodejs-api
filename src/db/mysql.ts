@@ -50,8 +50,7 @@ export async function initMySql(
     } satisfies ConnectionPoolConfig)
 
     // @databases/mysql doesn't support generics, so this is a workaround for now
-    const mySql: MySqlConnection = {
-        ...pool,
+    const mySql: MySqlConnection = Object.assign(pool, {
         healthCheck: async () => {
             await pool.query(sql`
               SELECT 1;
@@ -78,7 +77,7 @@ export async function initMySql(
             }
         },
         sql,
-    }
+    })
 
     await mySql.healthCheck()
 

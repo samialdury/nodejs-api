@@ -14,6 +14,8 @@
 # Example:
 # ./run-cmd.sh docker-compose.yml "psql -V" db
 #
+# Makefile example:
+# @$(WAIT_UNTIL) '$(RUN_IN_DOCKER) $(TEST_COMPOSE_FILE) '\''pg_isready --host postgres_test'\'' postgres_test'
 
 set -e
 

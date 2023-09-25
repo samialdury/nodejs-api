@@ -24,5 +24,6 @@
         ":automergeTypes"
     ],
     "platformCommit": true,
-    "platformAutomerge": true
+    "platformAutomerge": true,
+    "ignoreDeps": ["@esbuild/darwin-arm64", "@esbuild/linux-arm64"]
 }

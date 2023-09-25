@@ -18,7 +18,8 @@ SCRIPTS_DIR ?= $(LOCAL_DIR)/scripts
 SRC_DIR ?= src
 BUILD_DIR ?= build
 CACHE_DIR ?= .cache
-MIGRATIONS_DIR ?= db/migrations
+
+MYSQL_MIGRATIONS_DIR ?= db/mysql/migrations
 
 PROXY_COMPOSE_FILE ?= $(LOCAL_DIR)/proxy.docker-compose.yml
 DEV_COMPOSE_FILE ?= $(DEV_DIR)/dev.docker-compose.yml
@@ -73,7 +74,7 @@ dev-prepare: ## prepare the dev environment
 	@echo
 	@echo "=== $(CYAN)pulling & building docker images$(NC) ==="
 	@$(COMPOSE_DEV) build app_dev
-	@$(COMPOSE_DEV) pull postgres_dev
+	@$(COMPOSE_DEV) pull mysql_dev
 	@echo "=== $(GREEN)docker images ready$(NC) ==="
 	@echo "=== $(CYAN)preparing docker network$(NC) ==="
 	@docker network create $(PROJECT_NAME) || true
@@ -101,32 +102,32 @@ run: ## run JS
 
 .PHONY: migrate-new
 migrate-new: ## create a new migration (name=<string>)
-	@$(RUN_IN_DOCKER) 'migrate create -ext sql -dir $(MIGRATIONS_DIR) $(name)'
+	@$(RUN_IN_DOCKER) 'migrate create -ext sql -dir $(MYSQL_MIGRATIONS_DIR) $(name)'
 
 .PHONY: migrate-up
 migrate-up: ## run migrations up (compose=<string>?, n=<int>)
 	@$(RUN_IN_DOCKER) $(or $(compose), $(DEV_COMPOSE_FILE)) \
-		'migrate -path $(MIGRATIONS_DIR) -database $$DATABASE_URL up $(n)'
+		'migrate -path $(MYSQL_MIGRATIONS_DIR) -database $$MYSQL_DATABASE_URL up $(n)'
 
 .PHONY: migrate-down
 migrate-down: ## run migrations down (compose=<string>?, n=<int>)
 	@$(RUN_IN_DOCKER) $(or $(compose), $(DEV_COMPOSE_FILE)) \
-		'migrate -path $(MIGRATIONS_DIR) -database $$DATABASE_URL down $(n)'
+		'migrate -path $(MYSQL_MIGRATIONS_DIR) -database $$MYSQL_DATABASE_URL down $(n)'
 
 .PHONY: migrate-drop
 migrate-drop: ## drop the database schema (compose=<string>?)
 	@$(RUN_IN_DOCKER) $(or $(compose), $(DEV_COMPOSE_FILE)) \
-		'migrate -path $(MIGRATIONS_DIR) -database $$DATABASE_URL drop'
+		'migrate -path $(MYSQL_MIGRATIONS_DIR) -database $$MYSQL_DATABASE_URL drop'
 
 .PHONY: migrate-force
 migrate-force: ## force migration version (compose=<string>?, v=<string>)
 	@$(RUN_IN_DOCKER) $(or $(compose), $(DEV_COMPOSE_FILE)) \
-		'migrate -path $(MIGRATIONS_DIR) -database $$DATABASE_URL force $(v)'
+		'migrate -path $(MYSQL_MIGRATIONS_DIR) -database $$MYSQL_DATABASE_URL force $(v)'
 
 .PHONY: migrate-version
 migrate-version: ## print current migration version (compose=<string>?)
 	@$(RUN_IN_DOCKER) $(or $(compose), $(DEV_COMPOSE_FILE)) \
-		'migrate -path $(MIGRATIONS_DIR) -database $$DATABASE_URL version'
+		'migrate -path $(MYSQL_MIGRATIONS_DIR) -database $$MYSQL_DATABASE_URL version'
 
 ##@ Build
 
@@ -148,15 +149,13 @@ test-prepare: ## prepare the test environment
 	@echo
 	@echo "=== $(CYAN)pulling & building docker images$(NC) ==="
 	@$(COMPOSE_TEST) build app_test
-	@$(COMPOSE_TEST) pull postgres_test
+	@$(COMPOSE_TEST) pull mysql_test
 	@echo "=== $(GREEN)docker images ready$(NC) ==="
 	@echo "=== $(CYAN)preparing docker network$(NC) ==="
 	@docker network create $(PROJECT_NAME) || true
 	@echo "=== $(GREEN)docker network ready$(NC) ==="
 	@echo "=== $(CYAN)preparing database$(NC) ==="
 	@$(COMPOSE_TEST) --profile support up --detach --wait
-# @echo "=== $(CYAN)waiting for database to accept connections$(NC) ==="
-# @$(WAIT_UNTIL) '$(RUN_IN_DOCKER) $(TEST_COMPOSE_FILE) '\''pg_isready --host postgres_test'\'' postgres_test'
 	@echo "=== $(GREEN)database ready$(NC) ==="
 	@echo "=== $(CYAN)running migrations$(NC) ==="
 	@make migrate-up compose=$(TEST_COMPOSE_FILE)

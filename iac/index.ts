@@ -71,13 +71,13 @@ const sshFirewall = new hcloud.Firewall(
     { protect: true },
 )
 
-const postgresFirewall = new hcloud.Firewall(
-    'postgres-firewall',
+const mySqlFirewall = new hcloud.Firewall(
+    'mysql-firewall',
     {
-        name: 'postgres-firewall',
+        name: 'mysql-firewall',
         rules: [
             {
-                description: 'IP whitelist for Postgres access',
+                description: 'IP whitelist for MySQL access',
                 direction: 'in',
                 port: '5432',
                 protocol: 'tcp',
@@ -116,7 +116,7 @@ const databaseServer = new hcloud.Server(
         datacenter: serverConfig.require('datacenter'),
         deleteProtection: true,
         // @ts-expect-error Types are wrong
-        firewallIds: [sshFirewall.id, postgresFirewall.id],
+        firewallIds: [sshFirewall.id, mySqlFirewall.id],
         image: serverConfig.require('image'),
         name: 'db',
         // sshKeys: [sshKey.id],
@@ -184,7 +184,7 @@ const adminServer = new hcloud.Server(
 export const sshKeyId = sshKey.id
 export const cloudflareFirewallId = cloudflareFirewall.id
 export const sshFirewallId = sshFirewall.id
-export const postgresFirewallId = postgresFirewall.id
+export const mySqlFirewallId = mySqlFirewall.id
 export const internalNetworkId = internalNetwork.id
 export const internalNetworkEuSubnetId = internalNetworkEuSubnet.id
 export const databaseServerId = databaseServer.id

@@ -4,8 +4,10 @@ import type { schema } from './schema.js'
 export const controller: Controller<typeof schema> = ({ S, ctx }) => {
     return ctx.response(S.OK, {
         body: {
-            project: ctx.config.projectName,
-            version: ctx.config.commitSha,
+            email: ctx.user.email,
+            id: ctx.user.sub,
+            name: ctx.user.name,
+            profileImageUrl: ctx.user.profileImageUrl,
         },
     })
 }

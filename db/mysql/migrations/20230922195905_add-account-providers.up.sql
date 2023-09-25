@@ -1,7 +1,8 @@
 INSERT INTO
-    "signup_source" (name)
+    `account_provider` (name)
 VALUES
     ('github'),
     ('google'),
     ('facebook'),
+    ('apple'),
     ('twitter');

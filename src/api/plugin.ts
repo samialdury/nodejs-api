@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import fastifyCookie from '@fastify/cookie'
-import type { ServerPlugin } from '../server.js'
-import { statusRouter } from '../../modules/status/router.js'
-import { VERIFY_USER_JWT } from '../constants.js'
-import { authPlugin } from './auth.js'
-import { restPlugin } from './rest.js'
+import type { ServerPlugin } from './server.js'
+import { authPlugin } from '../modules/auth/plugin.js'
+import { authRouter } from '../modules/auth/router.js'
+import { statusRouter } from '../modules/status/router.js'
+import { userRouter } from '../modules/user/router.js'
+import { CONTEXT, VERIFY_USER_JWT } from './constants.js'
 
 export const apiPlugin: ServerPlugin = async (server) => {
     await server.register(fastifyCookie, {
@@ -14,7 +16,7 @@ export const apiPlugin: ServerPlugin = async (server) => {
             secure: true,
             // signed: true,
         },
-        secret: server.ctx.config.cookieSecret,
+        secret: server[CONTEXT].config.cookieSecret,
     })
 
     await server.register(authPlugin)
@@ -25,6 +27,7 @@ export const apiPlugin: ServerPlugin = async (server) => {
      */
     await server.register(async (public_) => {
         await public_.register(statusRouter)
+        await public_.register(authRouter)
     })
 
     /**
@@ -32,8 +35,13 @@ export const apiPlugin: ServerPlugin = async (server) => {
      * All routes in this plugin require a valid JWT cookie.
      */
     await server.register(async (private_) => {
-        private_.addHook('onRequest', server.auth([server[VERIFY_USER_JWT]]))
+        private_.addHook(
+            'onRequest',
+            server.auth([server[VERIFY_USER_JWT], server.verifyBearerAuth!], {
+                relation: 'or',
+            }),
+        )
 
-        await private_.register(restPlugin)
+        await private_.register(userRouter)
     })
 }

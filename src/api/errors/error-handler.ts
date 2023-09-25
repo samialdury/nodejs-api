@@ -13,6 +13,26 @@ export async function errorHandler(
         return response.status(serialized.statusCode).send(serialized)
     }
 
+    // Workaround for `@fastify/bearer-auth`
+    switch (err.message) {
+        case 'missing authorization header': {
+            return response.status(Status.UNAUTHORIZED).send({
+                code: 'missing-auth-header',
+                message: 'Missing authorization header',
+                statusCode: Status.UNAUTHORIZED,
+                type: Reason.UNAUTHORIZED,
+            } satisfies HttpErrorSerialized)
+        }
+        case 'invalid authorization header': {
+            return response.status(Status.UNAUTHORIZED).send({
+                code: 'invalid-access-token',
+                message: 'Invalid access token',
+                statusCode: Status.UNAUTHORIZED,
+                type: Reason.UNAUTHORIZED,
+            } satisfies HttpErrorSerialized)
+        }
+    }
+
     request.log.error(err, 'Unhandled error')
 
     return response.status(Status.INTERNAL_SERVER_ERROR).send({

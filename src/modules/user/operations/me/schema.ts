@@ -4,7 +4,10 @@ export const schema = createSchema((S, T) => {
     return {
         response: {
             [S.OK]: T.Object({
-                accessToken: T.String(),
+                email: T.String(),
+                id: T.String(),
+                name: T.String(),
+                profileImageUrl: T.Union([T.String(), T.Null()]),
             }),
         },
     }

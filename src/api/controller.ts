@@ -2,13 +2,19 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { CookieSerializeOptions } from '@fastify/cookie'
-import type { FastifySchema, HTTPMethods, RouteOptions } from 'fastify'
+import type { Static } from '@sinclair/typebox'
+import { Type } from '@sinclair/typebox'
 import type { ControllerContext } from './context.js'
-import type { ControllerSchema, Server } from './server.js'
+import type {
+    ControllerSchema,
+    HTTPMethods,
+    RouteOptions,
+    Server,
+} from './server.js'
 import { CONTEXT, GITHUB_AUTH_NS, Status } from './constants.js'
 
 // @ts-expect-error - We're sure that it's a valid key
-type GetStatic<S extends ControllerSchema, T extends keyof S> = Static<S[T]>
+type GetStatic<S, K extends keyof S> = Static<S[K]>
 
 export type Cookies = Record<
     string,
@@ -18,33 +24,37 @@ export type Cookies = Record<
     }
 >
 
-export interface ResponseType<Schema extends ControllerSchema, TStatus> {
+export interface ResponseType<
+    Schema extends ControllerSchema = never,
+    TStatus = never,
+> {
     // @ts-expect-error - We're sure that it's a valid key
-    body?: Static<PropertyType<Schema['response'], TStatus>>
+    body?: GetStatic<Schema['response'], TStatus>
     cookies?: Cookies
     redirect?: string
     status: TStatus
 }
 
 export type Controller<
-    Schema extends ControllerSchema = never,
-    TStatus extends keyof Schema['response'] = keyof Schema['response'],
+    TSchema extends ControllerSchema = never,
+    TStatus extends keyof TSchema['response'] = keyof TSchema['response'],
 > = (
     params: Readonly<
         {
-            body: Readonly<GetStatic<Schema, 'body'>>
-            headers: Readonly<GetStatic<Schema, 'headers'>>
-            params: Readonly<GetStatic<Schema, 'params'>>
-            query: Readonly<GetStatic<Schema, 'querystring'>>
+            S: typeof Status
+            body: Readonly<GetStatic<TSchema, 'body'>>
+            headers: Readonly<GetStatic<TSchema, 'headers'>>
+            params: Readonly<GetStatic<TSchema, 'params'>>
+            query: Readonly<GetStatic<TSchema, 'querystring'>>
         } & {
             ctx: ControllerContext
         }
     >,
-) => Promise<ResponseType<Schema, TStatus>> | ResponseType<Schema, TStatus>
+) => Promise<ResponseType<TSchema, TStatus>> | ResponseType<TSchema, TStatus>
 
 export function createResponse<
-    Schema extends FastifySchema,
-    TStatus extends keyof Schema['response'],
+    TSchema extends ControllerSchema = never,
+    TStatus extends keyof TSchema['response'] = keyof TSchema['response'],
 >(
     status: TStatus,
     params: {
@@ -52,37 +62,43 @@ export function createResponse<
         redirect?: string
     } & (TStatus extends Status.NO_CONTENT
         ? { body?: never }
-        : // @ts-expect-error
-          { body: Static<PropertyType<Schema['response'], TStatus>> }),
-): ResponseType<Schema, TStatus> {
+        : { body: GetStatic<TSchema['response'], TStatus> }),
+): ResponseType<TSchema, TStatus> {
     return {
         body: params.body,
         cookies: params.cookies,
         redirect: params.redirect,
         status,
-    } as ResponseType<Schema, TStatus>
+    } as ResponseType<TSchema, TStatus>
 }
 
 export function createRedirect(params: {
     cookies?: Cookies
     location: string
-}): ResponseType<never, never> {
+}): ResponseType {
     return {
         cookies: params.cookies,
         redirect: params.location,
-    } as ResponseType<never, never>
+    } as ResponseType
 }
 
-export const createController = <S extends FastifySchema>(
+export function createSchema<TSchema extends ControllerSchema>(
+    schema: (S: typeof Status, T: typeof Type) => TSchema,
+): TSchema {
+    return schema(Status, Type)
+}
+
+export function createController<TSchema extends ControllerSchema>(
     server: Server,
     method: HTTPMethods,
     url: string,
-    schema: S,
-    controller: Controller<S>,
-): RouteOptions => {
+    schema: TSchema,
+    controller: Controller<TSchema>,
+): RouteOptions {
     return {
         handler: async (request, response) => {
             const { body, cookies, redirect, status } = await controller({
+                S: Status,
                 body: request.body as never,
                 ctx: {
                     auth: {

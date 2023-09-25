@@ -20,19 +20,24 @@ async function main() {
 
     const envFile = await fs.readFile(testEnvFileLocation, 'utf-8')
 
-    const [pgUser, pgPassword, pgDb] = [
+    const [mySqlRPassword, mySqlUser, mySqlPassword, mySqlDb] = [
+        `rpw_${getRandomString()}`,
         `u_${getRandomString()}`,
         `pw_${getRandomString()}`,
         `db_${getRandomString()}`,
     ]
 
     const replacedEnvFile = envFile
-        .replace(/POSTGRES_USER=""/g, `POSTGRES_USER="${pgUser}"`)
-        .replace(/POSTGRES_PASSWORD=""/g, `POSTGRES_PASSWORD="${pgPassword}"`)
-        .replace(/POSTGRES_DB=""/g, `POSTGRES_DB="${pgDb}"`)
         .replace(
-            /DATABASE_URL="postgres:\/\/\?sslmode=disable"/g,
-            `DATABASE_URL="postgres://${pgUser}:${pgPassword}@postgres_test:5432/${pgDb}?sslmode=disable"`,
+            /MYSQL_ROOT_PASSWORD=""/g,
+            `MYSQL_ROOT_PASSWORD="${mySqlRPassword}"`,
+        )
+        .replace(/MYSQL_USER=""/g, `MYSQL_USER="${mySqlUser}"`)
+        .replace(/MYSQL_PASSWORD=""/g, `MYSQL_PASSWORD="${mySqlPassword}"`)
+        .replace(/MYSQL_DATABASE=""/g, `MYSQL_DATABASE="${mySqlDb}"`)
+        .replace(
+            /MYSQL_DATABASE_URL="mysql:\/\/\?multiStatements=true"/g,
+            `MYSQL_DATABASE_URL="mysql://${mySqlUser}:${mySqlPassword}@tcp(mysql_test:3306)/${mySqlDb}?multiStatements=true"`,
         )
 
     await fs.writeFile(testEnvFileLocation, replacedEnvFile)

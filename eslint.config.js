@@ -17,7 +17,7 @@ export default [
         },
     },
     {
-        files: ['src/**/controller.ts'],
+        files: ['src/**/controller.ts', 'src/**/plugin.ts'],
         rules: {
             'func-style': 'off',
         },

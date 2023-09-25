@@ -5,7 +5,6 @@
     "type": "module",
     "dependencies": {
         "@databases/mysql": "6.0.0",
-        "@databases/pg": "5.4.1",
         "@fastify/auth": "4.3.0",
         "@fastify/bearer-auth": "9.0.0",
         "@fastify/cookie": "9.1.0",
@@ -25,8 +24,8 @@
     },
     "devDependencies": {
         "@commitlint/cli": "17.7.1",
-        "@esbuild/darwin-arm64": "0.19.3",
-        "@esbuild/linux-arm64": "0.19.3",
+        "@esbuild/darwin-arm64": "0.18.20",
+        "@esbuild/linux-arm64": "0.18.20",
         "@fastify/type-provider-typebox": "3.5.0",
         "@pulumi/hcloud": "1.14.1",
         "@pulumi/pulumi": "3.84.0",
@@ -40,7 +39,6 @@
         "pino-pretty": "10.2.0",
         "prettier": "3.0.3",
         "semantic-release": "21.1.2",
-        "ts-node": "10.9.1",
         "tsx": "3.12.10",
         "typescript": "5.2.2",
         "undici": "5.25.1"

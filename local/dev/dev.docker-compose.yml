@@ -29,14 +29,13 @@ services:
             - ../../:/app
         profiles:
             - app
-    postgres_dev:
-        image: postgres:15-alpine
-        container_name: postgres_nodejs-api_dev
+
+    mysql_dev:
+        image: mysql:8
+        container_name: mysql_nodejs-api_dev
         restart: unless-stopped
         healthcheck:
-            test:
-                - CMD
-                - pg_isready
+            test: "mysql -uroot -p$$MYSQL_ROOT_PASSWORD -e 'SELECT 1'"
             start_period: 10s
             interval: 3s
             timeout: 1s
@@ -44,9 +43,9 @@ services:
         env_file:
             - .dev.env
         ports:
-            - 5432:5432
+            - 3306:3306
         volumes:
-            - postgres_data:/var/lib/postgresql/data
+            - mysql_data:/var/lib/mysql
         profiles:
             - support
 
@@ -56,5 +55,5 @@ networks:
         external: true
 
 volumes:
-    postgres_data:
-        name: postgres_nodejs-api_dev_data
+    mysql_data:
+        name: mysql_nodejs-api_dev_data

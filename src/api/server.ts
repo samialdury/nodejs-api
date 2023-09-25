@@ -6,4 +6,8 @@ export type {
     FastifyReply as ServerResponse,
     FastifyRequest as ServerRequest,
     FastifySchema as ControllerSchema,
+    HTTPMethods,
+    RouteOptions,
 } from 'fastify'
+export { fastify as createServer } from 'fastify'
+export { fastifyPlugin as serverPlugin } from 'fastify-plugin'
