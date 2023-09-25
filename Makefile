@@ -54,18 +54,12 @@ else
 	@$(BIN)/husky install
 endif
 
-.PHONY: gql-gen
-gql-gen: ## generate GraphQL types
-	@$(BIN)/gql-gen --config codegen.ts
-
 .PHONY: dev-local
 dev-local: ## run TS and watch for changes
-	@make gql-gen
 	@node --env-file $(DEV)/.dev.env --no-warnings --loader tsx --watch --watch-preserve-output $(SRC_DIR)/main.ts | $(BIN)/pino-pretty
 
 .PHONY: dev-docker
 dev-docker: ## run TS and watch for changes (docker)
-	@make gql-gen
 	@node --no-warnings --loader tsx --watch --watch-preserve-output $(SRC_DIR)/main.ts | $(BIN)/pino-pretty --colorize
 
 .PHONY: dev-support
@@ -140,7 +134,6 @@ migrate-version: ## print current migration version (compose=<string>?)
 build: ## build the project
 	@rm -rf $(BUILD_DIR)
 	@$(BIN)/tsc
-	@cp ./schema.gql $(BUILD_DIR)/schema.gql
 	@echo "=== $(GREEN)build successful$(NC) ==="
 
 .PHONY: build-image

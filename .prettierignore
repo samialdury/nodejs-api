@@ -12,6 +12,3 @@ pnpm-lock.yaml
 
 *.md
 *.sh
-
-__generated__
-db_data

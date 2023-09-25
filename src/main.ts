@@ -1,20 +1,20 @@
 import { onExit } from 'gracy'
 import { initApi } from './api/bootstrap.js'
 import { initConfig } from './config.js'
-import { initDatabase } from './database.js'
+import { initMySql } from './db/mysql.js'
 import { initLogger } from './logger.js'
 
 async function main(): Promise<void> {
     const config = initConfig()
     const logger = initLogger(config)
 
-    const database = await initDatabase(config, logger)
+    const mySql = await initMySql(config, logger)
 
-    const server = await initApi(config, logger, database)
+    const server = await initApi(config, logger, { mySql })
 
     onExit({ logger }, async () => {
         await server.close()
-        await database.close()
+        await mySql.dispose()
     })
 
     await server.listen({

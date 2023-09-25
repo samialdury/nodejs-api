@@ -55,11 +55,9 @@ RUN pnpm fetch
 COPY tsconfig.base.json tsconfig.base.json
 COPY tsconfig.prod.json tsconfig.prod.json
 COPY src src
-COPY schema.gql schema.gql
 
 RUN pnpm install --offline --frozen-lockfile
 RUN ./node_modules/.bin/tsc --project ./tsconfig.prod.json
-RUN cp schema.gql build/schema.gql
 
 ################################################################
 #                                                              #

@@ -9,14 +9,12 @@ function bool(defaultValue: boolean): z.ZodBoolean {
 }
 
 const schema = {
-    // Common
     commitSha: {
         env: 'COMMIT_SHA',
         format: z.string(),
     },
-    // Database
-    databaseUrl: {
-        env: 'DATABASE_URL',
+    cookieSecret: {
+        env: 'COOKIE_SECRET',
         format: z.string(),
     },
     githubClientId: {
@@ -27,17 +25,18 @@ const schema = {
         env: 'GITHUB_CLIENT_SECRET',
         format: z.string(),
     },
-    // GitHub
     githubLoginPath: {
         env: 'GITHUB_LOGIN_PATH',
         format: z.string().default('/login/github'),
     },
-    // API
     host: {
         env: 'INTERNAL_HOST',
         format: z.string().default('0.0.0.0'),
     },
-    // Auth
+    internalHost: {
+        env: 'INTERNAL_HOST',
+        format: z.string().default('0.0.0.0'),
+    },
     jwtSecret: {
         env: 'JWT_SECRET',
         format: z.string(),
@@ -58,6 +57,10 @@ const schema = {
         env: 'LOG_REQUESTS',
         format: bool(false),
     },
+    mySqlDatabaseUrl: {
+        env: 'MYSQL_DATABASE_URL',
+        format: z.string(),
+    },
     port: {
         env: 'PORT',
         format: z.coerce.number().int().min(1024).max(65_535).default(8080),
@@ -67,7 +70,7 @@ const schema = {
         format: z.string(),
     },
     publicHost: {
-        env: 'HOST',
+        env: 'PUBLIC_HOST',
         format: z.string(),
     },
 } satisfies EnveySchema

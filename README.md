@@ -32,8 +32,7 @@ make prepare name=your-project-name
 - Docker & Docker Compose
 - GitHub Actions & GitHub Container Registry
 - REST
-- GraphQL
-- PostgreSQL
+- MySQL
 - OAuth2 & JWT (**work in progress**)
 - Pulumi IaC
 - local HTTPS

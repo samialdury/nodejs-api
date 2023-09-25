@@ -1,56 +1,67 @@
+import type { Context } from '../../api/context.js'
 import type { User } from './model.js'
-import { type Database, sql } from '../../database.js'
 
-export async function getUserByOid(
-    database: Database,
-    oid: User['oid'],
+async function getById(ctx: Context, id: string): Promise<User | undefined> {
+    const result = await ctx.db.mySql.queryOne<User>(ctx.db.mySql.sql`
+        SELECT * FROM user WHERE id = ${id} LIMIT 1
+    `)
+
+    return result
+}
+
+async function getByExternalId(
+    ctx: Context,
+    externalId: number,
 ): Promise<User | undefined> {
-    const user = await database.queryOne<User>(sql`
-      SELECT * FROM user WHERE oid = ${oid}
-        AND deletedAt IS NULL
-      LIMIT 1;
+    const result = await ctx.db.mySql.queryOne<User>(ctx.db.mySql.sql`
+        SELECT * FROM user WHERE externalId = ${externalId} LIMIT 1
     `)
 
-    return user
+    return result
 }
 
-export async function getUsers(database: Database): Promise<User[]> {
-    const users = await database.queryMultiple<User>(sql`
-      SELECT * FROM user WHERE deletedAt IS NULL
-      ORDER BY createdAt DESC;
+async function getByEmail(
+    ctx: Context,
+    email: string,
+): Promise<User | undefined> {
+    const result = await ctx.db.mySql.queryOne<User>(ctx.db.mySql.sql`
+        SELECT * FROM user WHERE email = ${email} LIMIT 1
     `)
 
-    return users
+    return result
 }
 
-export async function getUsersByOids(
-    database: Database,
-    oids: User['oid'][],
-): Promise<User[]> {
-    const users = await database.queryMultiple<User>(sql`
-      SELECT * FROM user WHERE oid IN (${oids.join(', ')})
-        AND deletedAt IS NULL
-      ORDER BY createdAt DESC;
-    `)
-
-    return users
-}
-
-export async function createUser(
-    database: Database,
-    { name, oid }: Omit<User, 'createdAt' | 'deletedAt' | 'id' | 'updatedAt'>,
+async function create(
+    ctx: Context,
+    user: Pick<
+        User,
+        | 'accountProviderId'
+        | 'email'
+        | 'externalId'
+        | 'id'
+        | 'name'
+        | 'profileImageUrl'
+    >,
 ): Promise<User> {
-    const now = new Date().toISOString()
-
-    await database.queryOne(sql`
-      INSERT INTO user (oid, name, createdAt, updatedAt) VALUES (${oid}, ${name}, ${now}, ${now});
+    await ctx.db.mySql.query(ctx.db.mySql.sql`
+        INSERT INTO user 
+            (id, accountProviderId, externalId, email, name, profileImageUrl)
+        VALUES (
+            ${user.id},
+            ${user.accountProviderId},
+            ${user.externalId},
+            ${user.email},
+            ${user.name},
+            ${user.profileImageUrl}
+        )
     `)
 
-    const user = await getUserByOid(database, oid)
+    return getById(ctx, user.id) as Promise<User>
+}
 
-    if (!user) {
-        throw new Error('User not found')
-    }
-
-    return user
+export const userRepo = {
+    create,
+    getByEmail,
+    getByExternalId,
+    getById,
 }

@@ -1,24 +1,69 @@
-import { typeid } from 'typeid-js'
-import type { Context } from '../../api/types.js'
+import type { Context } from '../../api/context.js'
+import type { ValidAccountProviders } from '../account-provider/model.js'
+import type { UserJwt } from './jwt.js'
 import type { User } from './model.js'
-import * as repository from './repository.js'
+import { accountProviderRepo } from '../account-provider/repository.js'
+import { jwt } from '../auth/jwt/service.js'
+import { id } from '../common/id.js'
+import { userRepo } from './repository.js'
 
-export async function getUser(
-    context: Context,
-    oid: string,
+async function createJwt(ctx: Context, user: User): Promise<string> {
+    const token = jwt.encode<UserJwt>(ctx, {
+        payload: {
+            email: user.email,
+            name: user.name,
+            profileImageUrl: user.profileImageUrl,
+            sub: user.id,
+        },
+    })
+
+    return token
+}
+
+async function decodeJwt(ctx: Context, token: string): Promise<UserJwt> {
+    return jwt.decode<UserJwt>(ctx, {
+        token,
+    })
+}
+
+async function getByExternalId(
+    ctx: Context,
+    externalId: number,
 ): Promise<User | undefined> {
-    return repository.getUserByOid(context.database, oid)
+    return userRepo.getByExternalId(ctx, externalId)
 }
 
-export async function getUsers(context: Context): Promise<User[]> {
-    return repository.getUsers(context.database)
+async function getByEmail(
+    ctx: Context,
+    email: string,
+): Promise<User | undefined> {
+    return userRepo.getByEmail(ctx, email)
 }
 
-export async function createUser(
-    context: Context,
-    name: User['name'],
+async function create(
+    ctx: Context,
+    accountProvider: ValidAccountProviders,
+    user: Pick<User, 'email' | 'externalId' | 'name' | 'profileImageUrl'>,
 ): Promise<User> {
-    const oid = typeid('user').toString()
+    const userId = id.create()
 
-    return repository.createUser(context.database, { name, oid })
+    const provider = await accountProviderRepo.getByName(ctx, accountProvider)
+
+    if (!provider) {
+        throw new Error('Account provider not found')
+    }
+
+    return userRepo.create(ctx, {
+        ...user,
+        accountProviderId: provider.id,
+        id: userId,
+    })
+}
+
+export const userService = {
+    create,
+    createJwt,
+    decodeJwt,
+    getByEmail,
+    getByExternalId,
 }

@@ -1,4 +1,4 @@
-import type { ControllerSchema } from '../../../../api/types.js'
+import type { ControllerSchema } from '../../../../api/server.js'
 import { Status } from '../../../../api/constants.js'
 import { T } from '../../../../api/validation.js'
 

@@ -1,15 +1,16 @@
 import { fastify } from 'fastify'
 import type { Config } from '../config.js'
-import type { Database } from '../database.js'
 import type { Logger } from '../logger.js'
-import type { Server } from './types.js'
+import type { DatabaseConnections } from './context.js'
+import type { Server } from './server.js'
 import { CONTEXT } from './constants.js'
+import { errorHandler } from './errors/error-handler.js'
 import { apiPlugin } from './plugins/api.js'
 
 export async function initApi(
     config: Config,
     logger: Logger,
-    database: Database,
+    db: DatabaseConnections,
 ): Promise<Server> {
     const server = fastify({
         bodyLimit: 1_048_576, // 1 MiB
@@ -19,9 +20,11 @@ export async function initApi(
 
     server.decorate(CONTEXT, {
         config,
-        database,
+        db,
         logger,
     })
+
+    server.setErrorHandler(errorHandler)
 
     await server.register(apiPlugin)
 

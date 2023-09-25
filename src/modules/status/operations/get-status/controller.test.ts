@@ -1,7 +1,7 @@
 import type { Static } from '@sinclair/typebox'
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import type { Server } from '../../../../api/types.js'
+import type { Server } from '../../../../api/server.js'
 import type { schema } from './schema.js'
 import { initApi } from '../../../../api/bootstrap.js'
 import { Status } from '../../../../api/constants.js'
