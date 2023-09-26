@@ -21,6 +21,8 @@ export type Cookies = Record<
     }
 >
 
+export type Headers = Record<string, string>
+
 export interface ResponseType<
     Schema extends ControllerSchema = never,
     TStatus = never,
@@ -28,6 +30,7 @@ export interface ResponseType<
     // @ts-expect-error - We're sure that it's a valid key
     body?: GetStatic<Schema['response'], TStatus>
     cookies?: Cookies
+    headers?: Headers
     redirect?: string
     status: TStatus
 }
@@ -56,6 +59,7 @@ export function createResponse<
     status: TStatus,
     params: {
         cookies?: Cookies
+        headers?: Headers
         redirect?: string
     } & (TStatus extends Status.NO_CONTENT
         ? { body?: never }
@@ -64,6 +68,7 @@ export function createResponse<
     return {
         body: params.body,
         cookies: params.cookies,
+        headers: params.headers,
         redirect: params.redirect,
         status,
     } as ResponseType<TSchema, TStatus>
@@ -94,27 +99,28 @@ export function createController<TSchema extends ControllerSchema>(
 ): RouteOptions {
     return {
         handler: async (request, response) => {
-            const { body, cookies, redirect, status } = await controller({
-                S: Status,
-                body: request.body as never,
-                ctx: {
-                    auth: {
-                        github: server[GITHUB_AUTH_NS],
+            const { body, cookies, headers, redirect, status } =
+                await controller({
+                    S: Status,
+                    body: request.body as never,
+                    ctx: {
+                        auth: {
+                            github: server[GITHUB_AUTH_NS],
+                        },
+                        config: server[CONTEXT].config,
+                        db: server[CONTEXT].db,
+                        logger: server[CONTEXT].logger,
+                        redirect: createRedirect,
+                        request,
+                        response: createResponse,
+                        server,
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
+                        user: (request as any).user,
                     },
-                    config: server[CONTEXT].config,
-                    db: server[CONTEXT].db,
-                    logger: server[CONTEXT].logger,
-                    redirect: createRedirect,
-                    request,
-                    response: createResponse,
-                    server,
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
-                    user: (request as any).user,
-                },
-                headers: request.headers as never,
-                params: request.params as never,
-                query: request.query as never,
-            })
+                    headers: request.headers as never,
+                    params: request.params as never,
+                    query: request.query as never,
+                })
 
             if (cookies) {
                 for (const [name, { options, value }] of Object.entries(
@@ -129,6 +135,10 @@ export function createController<TSchema extends ControllerSchema>(
                         ...options,
                     })
                 }
+            }
+
+            if (headers) {
+                void response.headers(headers)
             }
 
             if (redirect) {
