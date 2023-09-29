@@ -12,7 +12,7 @@
         "@panva/hkdf": "1.1.1",
         "@paralleldrive/cuid2": "2.2.2",
         "@sinclair/typebox": "0.31.15",
-        "envey": "2.1.0",
+        "envey": "2.2.0",
         "fastify": "4.23.2",
         "fastify-plugin": "4.5.1",
         "gracy": "3.0.0",

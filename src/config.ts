@@ -1,12 +1,10 @@
-import { type EnveySchema, type InferEnveyConfig, createConfig } from 'envey'
+import {
+    type EnveySchema,
+    type InferEnveyConfig,
+    bool,
+    createConfig,
+} from 'envey'
 import { z } from 'zod'
-
-function bool(defaultValue: boolean): z.ZodBoolean {
-    return z
-        .enum(['true', 'false'])
-        .transform((value) => value === 'true')
-        .default(defaultValue.toString() as never) as unknown as z.ZodBoolean
-}
 
 const schema = {
     commitSha: {
@@ -55,7 +53,7 @@ const schema = {
     },
     logRequests: {
         env: 'LOG_REQUESTS',
-        format: bool(false),
+        format: bool(z, false),
     },
     mySqlDatabaseUrl: {
         env: 'MYSQL_DATABASE_URL',

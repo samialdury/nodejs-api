@@ -30,8 +30,8 @@ dependencies:
     specifier: 0.31.15
     version: 0.31.15
   envey:
-    specifier: 2.1.0
-    version: 2.1.0(zod@3.22.2)
+    specifier: 2.2.0
+    version: 2.2.0(zod@3.22.2)
   fastify:
     specifier: 4.23.2
     version: 4.23.2
@@ -2687,8 +2687,8 @@ packages:
       java-properties: 1.0.2
     dev: true
 
-  /envey@2.1.0(zod@3.22.2):
-    resolution: {integrity: sha512-oxVddHPwhf42j5bxy7rdSJWeBoBTfYgv3U4fEA0xRXnM1UmPen8e8FDQAQUmkc4eCh8nBGUl2ZIVNTw5uUhq3w==}
+  /envey@2.2.0(zod@3.22.2):
+    resolution: {integrity: sha512-yemIczrg1ggr/AteWwtOnbKLdMxXcnPFL1czljKeLOWHtC4qBdczeNNgGO4KKe12V/GYt1Fe6wRGoqIlfd1kqQ==}
     engines: {node: '>=20'}
     peerDependencies:
       zod: ^3.0.0
