@@ -71,11 +71,11 @@ devDependencies:
     specifier: 3.5.0
     version: 3.5.0(@sinclair/typebox@0.31.17)
   '@pulumi/hcloud':
-    specifier: 1.14.1
-    version: 1.14.1
+    specifier: 1.15.0
+    version: 1.15.0
   '@pulumi/pulumi':
-    specifier: 3.84.0
-    version: 3.84.0
+    specifier: 3.86.0
+    version: 3.86.0
   '@samialdury/config':
     specifier: 5.11.3
     version: 5.11.3(@commitlint/cli@17.7.2)(eslint@8.49.0)(lint-staged@14.0.1)(prettier@3.0.3)(semantic-release@22.0.5)(typescript@5.2.2)
@@ -107,8 +107,8 @@ devDependencies:
     specifier: 22.0.5
     version: 22.0.5
   tsx:
-    specifier: 3.12.10
-    version: 3.12.10
+    specifier: 3.13.0
+    version: 3.13.0
   typescript:
     specifier: 5.2.2
     version: 5.2.2
@@ -399,27 +399,6 @@ packages:
   /@databases/validate-unicode@1.0.0:
     resolution: {integrity: sha512-dLKqxGcymeVwEb/6c44KjOnzaAafFf0Wxa8xcfEjx/qOl3rdijsKYBAtIGhtVtOlpPf/PFKfgTuFurSPn/3B/g==}
     dev: false
-
-  /@esbuild-kit/cjs-loader@2.4.2:
-    resolution: {integrity: sha512-BDXFbYOJzT/NBEtp71cvsrGPwGAMGRB/349rwKuoxNSiKjPraNNnlK6MIIabViCjqZugu6j+xeMDlEkWdHHJSg==}
-    dependencies:
-      '@esbuild-kit/core-utils': 3.3.2
-      get-tsconfig: 4.7.0
-    dev: true
-
-  /@esbuild-kit/core-utils@3.3.2:
-    resolution: {integrity: sha512-sPRAnw9CdSsRmEtnsl2WXWdyquogVpB3yZ3dgwJfe8zrOzTsV7cJvmwrKVa+0ma5BoiGJ+BoqkMvawbayKUsqQ==}
-    dependencies:
-      esbuild: 0.18.20
-      source-map-support: 0.5.21
-    dev: true
-
-  /@esbuild-kit/esm-loader@2.6.5:
-    resolution: {integrity: sha512-FxEMIkJKnodyA1OaCUoEvbYRkoZlLZ4d/eXFu9Fh8CbBBgP5EmZxrfTRyN0qpXZ4vOvqnE5YdRdcrmUUXuU+dA==}
-    dependencies:
-      '@esbuild-kit/core-utils': 3.3.2
-      get-tsconfig: 4.7.0
-    dev: true
 
   /@esbuild/android-arm64@0.18.20:
     resolution: {integrity: sha512-Nz4rJcchGDtENV0eMKUNa6L12zz2zBDXuhj/Vjh18zGqB44Bi7MBMSXjgunJgjRhCmKOjnPuZp4Mb6OKqtMHLQ==}
@@ -1348,17 +1327,16 @@ packages:
     resolution: {integrity: sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==}
     dev: true
 
-  /@pulumi/hcloud@1.14.1:
-    resolution: {integrity: sha512-Wy9JSxLZIkifdlTXTEM3aCO2Do7K0aJsQAUv98LvYTu5OSAnorjch7IOt64F4u3Ifajyz59eeubB0rKU/gYadw==}
-    requiresBuild: true
+  /@pulumi/hcloud@1.15.0:
+    resolution: {integrity: sha512-o15T1WIRgyXNH8yqMVs3UFrrlXYDJo6SoOcOShBi4Y4R9XYvaYeEHsMwkHguNvgcFUzGn1Y4v7eKvC8h9EV+Og==}
     dependencies:
-      '@pulumi/pulumi': 3.84.0
+      '@pulumi/pulumi': 3.86.0
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@pulumi/pulumi@3.84.0:
-    resolution: {integrity: sha512-IfY3mUVsR/6ufibrnA2rVp03E145tKA3W5VdOisyvR4Rnd9L+nCMecD+C+Pl/rFJeW710o4orB2E+QoT+35Ssg==}
+  /@pulumi/pulumi@3.86.0:
+    resolution: {integrity: sha512-A521m5y/ucwyy327tMWf+yhffS8ySRB1+maMUF0vCXLvr4ttRrYoE7iqonnfz46ScLDuFR88H3c9ZgMOMkGkMQ==}
     engines: {node: '>=8.13.0 || >=10.10.0'}
     dependencies:
       '@grpc/grpc-js': 1.9.0
@@ -3467,12 +3445,6 @@ packages:
     dependencies:
       call-bind: 1.0.2
       get-intrinsic: 1.2.1
-    dev: true
-
-  /get-tsconfig@4.7.0:
-    resolution: {integrity: sha512-pmjiZ7xtB8URYm74PlGJozDNyhvsVLUcpBa8DZBG3bWHwaHa9bPiRpiSfovw+fjhwONSCWKRyk+JQHEGZmMrzw==}
-    dependencies:
-      resolve-pkg-maps: 1.0.0
     dev: true
 
   /get-tsconfig@4.7.2:
@@ -6154,13 +6126,13 @@ packages:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
     dev: true
 
-  /tsx@3.12.10:
-    resolution: {integrity: sha512-2+46h4xvUt1aLDNvk5YBT8Uzw+b7BolGbn7iSMucYqCXZiDc+1IMghLVdw8kKjING32JFOeO+Am9posvjkeclA==}
+  /tsx@3.13.0:
+    resolution: {integrity: sha512-rjmRpTu3as/5fjNq/kOkOtihgLxuIz6pbKdj9xwP4J5jOLkBxw/rjN5ANw+KyrrOXV5uB7HC8+SrrSJxT65y+A==}
     hasBin: true
     dependencies:
-      '@esbuild-kit/cjs-loader': 2.4.2
-      '@esbuild-kit/core-utils': 3.3.2
-      '@esbuild-kit/esm-loader': 2.6.5
+      esbuild: 0.18.20
+      get-tsconfig: 4.7.2
+      source-map-support: 0.5.21
     optionalDependencies:
       fsevents: 2.3.3
     dev: true
