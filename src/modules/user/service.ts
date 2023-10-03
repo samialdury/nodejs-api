@@ -28,7 +28,7 @@ async function decodeJwt(ctx: Context, token: string): Promise<UserJwt> {
 
 async function getByExternalId(
     ctx: Context,
-    externalId: number,
+    externalId: string,
 ): Promise<User | undefined> {
     return userRepo.getByExternalId(ctx, externalId)
 }
@@ -57,7 +57,16 @@ async function create(
         ...user,
         accountProviderId: provider.id,
         id: userId,
+        lastLoginAt: new Date(),
     })
+}
+
+async function updateLastLoginAt(
+    ctx: Context,
+    userId: string,
+    date: Date,
+): Promise<void> {
+    await userRepo.updateLastLoginAt(ctx, userId, date)
 }
 
 export const userService = {
@@ -66,4 +75,5 @@ export const userService = {
     decodeJwt,
     getByEmail,
     getByExternalId,
+    updateLastLoginAt,
 }

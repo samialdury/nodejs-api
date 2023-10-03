@@ -1,5 +1,5 @@
 import type { Config } from '../config.js'
-import type { MySqlConnection } from '../db/mysql.js'
+import type { MySqlConnection } from '../db/mysql/connection.js'
 import type { Logger } from '../logger.js'
 import type { UserJwt } from '../modules/user/jwt.js'
 import type { createRedirect, createResponse } from './controller.js'
@@ -9,9 +9,8 @@ export interface DatabaseConnections {
     mySql: MySqlConnection
 }
 
-export interface Context {
+export interface Context extends DatabaseConnections {
     config: Config
-    db: DatabaseConnections
     logger: Logger
 }
 

@@ -1,16 +1,7 @@
 import type { ServerPlugin } from '../../api/server.js'
 import { createController } from '../../api/controller.js'
-import { controller as getStatusController } from './operations/get-status/controller.js'
-import { schema as getStatusSchema } from './operations/get-status/schema.js'
+import { status } from './operations/get-status/route.js'
 
 export const statusRouter: ServerPlugin = async (server) => {
-    server.route(
-        createController(
-            server,
-            'GET',
-            '/status',
-            getStatusSchema,
-            getStatusController,
-        ),
-    )
+    server.route(createController(server, 'GET', '/status', status))
 }

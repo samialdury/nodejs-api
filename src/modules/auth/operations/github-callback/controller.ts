@@ -17,7 +17,7 @@ function setAccessTokenCookie(accessToken: string): Cookies {
     }
 }
 
-export const controller: Controller<typeof schema> = async ({ S, ctx }) => {
+export const controller: Controller<typeof schema> = async ({ s, ctx }) => {
     const { token } =
         await ctx.auth.github.getAccessTokenFromAuthorizationCodeFlow(
             ctx.request,
@@ -29,12 +29,15 @@ export const controller: Controller<typeof schema> = async ({ S, ctx }) => {
 
     ctx.logger.debug(githubUser, 'Received user info from GitHub')
 
-    const user = await userService.getByExternalId(ctx, githubUser.id)
+    const user = await userService.getByExternalId(
+        ctx,
+        githubUser.id.toString(),
+    )
 
     if (user) {
         const accessToken = await userService.createJwt(ctx, user)
 
-        return ctx.response(S.OK, {
+        return ctx.response(s.OK, {
             body: {
                 accessToken,
             },
@@ -67,7 +70,7 @@ export const controller: Controller<typeof schema> = async ({ S, ctx }) => {
 
     const accessToken = await userService.createJwt(ctx, newUser)
 
-    return ctx.response(S.OK, {
+    return ctx.response(s.OK, {
         body: {
             accessToken,
         },

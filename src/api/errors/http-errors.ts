@@ -1,11 +1,13 @@
 import { Reason, Status } from '../../api/constants.js'
 import { BaseError } from '../../errors/base-error.js'
 
-export interface HttpErrorSerialized {
+export interface HttpErrorObject {
     code: string
     message: string
     statusCode: Status
     type: Reason
+    stack?: string
+    causedBy?: unknown
 }
 
 export class HttpError extends BaseError {
@@ -25,12 +27,55 @@ export class HttpError extends BaseError {
         this.statusCode = statusCode
     }
 
-    public serialize(): HttpErrorSerialized {
+    public static createCauseObject(cause: unknown): unknown {
+        if (!cause) {
+            return undefined
+        }
+
+        if (cause instanceof Error) {
+            return {
+                name: cause.name,
+                message: cause.message,
+                causedBy: cause.cause
+                    ? this.createCauseObject(cause.cause)
+                    : undefined,
+            }
+        }
+
+        if (
+            typeof cause === 'string' ||
+            typeof cause === 'number' ||
+            typeof cause === 'boolean'
+        ) {
+            return cause
+        }
+
+        if (Array.isArray(cause)) {
+            return cause.map((item) => this.createCauseObject(item))
+        }
+
+        if (typeof cause === 'object') {
+            return Object.fromEntries(
+                Object.entries(cause).map(([key, value]) => [
+                    key,
+                    this.createCauseObject(value),
+                ]),
+            )
+        }
+
+        return JSON.stringify(cause, undefined, 2)
+    }
+
+    public toObject(includeSensitive = false): HttpErrorObject {
         return {
-            code: this.code,
-            message: this.message,
             statusCode: this.statusCode,
             type: this.reasonPhrase,
+            code: this.code,
+            message: this.message,
+            ...(includeSensitive && {
+                causedBy: HttpError.createCauseObject(this.cause),
+                stack: this.stack,
+            }),
         }
     }
 }
@@ -38,40 +83,47 @@ export class HttpError extends BaseError {
 export class BadRequestError extends HttpError {
     constructor(message: string, code: string) {
         super(message, code, Reason.BAD_REQUEST, Status.BAD_REQUEST)
+        this.name = this.constructor.name
     }
 }
 
 export class UnauthorizedError extends HttpError {
     constructor(message: string, code: string) {
         super(message, code, Reason.UNAUTHORIZED, Status.UNAUTHORIZED)
+        this.name = this.constructor.name
     }
 }
 
 export class ForbiddenError extends HttpError {
     constructor(message: string, code: string) {
         super(message, code, Reason.FORBIDDEN, Status.FORBIDDEN)
+        this.name = this.constructor.name
     }
 }
 
 export class NotFoundError extends HttpError {
     constructor(message: string, code: string) {
         super(message, code, Reason.NOT_FOUND, Status.NOT_FOUND)
+        this.name = this.constructor.name
     }
 }
 
 export class InternalServerError extends HttpError {
-    constructor(message: string, code: string) {
+    constructor(message: string, code: string, cause: unknown) {
         super(
             message,
             code,
             Reason.INTERNAL_SERVER_ERROR,
             Status.INTERNAL_SERVER_ERROR,
         )
+        this.name = this.constructor.name
+        this.cause = cause
     }
 }
 
 export class ConflictError extends HttpError {
     constructor(message: string, code: string) {
         super(message, code, Reason.CONFLICT, Status.CONFLICT)
+        this.name = this.constructor.name
     }
 }

@@ -19,7 +19,7 @@ SRC_DIR ?= src
 BUILD_DIR ?= build
 CACHE_DIR ?= .cache
 
-MYSQL_MIGRATIONS_DIR ?= db/mysql/migrations
+MYSQL_SEEDS_DIR ?= seeds/mysql
 
 PROXY_COMPOSE_FILE ?= $(LOCAL_DIR)/proxy.docker-compose.yml
 DEV_COMPOSE_FILE ?= $(DEV_DIR)/dev.docker-compose.yml
@@ -73,8 +73,8 @@ dev-prepare: ## prepare the dev environment
 	@echo "=== $(CYAN)preparing dev environment$(NC) ==="
 	@echo
 	@echo "=== $(CYAN)pulling & building docker images$(NC) ==="
-	@$(COMPOSE_DEV) build app_dev
-	@$(COMPOSE_DEV) pull mysql_dev
+	@$(COMPOSE_DEV) build app-dev
+	@$(COMPOSE_DEV) pull mysql-dev
 	@echo "=== $(GREEN)docker images ready$(NC) ==="
 	@echo "=== $(CYAN)preparing docker network$(NC) ==="
 	@docker network create $(PROJECT_NAME) || true
@@ -82,11 +82,9 @@ dev-prepare: ## prepare the dev environment
 	@echo "=== $(CYAN)preparing database$(NC) ==="
 	@$(COMPOSE_DEV) --profile support up --detach --wait
 	@echo "=== $(GREEN)database ready$(NC) ==="
-	@echo "=== $(CYAN)running migrations$(NC) ==="
-	@make migrate-up
-	@echo "=== $(GREEN)migrations ran successfully$(NC) ==="
-	@echo "=== $(YELLOW)current version$(NC) ==="
-	@make migrate-version
+	@echo "=== $(CYAN)syncing DB schema$(NC) ==="
+	@make db-push
+	@echo "=== $(GREEN)DB schema synced$(NC) ==="
 	@echo
 	@echo "=== $(GREEN)dev environment ready$(NC) ==="
 
@@ -98,42 +96,30 @@ dev: ## start the app in dev mode
 run: ## run JS
 	@$(RUN_IN_DOCKER) 'node --env-file .env $(BUILD_DIR)/$(SRC_DIR)/main.js | $(BIN)/pino-pretty --colorize'
 
-##@ Migrations
+##@ Database
 
-.PHONY: migrate-new
-migrate-new: ## create a new migration (name=<string>)
-	@$(RUN_IN_DOCKER) 'migrate create -ext sql -dir $(MYSQL_MIGRATIONS_DIR) $(name)'
-
-.PHONY: migrate-up
-migrate-up: ## run migrations up (compose=<string>?, n=<int>)
+.PHONY: db-push
+db-push: ## sync database with the schema
 	@$(RUN_IN_DOCKER) $(or $(compose), $(DEV_COMPOSE_FILE)) \
-		'migrate -path $(MYSQL_MIGRATIONS_DIR) -database $$MYSQL_DATABASE_URL up $(n)'
+		'$(BIN)/drizzle-kit push:mysql'
 
-.PHONY: migrate-down
-migrate-down: ## run migrations down (compose=<string>?, n=<int>)
+.PHONY: db-seed
+db-seed: ## run seed (name=<string>)
+ifeq ($(name),)
+	@echo "$(RED)name is required$(NC)"
+	@exit 1
+else
 	@$(RUN_IN_DOCKER) $(or $(compose), $(DEV_COMPOSE_FILE)) \
-		'migrate -path $(MYSQL_MIGRATIONS_DIR) -database $$MYSQL_DATABASE_URL down $(n)'
-
-.PHONY: migrate-drop
-migrate-drop: ## drop the database schema (compose=<string>?)
-	@$(RUN_IN_DOCKER) $(or $(compose), $(DEV_COMPOSE_FILE)) \
-		'migrate -path $(MYSQL_MIGRATIONS_DIR) -database $$MYSQL_DATABASE_URL drop'
-
-.PHONY: migrate-force
-migrate-force: ## force migration version (compose=<string>?, v=<string>)
-	@$(RUN_IN_DOCKER) $(or $(compose), $(DEV_COMPOSE_FILE)) \
-		'migrate -path $(MYSQL_MIGRATIONS_DIR) -database $$MYSQL_DATABASE_URL force $(v)'
-
-.PHONY: migrate-version
-migrate-version: ## print current migration version (compose=<string>?)
-	@$(RUN_IN_DOCKER) $(or $(compose), $(DEV_COMPOSE_FILE)) \
-		'migrate -path $(MYSQL_MIGRATIONS_DIR) -database $$MYSQL_DATABASE_URL version'
+		'node --env-file $(DEV)/.dev.env --no-warnings --loader tsx $(MYSQL_SEEDS_DIR)/$(name).ts | $(BIN)/pino-pretty'
+endif
 
 ##@ Build
 
 .PHONY: build
 build: ## build the project
+	@echo "=== $(YELLOW)cleaning build directory$(NC) ==="
 	@rm -rf $(BUILD_DIR)
+	@echo "=== $(CYAN)building project$(NC) (TS $$($(BIN)/tsc --version)) ==="
 	@$(BIN)/tsc
 	@echo "=== $(GREEN)build successful$(NC) ==="
 
@@ -148,8 +134,8 @@ test-prepare: ## prepare the test environment
 	@echo "=== $(CYAN)preparing test environment$(NC) ==="
 	@echo
 	@echo "=== $(CYAN)pulling & building docker images$(NC) ==="
-	@$(COMPOSE_TEST) build app_test
-	@$(COMPOSE_TEST) pull mysql_test
+	@$(COMPOSE_TEST) build app-test
+	@$(COMPOSE_TEST) pull mysql-test
 	@echo "=== $(GREEN)docker images ready$(NC) ==="
 	@echo "=== $(CYAN)preparing docker network$(NC) ==="
 	@docker network create $(PROJECT_NAME) || true
@@ -157,11 +143,9 @@ test-prepare: ## prepare the test environment
 	@echo "=== $(CYAN)preparing database$(NC) ==="
 	@$(COMPOSE_TEST) --profile support up --detach --wait
 	@echo "=== $(GREEN)database ready$(NC) ==="
-	@echo "=== $(CYAN)running migrations$(NC) ==="
-	@make migrate-up compose=$(TEST_COMPOSE_FILE)
-	@echo "=== $(GREEN)migrations ran successfully$(NC) ==="
-	@echo "=== $(YELLOW)current version$(NC) ==="
-	@make migrate-version compose=$(TEST_COMPOSE_FILE)
+	@echo "=== $(CYAN)syncing DB schema$(NC) ==="
+	@make db-push compose=$(TEST_COMPOSE_FILE)
+	@echo "=== $(GREEN)DB schema synced$(NC) ==="
 	@echo
 	@echo "=== $(GREEN)test environment ready$(NC) ==="
 
@@ -177,11 +161,15 @@ test-watch: ## run tests and watch for changes
 
 .PHONY: format
 format: ## format the code
-	@$(BIN)/prettier --cache --cache-location=$(CACHE_DIR)/prettier --write .
+	@echo "=== $(CYAN)running Prettier$(NC) ==="
+	@$(BIN)/prettier --cache --cache-location=$(CACHE_DIR)/prettier --write --log-level warn .
+	@echo "=== $(GREEN)format successful$(NC) ==="
 
 .PHONY: lint
 lint: ## lint the code
+	@echo "=== $(CYAN)running ESLint$(NC) ==="
 	@$(BIN)/eslint --max-warnings 0 --cache --cache-location $(CACHE_DIR)/eslint --fix .
+	@echo "=== $(GREEN)lint successful$(NC) ==="
 
 ##@ CI
 
@@ -208,11 +196,15 @@ test-ci: ## run tests (CI)
 
 .PHONY: format-ci
 format-ci: ## format the code (CI)
-	@$(BIN)/prettier --check .
+	@echo "=== $(CYAN)running Prettier$(NC) ==="
+	@$(BIN)/prettier --check --log-level warn .
+	@echo "=== $(GREEN)format successful$(NC) ==="
 
 .PHONY: lint-ci
 lint-ci: ## lint the code (CI)
+	@echo "=== $(CYAN)running ESLint$(NC) ==="
 	@$(BIN)/eslint --max-warnings 0 .
+	@echo "=== $(GREEN)lint successful$(NC) ==="
 
 ##@ Release
 

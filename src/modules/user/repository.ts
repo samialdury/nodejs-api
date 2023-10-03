@@ -1,62 +1,57 @@
+import { eq } from 'drizzle-orm'
 import type { Context } from '../../api/context.js'
-import type { User } from './model.js'
+import type { NewUser, User } from './model.js'
 
-async function getById(ctx: Context, id: string): Promise<User | undefined> {
-    const result = await ctx.db.mySql.queryOne<User>(ctx.db.mySql.sql`
-        SELECT * FROM user WHERE id = ${id} LIMIT 1
-    `)
+async function getById(
+    { mySql }: Context,
+    id: string,
+): Promise<User | undefined> {
+    const result = await mySql.query.user.findFirst({
+        where: eq(mySql.schema.user.id, id),
+    })
 
     return result
 }
 
 async function getByExternalId(
-    ctx: Context,
-    externalId: number,
+    { mySql }: Context,
+    externalId: string,
 ): Promise<User | undefined> {
-    const result = await ctx.db.mySql.queryOne<User>(ctx.db.mySql.sql`
-        SELECT * FROM user WHERE externalId = ${externalId} LIMIT 1
-    `)
+    const result = await mySql.query.user.findFirst({
+        where: eq(mySql.schema.user.externalId, externalId),
+    })
 
     return result
 }
 
 async function getByEmail(
-    ctx: Context,
+    { mySql }: Context,
     email: string,
 ): Promise<User | undefined> {
-    const result = await ctx.db.mySql.queryOne<User>(ctx.db.mySql.sql`
-        SELECT * FROM user WHERE email = ${email} LIMIT 1
-    `)
+    const result = await mySql.query.user.findFirst({
+        where: eq(mySql.schema.user.email, email),
+    })
 
     return result
 }
 
-async function create(
-    ctx: Context,
-    user: Pick<
-        User,
-        | 'accountProviderId'
-        | 'email'
-        | 'externalId'
-        | 'id'
-        | 'name'
-        | 'profileImageUrl'
-    >,
-): Promise<User> {
-    await ctx.db.mySql.query(ctx.db.mySql.sql`
-        INSERT INTO user 
-            (id, accountProviderId, externalId, email, name, profileImageUrl)
-        VALUES (
-            ${user.id},
-            ${user.accountProviderId},
-            ${user.externalId},
-            ${user.email},
-            ${user.name},
-            ${user.profileImageUrl}
-        )
-    `)
+async function create(ctx: Context, user: NewUser): Promise<User> {
+    await ctx.mySql.insert(ctx.mySql.schema.user).values(user)
 
     return getById(ctx, user.id) as Promise<User>
+}
+
+async function updateLastLoginAt(
+    { mySql }: Context,
+    id: string,
+    lastLoginAt: Date,
+): Promise<void> {
+    await mySql
+        .update(mySql.schema.user)
+        .set({
+            lastLoginAt,
+        })
+        .where(eq(mySql.schema.user.id, id))
 }
 
 export const userRepo = {
@@ -64,4 +59,5 @@ export const userRepo = {
     getByEmail,
     getByExternalId,
     getById,
+    updateLastLoginAt,
 }

@@ -6,7 +6,7 @@
 # Parameters:
 # 1. The docker compose file (required)
 # 2. The command to run (required)
-# 3. The target service (optional, defaults to `app_dev` or `app_test`, depending if the `file` includes `test.docker-compose` or `dev.compose`)
+# 3. The target service (optional, defaults to `app-dev` or `app-test`, depending if the `file` includes `test.docker-compose` or `dev.compose`)
 #
 # Usage:
 # ./run-cmd.sh <docker-compose-file> <command> <target-service?>
@@ -29,13 +29,13 @@ target=$3
 dev_compose_file="dev.docker-compose"
 test_docker_compose_file="test.docker-compose"
 
-# If `target` variable is empty, default it to `app_dev` or `app_test`,
+# If `target` variable is empty, default it to `app-dev` or `app-test`,
 # depending if the `file` includes `test.docker-compose` or `dev.compose`
 if [ -z "$target" ]; then
     if [[ $file == *$test_docker_compose_file* ]]; then
-        target="app_test"
+        target="app-test"
     elif [[ $file == *$dev_compose_file* ]]; then
-        target="app_dev"
+        target="app-dev"
     else
         echo "${red}ERROR: The docker compose file must start with either $dev_compose_file or $test_docker_compose_file.${reset}"
         exit 1

@@ -30,6 +30,7 @@ export interface ResponseType<
     // @ts-expect-error - We're sure that it's a valid key
     body?: GetStatic<Schema['response'], TStatus>
     cookies?: Cookies
+    clearCookies?: string[]
     headers?: Headers
     redirect?: string
     status: TStatus
@@ -41,11 +42,11 @@ export type Controller<
 > = (
     params: Readonly<
         {
-            S: typeof Status
             body: Readonly<GetStatic<TSchema, 'body'>>
             headers: Readonly<GetStatic<TSchema, 'headers'>>
             params: Readonly<GetStatic<TSchema, 'params'>>
             query: Readonly<GetStatic<TSchema, 'querystring'>>
+            s: typeof Status
         } & {
             ctx: ControllerContext
         }
@@ -58,6 +59,7 @@ export function createResponse<
 >(
     status: TStatus,
     params: {
+        clearCookies?: string[]
         cookies?: Cookies
         headers?: Headers
         redirect?: string
@@ -68,6 +70,7 @@ export function createResponse<
     return {
         body: params.body,
         cookies: params.cookies,
+        clearCookies: params.clearCookies,
         headers: params.headers,
         redirect: params.redirect,
         status,
@@ -85,7 +88,7 @@ export function createRedirect(params: {
 }
 
 export function createSchema<TSchema extends ControllerSchema>(
-    schema: (S: typeof Status, T: typeof Type) => TSchema,
+    schema: (s: typeof Status, t: typeof Type) => TSchema,
 ): TSchema {
     return schema(Status, Type)
 }
@@ -94,21 +97,26 @@ export function createController<TSchema extends ControllerSchema>(
     server: Server,
     method: HTTPMethods,
     url: string,
-    schema: TSchema,
-    controller: Controller<TSchema>,
+    {
+        schema,
+        controller,
+    }: {
+        controller: Controller<TSchema>
+        schema: TSchema
+    },
 ): RouteOptions {
     return {
         handler: async (request, response) => {
-            const { body, cookies, headers, redirect, status } =
+            const { body, cookies, clearCookies, headers, redirect, status } =
                 await controller({
-                    S: Status,
+                    s: Status,
                     body: request.body as never,
                     ctx: {
                         auth: {
                             github: server[GITHUB_AUTH_NS],
                         },
                         config: server[CONTEXT].config,
-                        db: server[CONTEXT].db,
+                        mySql: server[CONTEXT].mySql,
                         logger: server[CONTEXT].logger,
                         redirect: createRedirect,
                         request,
@@ -134,6 +142,12 @@ export function createController<TSchema extends ControllerSchema>(
                         signed: true,
                         ...options,
                     })
+                }
+            }
+
+            if (clearCookies) {
+                for (const name of clearCookies) {
+                    void response.clearCookie(name)
                 }
             }
 

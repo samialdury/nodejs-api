@@ -1,5 +1,5 @@
 services:
-    app_test:
+    app-test:
         build:
             context: ../../
             dockerfile: local/local.Dockerfile
@@ -19,7 +19,7 @@ services:
         profiles:
             - app
 
-    mysql_test:
+    mysql-test:
         image: mysql:8
         container_name: mysql_nodejs-api_test
         restart: unless-stopped

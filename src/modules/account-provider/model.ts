@@ -1,3 +1,5 @@
+import type { accountProvider } from '../../db/mysql/schema.js'
+
 export type ValidAccountProviders =
     | 'apple'
     | 'facebook'
@@ -5,10 +7,6 @@ export type ValidAccountProviders =
     | 'google'
     | 'twitter'
 
-export interface AccountProvider {
-    createdAt: Date
-    deletedAt: Date | null
-    id: number
-    name: ValidAccountProviders
-    updatedAt: Date
-}
+export type AccountProvider = typeof accountProvider.$inferSelect
+
+export type NewAccountProvider = typeof accountProvider.$inferInsert

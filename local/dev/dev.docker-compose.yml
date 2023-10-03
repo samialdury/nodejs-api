@@ -1,5 +1,5 @@
 services:
-    app_dev:
+    app-dev:
         build:
             context: ../../
             dockerfile: local/local.Dockerfile
@@ -30,7 +30,7 @@ services:
         profiles:
             - app
 
-    mysql_dev:
+    mysql-dev:
         image: mysql:8
         container_name: mysql_nodejs-api_dev
         restart: unless-stopped

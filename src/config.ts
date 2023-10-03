@@ -71,6 +71,10 @@ const schema = {
         env: 'PUBLIC_HOST',
         format: z.string(),
     },
+    debugMode: {
+        env: 'DEBUG_MODE',
+        format: bool(z, false),
+    },
 } satisfies EnveySchema
 
 export type Config = InferEnveyConfig<typeof schema>

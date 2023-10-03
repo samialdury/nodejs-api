@@ -9,23 +9,25 @@ import { type Server, createServer } from './server.js'
 export async function initApi(
     config: Config,
     logger: Logger,
-    db: DatabaseConnections,
+    dbs: DatabaseConnections,
 ): Promise<Server> {
     const server = createServer({
         bodyLimit: 1_048_576, // 1 MiB
         disableRequestLogging: !config.logRequests,
         logger,
-    })
+    }) as unknown as Server
 
     server.decorate(CONTEXT, {
         config,
-        db,
         logger,
+        ...dbs,
     })
 
-    server.setErrorHandler(errorHandler)
+    server.setErrorHandler(async (err, request, response) => {
+        return errorHandler(server, err, request, response)
+    })
 
     await server.register(apiPlugin)
 
-    return server as unknown as Server
+    return server
 }

@@ -1,26 +1,25 @@
+import { eq } from 'drizzle-orm'
 import type { Context } from '../../api/context.js'
 import type { AccountProvider, ValidAccountProviders } from './model.js'
 
 async function getById(
-    ctx: Context,
+    { mySql }: Context,
     id: number,
 ): Promise<AccountProvider | undefined> {
-    const result = await ctx.db.mySql.queryOne<AccountProvider>(ctx.db.mySql
-        .sql`
-        SELECT * FROM account_provider WHERE id = ${id} LIMIT 1
-    `)
+    const result = await mySql.query.accountProvider.findFirst({
+        where: eq(mySql.schema.accountProvider.id, id),
+    })
 
     return result
 }
 
 async function getByName(
-    ctx: Context,
+    { mySql }: Context,
     name: ValidAccountProviders,
 ): Promise<AccountProvider | undefined> {
-    const result = await ctx.db.mySql.queryOne<AccountProvider>(ctx.db.mySql
-        .sql`
-        SELECT * FROM account_provider WHERE name = ${name} LIMIT 1
-    `)
+    const result = await mySql.query.accountProvider.findFirst({
+        where: eq(mySql.schema.accountProvider.name, name),
+    })
 
     return result
 }

@@ -1,13 +1,5 @@
-export interface User {
-    accountProviderId: number
-    createdAt: Date
-    deletedAt: Date | null
-    displayName: null | string
-    email: string
-    externalId: null | string
-    id: string
-    lastLoginAt: null | string
-    name: string
-    profileImageUrl: null | string
-    updatedAt: Date
-}
+import type { user } from '../../db/mysql/schema.js'
+
+export type User = typeof user.$inferSelect
+
+export type NewUser = typeof user.$inferInsert

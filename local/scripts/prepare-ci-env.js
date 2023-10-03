@@ -36,8 +36,8 @@ async function main() {
         .replace(/MYSQL_PASSWORD=""/g, `MYSQL_PASSWORD="${mySqlPassword}"`)
         .replace(/MYSQL_DATABASE=""/g, `MYSQL_DATABASE="${mySqlDb}"`)
         .replace(
-            /MYSQL_DATABASE_URL="mysql:\/\/\?multiStatements=true"/g,
-            `MYSQL_DATABASE_URL="mysql://${mySqlUser}:${mySqlPassword}@tcp(mysql_test:3306)/${mySqlDb}?multiStatements=true"`,
+            /MYSQL_DATABASE_URL="mysql:\/\/"/g,
+            `MYSQL_DATABASE_URL="mysql://${mySqlUser}:${mySqlPassword}@mysql-test:3306/${mySqlDb}"`,
         )
 
     await fs.writeFile(testEnvFileLocation, replacedEnvFile)

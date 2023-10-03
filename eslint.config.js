@@ -9,7 +9,7 @@ export default [
         ignores: ['**/prepare-ci-env.js', '**/prepare-template.js'],
     },
     {
-        files: ['src/**/plugins/*.ts', 'src/**/router.ts'],
+        files: ['src/**/router.ts'],
         rules: {
             'func-style': 'off',
             '@typescript-eslint/require-await': 'off',
@@ -26,6 +26,13 @@ export default [
         files: ['src/**/*.d.ts', 'iac/**/*.ts'],
         rules: {
             'import/no-extraneous-dependencies': 'off',
+        },
+    },
+    {
+        rules: {
+            'perfectionist/sort-objects': 'off',
+            'perfectionist/sort-interfaces': 'off',
+            'perfectionist/sort-object-types': 'off',
         },
     },
 ]
