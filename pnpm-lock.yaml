@@ -31,7 +31,7 @@ dependencies:
     version: 0.28.6(@opentelemetry/api@1.4.1)(mysql2@3.6.1)
   envey:
     specifier: 2.2.0
-    version: 2.2.0(zod@3.22.3)
+    version: 2.2.0(zod@3.22.4)
   fastify:
     specifier: 4.23.2
     version: 4.23.2
@@ -54,11 +54,11 @@ dependencies:
     specifier: 3.1.1
     version: 3.1.1
   pino:
-    specifier: 8.15.1
-    version: 8.15.1
+    specifier: 8.15.6
+    version: 8.15.6
   zod:
-    specifier: 3.22.3
-    version: 3.22.3
+    specifier: 3.22.4
+    version: 3.22.4
 
 devDependencies:
   '@commitlint/cli':
@@ -104,8 +104,8 @@ devDependencies:
     specifier: 14.0.1
     version: 14.0.1
   pino-pretty:
-    specifier: 10.2.0
-    version: 10.2.0
+    specifier: 10.2.3
+    version: 10.2.3
   prettier:
     specifier: 3.0.3
     version: 3.0.3
@@ -119,8 +119,8 @@ devDependencies:
     specifier: 5.2.2
     version: 5.2.2
   undici:
-    specifier: 5.25.2
-    version: 5.25.2
+    specifier: 5.25.4
+    version: 5.25.4
 
 packages:
 
@@ -609,6 +609,11 @@ packages:
     dependencies:
       fastify-plugin: 4.5.1
     dev: false
+
+  /@fastify/busboy@2.0.0:
+    resolution: {integrity: sha512-JUFJad5lv7jxj926GPgymrWQxxjPYuJNiNjNMzqT+HiuP6Vl3dk5xzG+8sTX96np0ZAluvaMzPsjhHZ5rNuNQQ==}
+    engines: {node: '>=14'}
+    dev: true
 
   /@fastify/cookie@9.1.0:
     resolution: {integrity: sha512-w/LlQjj7cmYlQNhEKNm4jQoLkFXCL73kFu1Jy3aL7IFbYEojEKur0f7ieCKUxBBaU65tpaWC83UM8xW7AzY6uw==}
@@ -2137,13 +2142,6 @@ packages:
       run-applescript: 5.0.0
     dev: true
 
-  /busboy@1.6.0:
-    resolution: {integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==}
-    engines: {node: '>=10.16.0'}
-    dependencies:
-      streamsearch: 1.1.0
-    dev: true
-
   /call-bind@1.0.2:
     resolution: {integrity: sha512-7O+FbCihrB5WGbFYesctwmTKae6rOiIzmz1icreWJ+0aA7LJfuqhEso2T9ncpcFtzMQtzXf2QGGueWJGTYsqrA==}
     dependencies:
@@ -2649,7 +2647,7 @@ packages:
       hanji: 0.0.5
       json-diff: 0.9.0
       minimatch: 7.4.6
-      zod: 3.22.3
+      zod: 3.22.4
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2770,13 +2768,13 @@ packages:
       java-properties: 1.0.2
     dev: true
 
-  /envey@2.2.0(zod@3.22.3):
+  /envey@2.2.0(zod@3.22.4):
     resolution: {integrity: sha512-yemIczrg1ggr/AteWwtOnbKLdMxXcnPFL1czljKeLOWHtC4qBdczeNNgGO4KKe12V/GYt1Fe6wRGoqIlfd1kqQ==}
     engines: {node: '>=20'}
     peerDependencies:
       zod: ^3.0.0
     dependencies:
-      zod: 3.22.3
+      zod: 3.22.4
     dev: false
 
   /error-ex@1.3.2:
@@ -3359,7 +3357,7 @@ packages:
       fast-json-stringify: 5.8.0
       find-my-way: 7.6.2
       light-my-request: 5.10.0
-      pino: 8.15.1
+      pino: 8.15.6
       process-warning: 2.2.0
       proxy-addr: 2.0.7
       rfdc: 1.3.0
@@ -5250,22 +5248,14 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /pino-abstract-transport@1.0.0:
-    resolution: {integrity: sha512-c7vo5OpW4wIS42hUVcT5REsL8ZljsUfBjqV/e2sFxmFEFZiq1XLUp5EYLtuDH6PEHq9W1egWqRbnLUP5FuZmOA==}
-    dependencies:
-      readable-stream: 4.4.2
-      split2: 4.2.0
-    dev: true
-
   /pino-abstract-transport@1.1.0:
     resolution: {integrity: sha512-lsleG3/2a/JIWUtf9Q5gUNErBqwIu1tUKTT3dUzaf5DySw9ra1wcqKjJjLX1VTY64Wk1eEOYsVGSaGfCK85ekA==}
     dependencies:
       readable-stream: 4.4.2
       split2: 4.2.0
-    dev: false
 
-  /pino-pretty@10.2.0:
-    resolution: {integrity: sha512-tRvpyEmGtc2D+Lr3FulIZ+R1baggQ4S3xD2Ar93KixFEDx6SEAUP3W5aYuEw1C73d6ROrNcB2IXLteW8itlwhA==}
+  /pino-pretty@10.2.3:
+    resolution: {integrity: sha512-4jfIUc8TC1GPUfDyMSlW1STeORqkoxec71yhxIpLDQapUu8WOuoz2TTCoidrIssyz78LZC69whBMPIKCMbi3cw==}
     hasBin: true
     dependencies:
       colorette: 2.0.20
@@ -5276,7 +5266,7 @@ packages:
       joycon: 3.1.1
       minimist: 1.2.8
       on-exit-leak-free: 2.1.0
-      pino-abstract-transport: 1.0.0
+      pino-abstract-transport: 1.1.0
       pump: 3.0.0
       readable-stream: 4.4.2
       secure-json-parse: 2.7.0
@@ -5288,8 +5278,8 @@ packages:
     resolution: {integrity: sha512-cHjPPsE+vhj/tnhCy/wiMh3M3z3h/j15zHQX+S9GkTBgqJuTuJzYJ4gUyACLhDaJ7kk9ba9iRDmbH2tJU03OiA==}
     dev: false
 
-  /pino@8.15.1:
-    resolution: {integrity: sha512-Cp4QzUQrvWCRJaQ8Lzv0mJzXVk4z2jlq8JNKMGaixC2Pz5L4l2p95TkuRvYbrEbe85NQsDKrAd4zalf7Ml6WiA==}
+  /pino@8.15.6:
+    resolution: {integrity: sha512-GuxHr61R0ZFD1npu58tB3a3FSVjuy21OwN/haw4OuKiZBL63Pg11Y51WWeD52RENS2mjwPZOwt+2OQOSkck6kQ==}
     hasBin: true
     dependencies:
       atomic-sleep: 1.0.0
@@ -6034,11 +6024,6 @@ packages:
       readable-stream: 2.3.8
     dev: true
 
-  /streamsearch@1.1.0:
-    resolution: {integrity: sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==}
-    engines: {node: '>=10.0.0'}
-    dev: true
-
   /string-argv@0.3.2:
     resolution: {integrity: sha512-aqD2Q0144Z+/RqG52NeHEkZauTAUWJO8c6yTftGJKO3Tja5tUgIfmIl6kExvhtxSDP7fXB6DvzkfMpCd/F3G+Q==}
     engines: {node: '>=0.6.19'}
@@ -6465,11 +6450,11 @@ packages:
       which-boxed-primitive: 1.0.2
     dev: true
 
-  /undici@5.25.2:
-    resolution: {integrity: sha512-tch8RbCfn1UUH1PeVCXva4V8gDpGAud/w0WubD6sHC46vYQ3KDxL+xv1A2UxK0N6jrVedutuPHxe1XIoqerwMw==}
+  /undici@5.25.4:
+    resolution: {integrity: sha512-450yJxT29qKMf3aoudzFpIciqpx6Pji3hEWaXqXmanbXF58LTAGCKxcJjxMXWu3iG+Mudgo3ZUfDB6YDFd/dAw==}
     engines: {node: '>=14.0'}
     dependencies:
-      busboy: 1.6.0
+      '@fastify/busboy': 2.0.0
     dev: true
 
   /unicode-emoji-modifier-base@1.0.0:
@@ -6656,5 +6641,5 @@ packages:
     engines: {node: '>=12.20'}
     dev: true
 
-  /zod@3.22.3:
-    resolution: {integrity: sha512-EjIevzuJRiRPbVH4mGc8nApb/lVLKVpmUhAaR5R5doKGfAnGJ6Gr3CViAVjP+4FWSxCsybeWQdcgCtbX+7oZug==}
+  /zod@3.22.4:
+    resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
