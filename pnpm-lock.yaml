@@ -15,8 +15,8 @@ dependencies:
     specifier: 9.1.0
     version: 9.1.0
   '@fastify/oauth2':
-    specifier: 7.4.0
-    version: 7.4.0
+    specifier: 7.5.0
+    version: 7.5.0
   '@panva/hkdf':
     specifier: 1.1.1
     version: 1.1.1
@@ -45,8 +45,8 @@ dependencies:
     specifier: 2.3.0
     version: 2.3.0
   jose:
-    specifier: 4.14.6
-    version: 4.14.6
+    specifier: 4.15.2
+    version: 4.15.2
   mysql2:
     specifier: 3.6.1
     version: 3.6.1
@@ -74,8 +74,8 @@ devDependencies:
     specifier: 3.5.0
     version: 3.5.0(@sinclair/typebox@0.31.17)
   '@pulumi/hcloud':
-    specifier: 1.15.0
-    version: 1.15.0
+    specifier: 1.16.1
+    version: 1.16.1
   '@pulumi/pulumi':
     specifier: 3.86.0
     version: 3.86.0
@@ -636,8 +636,8 @@ packages:
       fast-json-stringify: 5.8.0
     dev: false
 
-  /@fastify/oauth2@7.4.0:
-    resolution: {integrity: sha512-9zvV/T4jWsCugjhkcjixhF6loaAHcnBQZHm/6i/SDfZGMr82MtjYa+MbLK/TMY+QwnsBJS6k+3+06kJ8DZFGYA==}
+  /@fastify/oauth2@7.5.0:
+    resolution: {integrity: sha512-SxMRLekUT1FgE+PjGuiA0U9Z+v3Y35U26aJ8+/abat2YhffaI1YL1b1GQhrpePSDD/g720PkGK+epcklKyCcwg==}
     dependencies:
       '@fastify/cookie': 9.1.0
       fastify-plugin: 4.5.1
@@ -1282,8 +1282,8 @@ packages:
     resolution: {integrity: sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==}
     dev: true
 
-  /@pulumi/hcloud@1.15.0:
-    resolution: {integrity: sha512-o15T1WIRgyXNH8yqMVs3UFrrlXYDJo6SoOcOShBi4Y4R9XYvaYeEHsMwkHguNvgcFUzGn1Y4v7eKvC8h9EV+Og==}
+  /@pulumi/hcloud@1.16.1:
+    resolution: {integrity: sha512-cSyYNGSx5Q/YRubv5RBSxQHzhuGcWIMVEikvi0b4tXgdQxrPnp0bg7UrTK5JkfHMyaoFGkjy8HxQXEDlLgGp3w==}
     dependencies:
       '@pulumi/pulumi': 3.86.0
     transitivePeerDependencies:
@@ -4234,8 +4234,8 @@ packages:
       '@sideway/pinpoint': 2.0.0
     dev: false
 
-  /jose@4.14.6:
-    resolution: {integrity: sha512-EqJPEUlZD0/CSUMubKtMaYUOtWe91tZXTWMJZoKSbLk+KtdhNdcvppH8lA9XwVu2V4Ailvsj0GBZJ2ZwDjfesQ==}
+  /jose@4.15.2:
+    resolution: {integrity: sha512-IY73F228OXRl9ar3jJagh7Vnuhj/GzBunPiZP13K0lOl7Am9SoWW3kEzq3MCllJMTtZqHTiDXQvoRd4U95aU6A==}
     dev: false
 
   /joycon@3.1.1:
