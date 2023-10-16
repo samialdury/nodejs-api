@@ -6,9 +6,6 @@ export default [
         typeScript: true,
     }),
     {
-        ignores: ['**/prepare-ci-env.js', '**/prepare-template.js'],
-    },
-    {
         files: ['src/**/router.ts'],
         rules: {
             'func-style': 'off',
@@ -26,13 +23,6 @@ export default [
         files: ['src/**/*.d.ts', 'iac/**/*.ts'],
         rules: {
             'import/no-extraneous-dependencies': 'off',
-        },
-    },
-    {
-        rules: {
-            'perfectionist/sort-objects': 'off',
-            'perfectionist/sort-interfaces': 'off',
-            'perfectionist/sort-object-types': 'off',
         },
     },
 ]

@@ -1,6 +1,6 @@
-import path from 'node:path'
-import fs from 'node:fs/promises'
 import crypto from 'node:crypto'
+import fs from 'node:fs/promises'
+import path from 'node:path'
 
 function getDirname() {
     return path.dirname(new URL(import.meta.url).pathname)
@@ -18,7 +18,7 @@ async function main() {
     const dirname = getDirname()
     const testEnvFileLocation = getTestEnvFileLocation(dirname)
 
-    const envFile = await fs.readFile(testEnvFileLocation, 'utf-8')
+    const envFile = await fs.readFile(testEnvFileLocation, 'utf8')
 
     const [mySqlRPassword, mySqlUser, mySqlPassword, mySqlDb] = [
         `rpw_${getRandomString()}`,
@@ -28,15 +28,15 @@ async function main() {
     ]
 
     const replacedEnvFile = envFile
-        .replace(
-            /MYSQL_ROOT_PASSWORD=""/g,
+        .replaceAll(
+            'MYSQL_ROOT_PASSWORD=""',
             `MYSQL_ROOT_PASSWORD="${mySqlRPassword}"`,
         )
-        .replace(/MYSQL_USER=""/g, `MYSQL_USER="${mySqlUser}"`)
-        .replace(/MYSQL_PASSWORD=""/g, `MYSQL_PASSWORD="${mySqlPassword}"`)
-        .replace(/MYSQL_DATABASE=""/g, `MYSQL_DATABASE="${mySqlDb}"`)
-        .replace(
-            /MYSQL_DATABASE_URL="mysql:\/\/"/g,
+        .replaceAll('MYSQL_USER=""', `MYSQL_USER="${mySqlUser}"`)
+        .replaceAll('MYSQL_PASSWORD=""', `MYSQL_PASSWORD="${mySqlPassword}"`)
+        .replaceAll('MYSQL_DATABASE=""', `MYSQL_DATABASE="${mySqlDb}"`)
+        .replaceAll(
+            'MYSQL_DATABASE_URL="mysql://"',
             `MYSQL_DATABASE_URL="mysql://${mySqlUser}:${mySqlPassword}@mysql-test:3306/${mySqlDb}"`,
         )
 
