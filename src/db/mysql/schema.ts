@@ -4,11 +4,13 @@ import {
     mysqlTable,
     text,
     timestamp,
-    tinyint,
     varchar,
 } from 'drizzle-orm/mysql-core'
 
-const cuidColumn = char('id', { length: 31 })
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+function cuidColumn(name: string) {
+    return char(name, { length: 31 })
+}
 
 const timestamps = {
     createdAt: timestamp('created_at').notNull().defaultNow(),
@@ -17,14 +19,14 @@ const timestamps = {
 }
 
 export const accountProvider = mysqlTable('account_provider', {
-    id: tinyint('id').notNull().primaryKey().autoincrement(),
+    id: cuidColumn('id').notNull().primaryKey(),
     name: varchar('name', { length: 255 }).notNull().unique(),
     ...timestamps,
 })
 
 export const user = mysqlTable('user', {
-    id: cuidColumn.notNull().primaryKey(),
-    accountProviderId: tinyint('account_provider_id').notNull(),
+    id: cuidColumn('id').notNull().primaryKey(),
+    accountProviderId: cuidColumn('account_provider_id').notNull(),
     externalId: varchar('external_id', { length: 255 }),
     email: varchar('email', { length: 255 }).notNull().unique(),
     name: varchar('name', { length: 255 }).notNull(),

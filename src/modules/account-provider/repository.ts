@@ -1,30 +1,32 @@
-import { eq } from 'drizzle-orm'
+import { and, eq, isNull } from 'drizzle-orm'
 import type { Context } from '../../api/context.js'
 import type { AccountProvider, ValidAccountProviders } from './model.js'
+import { accountProvider } from '../../db/mysql/schema.js'
 
-async function getById(
+export async function getById(
     { mySql }: Context,
-    id: number,
+    id: string,
 ): Promise<AccountProvider | undefined> {
     const result = await mySql.query.accountProvider.findFirst({
-        where: eq(mySql.schema.accountProvider.id, id),
+        where: and(
+            eq(accountProvider.id, id),
+            isNull(accountProvider.deletedAt),
+        ),
     })
 
     return result
 }
 
-async function getByName(
+export async function getByName(
     { mySql }: Context,
     name: ValidAccountProviders,
 ): Promise<AccountProvider | undefined> {
     const result = await mySql.query.accountProvider.findFirst({
-        where: eq(mySql.schema.accountProvider.name, name),
+        where: and(
+            eq(accountProvider.name, name),
+            isNull(accountProvider.deletedAt),
+        ),
     })
 
     return result
-}
-
-export const accountProviderRepo = {
-    getById,
-    getByName,
 }

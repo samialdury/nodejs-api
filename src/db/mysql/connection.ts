@@ -5,9 +5,7 @@ import type { Config } from '../../config.js'
 import type { Logger } from '../../logger.js'
 import * as schema from './schema.js'
 
-export type MySqlConnection = MySql2Database<typeof schema> & {
-    schema: typeof schema
-}
+export type MySqlConnection = MySql2Database<typeof schema>
 
 export async function initMySql(
     config: Config,
@@ -34,5 +32,5 @@ export async function initMySql(
         throw err
     }
 
-    return [Object.assign(orm, { schema }), pool]
+    return [orm, pool]
 }

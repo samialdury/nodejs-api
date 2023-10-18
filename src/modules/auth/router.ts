@@ -1,6 +1,6 @@
 import type { ServerPlugin } from '../../api/server.js'
 import { createController } from '../../api/controller.js'
-import { githubCallback } from './operations/github-callback/route.js'
+import * as githubCallback from './operations/github-callback/route.js'
 
 export const authRouter: ServerPlugin = async (server) => {
     server.route(

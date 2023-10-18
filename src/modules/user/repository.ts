@@ -1,63 +1,56 @@
-import { eq } from 'drizzle-orm'
+import { and, eq, isNull } from 'drizzle-orm'
 import type { Context } from '../../api/context.js'
 import type { NewUser, User } from './model.js'
+import { user } from '../../db/mysql/schema.js'
 
-async function getById(
+export async function getById(
     { mySql }: Context,
     id: string,
 ): Promise<User | undefined> {
     const result = await mySql.query.user.findFirst({
-        where: eq(mySql.schema.user.id, id),
+        where: and(eq(user.id, id), isNull(user.deletedAt)),
     })
 
     return result
 }
 
-async function getByExternalId(
+export async function getByExternalId(
     { mySql }: Context,
     externalId: string,
 ): Promise<User | undefined> {
     const result = await mySql.query.user.findFirst({
-        where: eq(mySql.schema.user.externalId, externalId),
+        where: and(eq(user.externalId, externalId), isNull(user.deletedAt)),
     })
 
     return result
 }
 
-async function getByEmail(
+export async function getByEmail(
     { mySql }: Context,
     email: string,
 ): Promise<User | undefined> {
     const result = await mySql.query.user.findFirst({
-        where: eq(mySql.schema.user.email, email),
+        where: and(eq(user.email, email), isNull(user.deletedAt)),
     })
 
     return result
 }
 
-async function create(ctx: Context, user: NewUser): Promise<User> {
-    await ctx.mySql.insert(ctx.mySql.schema.user).values(user)
+export async function create(ctx: Context, data: NewUser): Promise<User> {
+    await ctx.mySql.insert(user).values(data)
 
-    return getById(ctx, user.id) as Promise<User>
+    return getById(ctx, data.id) as Promise<User>
 }
 
-async function updateLastLoginAt(
+export async function updateLastLoginAt(
     { mySql }: Context,
     id: string,
     lastLoginAt: Date,
 ): Promise<void> {
     await mySql
-        .update(mySql.schema.user)
+        .update(user)
         .set({
             lastLoginAt,
         })
-        .where(eq(mySql.schema.user.id, id))
-}
-
-export const userRepo = {
-    create,
-    getByEmail,
-    getByExternalId,
-    getById,
-    updateLastLoginAt,
+        .where(eq(user.id, id))
 }

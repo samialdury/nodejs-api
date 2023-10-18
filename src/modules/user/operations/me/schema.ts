@@ -1,13 +1,13 @@
 import { createSchema } from '../../../../api/controller.js'
 
-export const schema = createSchema((S, T) => {
+export const schema = createSchema((s, t) => {
     return {
         response: {
-            [S.OK]: T.Object({
-                email: T.String(),
-                id: T.String(),
-                name: T.String(),
-                profileImageUrl: T.Union([T.String(), T.Null()]),
+            [s.OK]: t.Object({
+                email: t.String(),
+                id: t.String(),
+                name: t.String(),
+                profileImageUrl: t.Union([t.String(), t.Null()]),
             }),
         },
     }

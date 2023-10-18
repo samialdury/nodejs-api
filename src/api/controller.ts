@@ -77,6 +77,11 @@ export function createResponse<
     } as ResponseType<TSchema, TStatus>
 }
 
+export interface RouteDefinition<TSchema extends ControllerSchema> {
+    controller: Controller<TSchema>
+    schema: TSchema
+}
+
 export function createRedirect(params: {
     cookies?: Cookies
     location: string
@@ -97,13 +102,7 @@ export function createController<TSchema extends ControllerSchema>(
     server: Server,
     method: HTTPMethods,
     url: string,
-    {
-        schema,
-        controller,
-    }: {
-        controller: Controller<TSchema>
-        schema: TSchema
-    },
+    { schema, controller }: RouteDefinition<TSchema>,
 ): RouteOptions {
     return {
         handler: async (request, response) => {

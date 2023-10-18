@@ -15,12 +15,12 @@ export interface Context extends DatabaseConnections {
 }
 
 export interface ControllerContext extends Context {
+    server: Server
+    request: ServerRequest
+    user: UserJwt
     auth: {
         github: OAuth2Namespace
     }
-    redirect: typeof createRedirect
-    request: ServerRequest
     response: typeof createResponse
-    server: Server
-    user: UserJwt
+    redirect: typeof createRedirect
 }

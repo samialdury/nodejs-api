@@ -2,10 +2,10 @@ import type { Context } from '../../api/context.js'
 import type { ValidAccountProviders } from '../account-provider/model.js'
 import type { UserJwt } from './jwt.js'
 import type { User } from './model.js'
-import { accountProviderRepo } from '../account-provider/repository.js'
+import * as accountProviderRepo from '../account-provider/repository.js'
 import { jwt } from '../auth/jwt/service.js'
-import { id } from '../common/id.js'
-import { userRepo } from './repository.js'
+import { createId } from '../common/id.js'
+import * as userRepo from './repository.js'
 
 async function createJwt(ctx: Context, user: User): Promise<string> {
     const token = jwt.encode<UserJwt>(ctx, {
@@ -45,7 +45,7 @@ async function create(
     accountProvider: ValidAccountProviders,
     user: Pick<User, 'email' | 'externalId' | 'name' | 'profileImageUrl'>,
 ): Promise<User> {
-    const userId = id.create()
+    const userId = createId()
 
     const provider = await accountProviderRepo.getByName(ctx, accountProvider)
 
