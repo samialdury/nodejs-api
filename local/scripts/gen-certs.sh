@@ -26,6 +26,8 @@ reset=$(tput sgr0)
 
 domain_name_dev=$1
 domain_name_test=$2
+domain_name_wildcard_dev="*.$domain_name_dev"
+domain_name_wildcard_test="*.$domain_name_test"
 
 # Check if domain names are provided
 if [ -z "$domain_name_dev" ] || [ -z "$domain_name_test" ]; then
@@ -40,6 +42,10 @@ dev_cert_file_name=dev.cert.pem
 dev_key_file_name=dev.key.pem
 test_cert_file_name=test.cert.pem
 test_key_file_name=test.key.pem
+wildcard_dev_cert_file_name=wildcard-dev.cert.pem
+wildcard_dev_key_file_name=wildcard-dev.key.pem
+wildcard_test_cert_file_name=wildcard-test.cert.pem
+wildcard_test_key_file_name=wildcard-test.key.pem
 
 # Check if mkcert is installed
 if ! command -v mkcert &>/dev/null; then
@@ -59,5 +65,13 @@ mkcert -cert-file $certs_dir/$dev_cert_file_name -key-file $certs_dir/$dev_key_f
 # Generate test certificates
 echo "${green}=== Generating test certificates... ===${reset}"
 mkcert -cert-file $certs_dir/$test_cert_file_name -key-file $certs_dir/$test_key_file_name $domain_name_test
+
+# Generate wildcard dev certificates
+echo "${green}=== Generating wildcard dev certificates... ===${reset}"
+mkcert -cert-file $certs_dir/$wildcard_dev_cert_file_name -key-file $certs_dir/$wildcard_dev_key_file_name $domain_name_wildcard_dev
+
+# Generate wildcard test certificates
+echo "${green}=== Generating wildcard test certificates... ===${reset}"
+mkcert -cert-file $certs_dir/$wildcard_test_cert_file_name -key-file $certs_dir/$wildcard_test_key_file_name $domain_name_wildcard_test
 
 echo "${green}=== Certificates generated successfully! ===${reset}"

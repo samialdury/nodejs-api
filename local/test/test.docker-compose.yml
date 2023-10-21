@@ -1,5 +1,5 @@
 services:
-    app-test:
+    app:
         build:
             context: ../../
             dockerfile: local/local.Dockerfile
@@ -9,9 +9,9 @@ services:
             - .test.env
         labels:
             traefik.enable: true
-            traefik.http.routers.test.rule: Host(`nodejs-api.test.sami.codes`)
-            traefik.http.routers.test.entrypoints: websecure
-            traefik.http.routers.test.tls: true
+            traefik.http.routers.nodejs-api.rule: Host(`nodejs-api.test.sami.codes`)
+            traefik.http.routers.nodejs-api.entrypoints: websecure
+            traefik.http.routers.nodejs-api.tls: true
         expose:
             - 8080
         volumes:
@@ -19,7 +19,7 @@ services:
         profiles:
             - app
 
-    mysql-test:
+    mysql:
         image: mysql:8
         container_name: mysql_nodejs-api_test
         restart: unless-stopped

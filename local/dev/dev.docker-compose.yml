@@ -1,28 +1,18 @@
 services:
-    app-dev:
+    app:
         build:
             context: ../../
             dockerfile: local/local.Dockerfile
-        command: ['make', 'dev-docker']
+        command: ['make', 'dev-local']
         container_name: nodejs-api_dev
         restart: unless-stopped
-        # healthcheck:
-        #     test:
-        #         - CMD
-        #         - curl
-        #         - --fail
-        #         - http://localhost:8080/status
-        #     start_period: 5s
-        #     interval: 3s
-        #     timeout: 1s
-        #     retries: 5
         env_file:
             - .dev.env
         labels:
             traefik.enable: true
-            traefik.http.routers.dev.rule: Host(`nodejs-api.dev.sami.codes`)
-            traefik.http.routers.dev.entrypoints: websecure
-            traefik.http.routers.dev.tls: true
+            traefik.http.routers.nodejs-api.rule: Host(`nodejs-api.dev.sami.codes`)
+            traefik.http.routers.nodejs-api.entrypoints: websecure
+            traefik.http.routers.nodejs-api.tls: true
         expose:
             - 8080
         volumes:
@@ -30,7 +20,7 @@ services:
         profiles:
             - app
 
-    mysql-dev:
+    mysql:
         image: mysql:8
         container_name: mysql_nodejs-api_dev
         restart: unless-stopped

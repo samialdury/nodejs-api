@@ -19,6 +19,8 @@ SRC_DIR ?= src
 BUILD_DIR ?= build
 CACHE_DIR ?= .cache
 
+TEST_FILES ?= {src,test}/**/*.test.ts
+
 MYSQL_SEEDS_DIR ?= seeds/mysql
 
 PROXY_COMPOSE_FILE ?= $(LOCAL_DIR)/proxy.docker-compose.yml
@@ -32,11 +34,13 @@ COMPOSE_TEST ?= docker compose -f $(TEST_COMPOSE_FILE)
 RUN_IN_DOCKER ?= $(SCRIPTS_DIR)/run-cmd.sh
 WAIT_UNTIL ?= $(SCRIPTS_DIR)/wait-until.sh
 
+PINO_PRETTY ?= $(BIN)/pino-pretty --colorize
+
 ##@ Misc
 
 .PHONY: help
 help: ## Display this help
-	@awk 'BEGIN {FS = ":.*##"; printf "Usage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_0-9-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
+	@awk 'BEGIN {FS = ":.*##"; printf "Usage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_0-9-]+:.*?##/ { printf "  \033[36m%-16s\033[0m  %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
 # You can remove this target once you've ran it.
 .PHONY: prepare
@@ -55,14 +59,6 @@ else
 	@$(BIN)/husky install
 endif
 
-.PHONY: dev-local
-dev-local: ## run TS and watch for changes
-	@node --env-file $(DEV)/.dev.env --no-warnings --loader tsx --watch --watch-preserve-output $(SRC_DIR)/main.ts | $(BIN)/pino-pretty
-
-.PHONY: dev-docker
-dev-docker: ## run TS and watch for changes (docker)
-	@node --no-warnings --loader tsx --watch --watch-preserve-output $(SRC_DIR)/main.ts | $(BIN)/pino-pretty --colorize
-
 .PHONY: dev-support
 dev-support: ## start the support services
 	@$(COMPOSE_PROXY) up --detach --wait
@@ -73,8 +69,8 @@ dev-prepare: ## prepare the dev environment
 	@echo "=== $(CYAN)preparing dev environment$(NC) ==="
 	@echo
 	@echo "=== $(CYAN)pulling & building docker images$(NC) ==="
-	@$(COMPOSE_DEV) build app-dev
-	@$(COMPOSE_DEV) pull mysql-dev
+	@$(COMPOSE_DEV) build app
+	@$(COMPOSE_DEV) pull mysql
 	@echo "=== $(GREEN)docker images ready$(NC) ==="
 	@echo "=== $(CYAN)preparing docker network$(NC) ==="
 	@docker network create $(PROJECT_NAME) || true
@@ -88,13 +84,21 @@ dev-prepare: ## prepare the dev environment
 	@echo
 	@echo "=== $(GREEN)dev environment ready$(NC) ==="
 
+.PHONY: dev-local
+dev-local: ## run TS and watch for changes
+	@node --env-file $(DEV)/.dev.env --no-warnings --import tsx --watch --watch-preserve-output $(SRC_DIR)/main.ts | $(PINO_PRETTY)
+
 .PHONY: dev
-dev: ## start the app in dev mode
+dev: ## run TS and watch for changes (Docker)
 	@$(COMPOSE_DEV) --profile app up
 
+.PHONY: run-local
+run-local: ## run JS
+	@node --env-file .env $(BUILD_DIR)/$(SRC_DIR)/main.js | $(PINO_PRETTY)
+
 .PHONY: run
-run: ## run JS
-	@$(RUN_IN_DOCKER) 'node --env-file .env $(BUILD_DIR)/$(SRC_DIR)/main.js | $(BIN)/pino-pretty --colorize'
+run: ## run JS (Docker)
+	@$(RUN_IN_DOCKER) $(DEV_COMPOSE_FILE) 'make run-local'
 
 ##@ Database
 
@@ -110,7 +114,7 @@ ifeq ($(name),)
 	@exit 1
 else
 	@$(RUN_IN_DOCKER) $(or $(compose), $(DEV_COMPOSE_FILE)) \
-		'node --env-file $(DEV)/.dev.env --no-warnings --loader tsx $(MYSQL_SEEDS_DIR)/$(name).ts | $(BIN)/pino-pretty'
+		'node --env-file $(DEV)/.dev.env --no-warnings --import tsx $(MYSQL_SEEDS_DIR)/$(name).ts | $(PINO_PRETTY)'
 endif
 
 ##@ Build
@@ -134,8 +138,8 @@ test-prepare: ## prepare the test environment
 	@echo "=== $(CYAN)preparing test environment$(NC) ==="
 	@echo
 	@echo "=== $(CYAN)pulling & building docker images$(NC) ==="
-	@$(COMPOSE_TEST) build app-test
-	@$(COMPOSE_TEST) pull mysql-test
+	@$(COMPOSE_TEST) build app
+	@$(COMPOSE_TEST) pull mysql
 	@echo "=== $(GREEN)docker images ready$(NC) ==="
 	@echo "=== $(CYAN)preparing docker network$(NC) ==="
 	@docker network create $(PROJECT_NAME) || true
@@ -149,13 +153,21 @@ test-prepare: ## prepare the test environment
 	@echo
 	@echo "=== $(GREEN)test environment ready$(NC) ==="
 
+.PHONY: test-local
+test-local: ## run tests
+	@$(BIN)/glob -c 'node --env-file $(TEST_DIR)/.test.env --no-warnings --import tsx --test $(args)' '$(TEST_FILES)'
+
+.PHONY: test-watch-local
+test-watch-local: ## run tests and watch for changes
+	@make test-local args='--watch --watch-preserve-output'
+
 .PHONY: test
-test: ## run tests
-	@$(RUN_IN_DOCKER) $(TEST_COMPOSE_FILE) '$(BIN)/glob -c "node --env-file .test.env --no-warnings --loader tsx --test" "{src,test}/**/*.test.ts"'
+test: ## run tests (Docker)
+	@$(RUN_IN_DOCKER) $(TEST_COMPOSE_FILE) 'make test-local'
 
 .PHONY: test-watch
-test-watch: ## run tests and watch for changes
-	@$(RUN_IN_DOCKER) $(TEST_COMPOSE_FILE) '$(BIN)/glob -c "node --env-file .test.env --no-warnings --loader tsx --watch --watch-preserve-output --test" "{src,test}/**/*.test.ts"'
+test-watch: ## run tests and watch for changes (Docker)
+	@$(RUN_IN_DOCKER) $(TEST_COMPOSE_FILE) 'make test-watch-local'
 
 ##@ Code quality
 

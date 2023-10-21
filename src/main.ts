@@ -12,10 +12,13 @@ async function main(): Promise<void> {
 
     const server = await initApi(config, logger, { mySql })
 
-    onExit({ logger }, async () => {
-        await server.close()
-        await mySqlPool.end()
-    })
+    onExit(
+        async () => {
+            await server.close()
+            await mySqlPool.end()
+        },
+        { logger },
+    )
 
     await server.listen({
         host: config.host,

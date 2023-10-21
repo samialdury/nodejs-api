@@ -37,7 +37,7 @@ async function main() {
         .replaceAll('MYSQL_DATABASE=""', `MYSQL_DATABASE="${mySqlDb}"`)
         .replaceAll(
             'MYSQL_DATABASE_URL="mysql://"',
-            `MYSQL_DATABASE_URL="mysql://${mySqlUser}:${mySqlPassword}@mysql-test:3306/${mySqlDb}"`,
+            `MYSQL_DATABASE_URL="mysql://${mySqlUser}:${mySqlPassword}@mysql:3306/${mySqlDb}"`,
         )
 
     await fs.writeFile(testEnvFileLocation, replacedEnvFile)
