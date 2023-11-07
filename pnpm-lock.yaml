@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@fastify/auth':
-    specifier: 4.3.0
-    version: 4.3.0
+    specifier: 4.4.0
+    version: 4.4.0
   '@fastify/bearer-auth':
     specifier: 9.0.0
     version: 9.0.0
@@ -45,8 +45,8 @@ dependencies:
     specifier: 2.3.0
     version: 2.3.0
   jose:
-    specifier: 5.0.1
-    version: 5.0.1
+    specifier: 5.1.0
+    version: 5.1.0
   mysql2:
     specifier: 3.6.2
     version: 3.6.2
@@ -77,8 +77,8 @@ devDependencies:
     specifier: 1.16.1
     version: 1.16.1
   '@pulumi/pulumi':
-    specifier: 3.91.1
-    version: 3.91.1
+    specifier: 3.92.0
+    version: 3.92.0
   '@samialdury/config':
     specifier: 6.1.2
     version: 6.1.2(@commitlint/cli@18.2.0)(eslint@8.52.0)(lint-staged@15.0.2)(prettier@3.0.3)(semantic-release@22.0.5)(typescript@5.2.2)
@@ -581,8 +581,8 @@ packages:
       fast-uri: 2.2.0
     dev: false
 
-  /@fastify/auth@4.3.0:
-    resolution: {integrity: sha512-LYAQteyywfbjvp1edSNID0WEfe9wSXovp2JGSraV7NnZIwz4QZjQuIdo+vtopin7ZQZLxb1Ms/Gv/FXXkuiuJA==}
+  /@fastify/auth@4.4.0:
+    resolution: {integrity: sha512-gGFicD/q1MSEPA+qiJAc+egZzzUH6LKJHDdLWQ5TfcgGxfszNMa+Dbx3ehKtGRpB2fOQF41/+yfFv8C12xoBHQ==}
     dependencies:
       fastify-plugin: 4.5.1
       reusify: 1.0.4
@@ -638,8 +638,8 @@ packages:
       '@sinclair/typebox': 0.31.20
     dev: true
 
-  /@grpc/grpc-js@1.9.7:
-    resolution: {integrity: sha512-yMaA/cIsRhGzW3ymCNpdlPcInXcovztlgu/rirThj2b87u3RzWUszliOqZ/pldy7yhmJPS8uwog+kZSTa4A0PQ==}
+  /@grpc/grpc-js@1.9.6:
+    resolution: {integrity: sha512-yq3qTy23u++8zdvf+h4mz4ohDFi681JAkMZZPTKh8zmUVh0AKLisFlgxcn22FMNowXz15oJ6pqgwT7DJ+PdJvg==}
     engines: {node: ^8.13.0 || >=10.10.0}
     dependencies:
       '@grpc/proto-loader': 0.7.10
@@ -1258,16 +1258,16 @@ packages:
   /@pulumi/hcloud@1.16.1:
     resolution: {integrity: sha512-cSyYNGSx5Q/YRubv5RBSxQHzhuGcWIMVEikvi0b4tXgdQxrPnp0bg7UrTK5JkfHMyaoFGkjy8HxQXEDlLgGp3w==}
     dependencies:
-      '@pulumi/pulumi': 3.91.1
+      '@pulumi/pulumi': 3.92.0
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@pulumi/pulumi@3.91.1:
-    resolution: {integrity: sha512-ZKX9twt1+EDSb/Sg3d9fffA74f3Ikx90Xc8k7C++qdaOkcwKd2RTycciZdzvM/ri7KW4B6CYU2qCgKy33li6tQ==}
+  /@pulumi/pulumi@3.92.0:
+    resolution: {integrity: sha512-G0LqldpT+IMjIySUP0GJ5NAxU9dY9cCQrVnTeXoeuZk6YWyo/xMNOyZFodUpgVl3Xbmf2jVVoAnD+5FT3vaeAQ==}
     engines: {node: '>=8.13.0 || >=10.10.0'}
     dependencies:
-      '@grpc/grpc-js': 1.9.7
+      '@grpc/grpc-js': 1.9.6
       '@logdna/tail-file': 2.2.0
       '@opentelemetry/api': 1.6.0
       '@opentelemetry/exporter-zipkin': 1.17.1(@opentelemetry/api@1.6.0)
@@ -4344,8 +4344,8 @@ packages:
       '@sideway/pinpoint': 2.0.0
     dev: false
 
-  /jose@5.0.1:
-    resolution: {integrity: sha512-gRVzy7s3RRdGbXmcTdlOswJOjhwPLx1ijIgAqLY6ktzFpOJxxYn4l0fC2vHaHHi4YBX/5FOL3aY+6W0cvQgpug==}
+  /jose@5.1.0:
+    resolution: {integrity: sha512-H+RVqxA6apaJ0rcQYupKYhos7uosAiF42gUcWZiwhICWMphDULFj/CRr1R0tV/JCv9DEeJaSyYYpc9luHHNT4g==}
     dev: false
 
   /joycon@3.1.1:
