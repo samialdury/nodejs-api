@@ -34,7 +34,7 @@
         "@total-typescript/ts-reset": "0.5.1",
         "@types/node": "20.9.0",
         "drizzle-kit": "0.19.13",
-        "eslint": "8.52.0",
+        "eslint": "8.53.0",
         "glob": "10.3.10",
         "husky": "8.0.3",
         "lint-staged": "15.0.2",
