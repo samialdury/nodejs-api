@@ -1,10 +1,10 @@
-import { Config } from 'drizzle-kit'
+import { defineConfig } from 'drizzle-kit'
 
-export default {
+export default defineConfig({
     schema: './src/db/mysql/schema.ts',
     driver: 'mysql2',
     verbose: true,
     dbCredentials: {
-        connectionString: process.env.MYSQL_DATABASE_URL as string,
+        uri: process.env.MYSQL_DATABASE_URL as string,
     },
-} satisfies Config
+})
