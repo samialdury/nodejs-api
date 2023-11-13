@@ -24,8 +24,8 @@ dependencies:
     specifier: 2.2.2
     version: 2.2.2
   '@sinclair/typebox':
-    specifier: 0.31.22
-    version: 0.31.22
+    specifier: 0.31.23
+    version: 0.31.23
   drizzle-orm:
     specifier: 0.28.6
     version: 0.28.6(@opentelemetry/api@1.6.0)(mysql2@3.6.3)
@@ -72,7 +72,7 @@ devDependencies:
     version: 0.18.20
   '@fastify/type-provider-typebox':
     specifier: 3.5.0
-    version: 3.5.0(@sinclair/typebox@0.31.22)
+    version: 3.5.0(@sinclair/typebox@0.31.23)
   '@pulumi/hcloud':
     specifier: 1.16.2
     version: 1.16.2
@@ -647,12 +647,12 @@ packages:
       - supports-color
     dev: false
 
-  /@fastify/type-provider-typebox@3.5.0(@sinclair/typebox@0.31.22):
+  /@fastify/type-provider-typebox@3.5.0(@sinclair/typebox@0.31.23):
     resolution: {integrity: sha512-f48uGzvLflE/y4pvXOS8qjAC+mZmlqev9CPHnB8NDsBSL4EbeydO61IgPuzOkeNlAYeRP9Y56UOKj1XWFibgMw==}
     peerDependencies:
       '@sinclair/typebox': '>=0.26 <=0.31'
     dependencies:
-      '@sinclair/typebox': 0.31.22
+      '@sinclair/typebox': 0.31.23
     dev: true
 
   /@grpc/grpc-js@1.9.6:
@@ -1520,8 +1520,8 @@ packages:
     resolution: {integrity: sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==}
     dev: false
 
-  /@sinclair/typebox@0.31.22:
-    resolution: {integrity: sha512-CKviMgpcXd8q8IsQQD8cCleswe4/EkQRcOqtVQcP1e+XUyszjJYjgL5Dtf3XunWZc2zEGmQPqJEsq08NiW9xfw==}
+  /@sinclair/typebox@0.31.23:
+    resolution: {integrity: sha512-ZzrzE8yCrWWU4mcBstBgdlBMjB8My3ESY9nZ/v996GptIJb4+MU1p7s1Qxrc2xvZeOiDDnAheLLmdHjPgZV79g==}
 
   /@sindresorhus/is@3.1.2:
     resolution: {integrity: sha512-JiX9vxoKMmu8Y3Zr2RVathBL1Cdu4Nt4MuNWemt1Nc06A0RAin9c5FArkhGsyMBWfCu4zj+9b+GxtjAnE4qqLQ==}
