@@ -10,7 +10,7 @@
         "@fastify/oauth2": "7.5.0",
         "@panva/hkdf": "1.1.1",
         "@paralleldrive/cuid2": "2.2.2",
-        "@sinclair/typebox": "0.31.22",
+        "@sinclair/typebox": "0.31.23",
         "drizzle-orm": "0.28.6",
         "envey": "2.2.1",
         "fastify": "4.24.3",
