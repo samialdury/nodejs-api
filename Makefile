@@ -34,8 +34,6 @@ COMPOSE_TEST ?= docker compose -f $(TEST_COMPOSE_FILE)
 RUN_IN_DOCKER ?= $(SCRIPTS_DIR)/run-cmd.sh
 WAIT_UNTIL ?= $(SCRIPTS_DIR)/wait-until.sh
 
-PINO_PRETTY ?= $(BIN)/pino-pretty --colorize
-
 ##@ Misc
 
 .PHONY: help
@@ -86,7 +84,7 @@ dev-prepare: ## prepare the dev environment
 
 .PHONY: dev-local
 dev-local: ## run TS and watch for changes
-	@node --env-file $(DEV)/.dev.env --no-warnings --import tsx --watch --watch-preserve-output $(SRC_DIR)/main.ts | $(PINO_PRETTY)
+	@node --env-file $(DEV)/.dev.env --no-warnings --import tsx --watch --watch-preserve-output $(SRC_DIR)/main.ts
 
 .PHONY: dev
 dev: ## run TS and watch for changes (Docker)
@@ -94,7 +92,7 @@ dev: ## run TS and watch for changes (Docker)
 
 .PHONY: run-local
 run-local: ## run JS
-	@node --env-file .env $(BUILD_DIR)/$(SRC_DIR)/main.js | $(PINO_PRETTY)
+	@node --env-file .env $(BUILD_DIR)/$(SRC_DIR)/main.js
 
 .PHONY: run
 run: ## run JS (Docker)
@@ -114,7 +112,7 @@ ifeq ($(name),)
 	@exit 1
 else
 	@$(RUN_IN_DOCKER) $(or $(compose), $(DEV_COMPOSE_FILE)) \
-		'node --env-file $(DEV)/.dev.env --no-warnings --import tsx $(MYSQL_SEEDS_DIR)/$(name).ts | $(PINO_PRETTY)'
+		'node --env-file $(DEV)/.dev.env --no-warnings --import tsx $(MYSQL_SEEDS_DIR)/$(name).ts'
 endif
 
 ##@ Build

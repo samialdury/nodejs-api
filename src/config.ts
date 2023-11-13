@@ -5,11 +5,34 @@ import {
     createConfig,
 } from 'envey'
 import { z } from 'zod'
+import { BaseError } from './errors/base-error.js'
 
 const schema = {
     commitSha: {
         env: 'COMMIT_SHA',
-        format: z.string(),
+        format: z.string().default('unknown'),
+    },
+    logLevel: {
+        env: 'LOG_LEVEL',
+        format: z
+            .enum([
+                'fatal',
+                'error',
+                'warn',
+                'info',
+                'debug',
+                'trace',
+                'silent',
+            ])
+            .default('info'),
+    },
+    projectName: {
+        env: 'PROJECT_NAME',
+        format: z.string().default('nodejs-api'),
+    },
+    env: {
+        env: 'ENV',
+        format: z.enum(['prod', 'dev', 'test']).default('prod'),
     },
     cookieSecret: {
         env: 'COOKIE_SECRET',
@@ -39,18 +62,6 @@ const schema = {
         env: 'JWT_SECRET',
         format: z.string(),
     },
-    logLevel: {
-        env: 'LOG_LEVEL',
-        format: z.enum([
-            'fatal',
-            'error',
-            'warn',
-            'info',
-            'debug',
-            'trace',
-            'silent',
-        ]),
-    },
     logRequests: {
         env: 'LOG_REQUESTS',
         format: bool(z, false),
@@ -62,10 +73,6 @@ const schema = {
     port: {
         env: 'PORT',
         format: z.coerce.number().int().min(1024).max(65_535).default(8080),
-    },
-    projectName: {
-        env: 'PROJECT_NAME',
-        format: z.string(),
     },
     publicHost: {
         env: 'PUBLIC_HOST',
@@ -79,13 +86,19 @@ const schema = {
 
 export type Config = InferEnveyConfig<typeof schema>
 
+class ConfigError extends BaseError {
+    constructor(message: string) {
+        super(message, false)
+    }
+}
+
 export function initConfig(): Config {
     const result = createConfig(z, schema, { validate: true })
 
     if (!result.success) {
         // eslint-disable-next-line no-console
         console.error(result.error.issues)
-        throw new Error('Invalid config')
+        throw new ConfigError('Invalid configuration')
     }
 
     return result.config
