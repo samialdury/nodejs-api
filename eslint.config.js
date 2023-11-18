@@ -25,4 +25,9 @@ export default [
             'import/no-extraneous-dependencies': 'off',
         },
     },
+    {
+        rules: {
+            '@typescript-eslint/explicit-function-return-type': 'off',
+        },
+    },
 ]

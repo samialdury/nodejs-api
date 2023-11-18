@@ -36,7 +36,7 @@ const schema = {
     },
     cookieSecret: {
         env: 'COOKIE_SECRET',
-        format: z.string(),
+        format: z.string().min(16),
     },
     githubClientId: {
         env: 'GITHUB_CLIENT_ID',
@@ -60,7 +60,7 @@ const schema = {
     },
     jwtSecret: {
         env: 'JWT_SECRET',
-        format: z.string(),
+        format: z.string().min(16),
     },
     logRequests: {
         env: 'LOG_REQUESTS',

@@ -4,17 +4,9 @@ import {
     fastifyBearerAuth,
 } from '@fastify/bearer-auth'
 import { fastifyOauth2 } from '@fastify/oauth2'
-import {
-    CONTEXT,
-    GITHUB_AUTH_NS,
-    VERIFY_USER_JWT,
-} from '../../api/constants.js'
-import {
-    type ServerRequest,
-    type ServerResponse,
-    serverPlugin,
-} from '../../api/server.js'
-import { authMiddleware } from './middleware.js'
+import { GITHUB_AUTH_NS } from '../../api/constants.js'
+import { serverPlugin } from '../../api/server.js'
+import { verifyUserJwt } from './middleware.js'
 
 export const authPlugin = serverPlugin(
     async (server) => {
@@ -27,11 +19,7 @@ export const authPlugin = serverPlugin(
             addHook: false,
             auth: async (key, request) => {
                 try {
-                    await authMiddleware.verifyUserJwt(
-                        server[CONTEXT],
-                        key,
-                        request,
-                    )
+                    await verifyUserJwt(server.ctx.config, key, request)
                     return true
                 } catch {
                     return false
@@ -41,20 +29,9 @@ export const authPlugin = serverPlugin(
             verifyErrorLogLevel: 'warn',
         } as FastifyBearerAuthOptions)
 
-        server.decorate(
-            VERIFY_USER_JWT,
-            async (request: ServerRequest, response: ServerResponse) => {
-                return authMiddleware.verifyUserJwtFromCookie(
-                    server[CONTEXT],
-                    request,
-                    response,
-                )
-            },
-        )
-
         // GitHub
         await server.register(fastifyOauth2, {
-            callbackUri: `${server[CONTEXT].config.publicHost}${server[CONTEXT].config.githubLoginPath}/callback`,
+            callbackUri: `${server.ctx.config.publicHost}${server.ctx.config.githubLoginPath}/callback`,
             cookie: {
                 httpOnly: true,
                 sameSite: 'lax',
@@ -64,14 +41,14 @@ export const authPlugin = serverPlugin(
             credentials: {
                 auth: fastifyOauth2.GITHUB_CONFIGURATION,
                 client: {
-                    id: server[CONTEXT].config.githubClientId,
-                    secret: server[CONTEXT].config.githubClientSecret,
+                    id: server.ctx.config.githubClientId,
+                    secret: server.ctx.config.githubClientSecret,
                 },
             },
             logLevel: 'warn',
             name: GITHUB_AUTH_NS,
-            scope: ['read:user user:email'],
-            startRedirectPath: server[CONTEXT].config.githubLoginPath,
+            scope: ['read:user', 'user:email'],
+            startRedirectPath: server.ctx.config.githubLoginPath,
         })
     },
     {

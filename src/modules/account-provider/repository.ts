@@ -1,32 +1,33 @@
-import { and, eq, isNull } from 'drizzle-orm'
-import type { Context } from '../../api/context.js'
+import type { MySqlConnection } from '../../db/mysql/connection.js'
 import type { AccountProvider, ValidAccountProviders } from './model.js'
-import { accountProvider } from '../../db/mysql/schema.js'
 
-export async function getById(
-    { mySql }: Context,
-    id: string,
-): Promise<AccountProvider | undefined> {
-    const result = await mySql.query.accountProvider.findFirst({
-        where: and(
-            eq(accountProvider.id, id),
-            isNull(accountProvider.deletedAt),
-        ),
-    })
+export type AccountProviderRepository = ReturnType<
+    typeof newAccountProviderRepository
+>
 
-    return result
-}
+export function newAccountProviderRepository(mySql: MySqlConnection) {
+    async function getById(id: string): Promise<AccountProvider | undefined> {
+        const result = await mySql.query.accountProvider.findFirst({
+            where: (table, { and, eq, isNull }) =>
+                and(eq(table.id, id), isNull(table.deletedAt)),
+        })
 
-export async function getByName(
-    { mySql }: Context,
-    name: ValidAccountProviders,
-): Promise<AccountProvider | undefined> {
-    const result = await mySql.query.accountProvider.findFirst({
-        where: and(
-            eq(accountProvider.name, name),
-            isNull(accountProvider.deletedAt),
-        ),
-    })
+        return result
+    }
 
-    return result
+    async function getByName(
+        name: ValidAccountProviders,
+    ): Promise<AccountProvider | undefined> {
+        const result = await mySql.query.accountProvider.findFirst({
+            where: (table, { and, eq, isNull }) =>
+                and(eq(table.name, name), isNull(table.deletedAt)),
+        })
+
+        return result
+    }
+
+    return {
+        getById,
+        getByName,
+    }
 }

@@ -8,7 +8,7 @@ import type {
     RouteOptions,
     Server,
 } from './server.js'
-import { CONTEXT, GITHUB_AUTH_NS, Status } from './constants.js'
+import { Status } from './constants.js'
 
 // @ts-expect-error - We're sure that it's a valid key
 type GetStatic<S, K extends keyof S> = Static<S[K]>
@@ -22,6 +22,9 @@ export type Cookies = Record<
 >
 
 export type Headers = Record<string, string>
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type BaseGenericContext = Record<string, any>
 
 export interface ResponseType<
     Schema extends ControllerSchema = never,
@@ -37,6 +40,7 @@ export interface ResponseType<
 }
 
 export type Controller<
+    TContext extends BaseGenericContext,
     TSchema extends ControllerSchema = never,
     TStatus extends keyof TSchema['response'] = keyof TSchema['response'],
 > = (
@@ -48,7 +52,7 @@ export type Controller<
             query: Readonly<GetStatic<TSchema, 'querystring'>>
             s: typeof Status
         } & {
-            ctx: ControllerContext
+            ctx: ControllerContext & TContext
         }
     >,
 ) => Promise<ResponseType<TSchema, TStatus>> | ResponseType<TSchema, TStatus>
@@ -77,8 +81,11 @@ export function createResponse<
     } as ResponseType<TSchema, TStatus>
 }
 
-export interface RouteDefinition<TSchema extends ControllerSchema> {
-    controller: Controller<TSchema>
+export interface RouteDefinition<
+    TContext extends BaseGenericContext,
+    TSchema extends ControllerSchema,
+> {
+    controller: Controller<TContext, TSchema>
     schema: TSchema
 }
 
@@ -98,11 +105,17 @@ export function createSchema<TSchema extends ControllerSchema>(
     return schema(Status, Type)
 }
 
-export function createController<TSchema extends ControllerSchema>(
+export function createController<
+    TContext extends BaseGenericContext,
+    TSchema extends ControllerSchema,
+>(
     server: Server,
     method: HTTPMethods,
     url: string,
-    { schema, controller }: RouteDefinition<TSchema>,
+    {
+        schema,
+        controller,
+    }: RouteDefinition<ControllerContext & TContext, TSchema>,
 ): RouteOptions {
     return {
         handler: async (request, response) => {
@@ -110,23 +123,20 @@ export function createController<TSchema extends ControllerSchema>(
                 await controller({
                     s: Status,
                     body: request.body as never,
-                    ctx: {
-                        auth: {
-                            github: server[GITHUB_AUTH_NS],
-                        },
-                        config: server[CONTEXT].config,
-                        mySql: server[CONTEXT].mySql,
-                        logger: server[CONTEXT].logger,
-                        redirect: createRedirect,
-                        request,
-                        response: createResponse,
-                        server,
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
-                        user: (request as any).user,
-                    },
                     headers: request.headers as never,
                     params: request.params as never,
                     query: request.query as never,
+                    ctx: {
+                        request,
+                        server,
+                        redirect: createRedirect,
+                        response: createResponse,
+                        auth: {
+                            github: server.githubOAuth2,
+                        },
+                        ...server.ctx,
+                        ...server.scopedCtx,
+                    } as ControllerContext & TContext,
                 })
 
             if (cookies) {

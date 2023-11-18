@@ -7,7 +7,6 @@ import {
     varchar,
 } from 'drizzle-orm/mysql-core'
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function cuidColumn(name: string) {
     return char(name, { length: 31 })
 }

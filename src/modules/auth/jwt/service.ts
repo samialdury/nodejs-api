@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto'
 import { hkdf } from '@panva/hkdf'
 import { EncryptJWT, jwtDecrypt } from 'jose'
-import type { Context } from '../../../api/context.js'
+import type { Config } from '../../../config.js'
 
 export interface JwtEncodeParams<TPayload extends Record<string, unknown>> {
     /**
@@ -25,53 +25,48 @@ export interface JwtDecodeParams {
 
 const DEFAULT_MAX_AGE = 30 * 24 * 60 * 60 // 30 days
 
-function now(): number {
+function nowSeconds(): number {
     return Math.trunc(Date.now() / 1000)
 }
 
-async function encode<TPayload extends Record<string, unknown>>(
-    ctx: Context,
-    { maxAge = DEFAULT_MAX_AGE, payload }: JwtEncodeParams<TPayload>,
-): Promise<string> {
-    const encryptionSecret = await getDerivedEncryptionKey(ctx)
-
-    const jwt = await new EncryptJWT(payload)
-        .setProtectedHeader({ alg: 'dir', enc: 'A256GCM' })
-        .setIssuer(ctx.config.projectName)
-        .setIssuedAt()
-        .setExpirationTime(now() + maxAge)
-        .setJti(randomUUID())
-        .encrypt(encryptionSecret)
-
-    return jwt
-}
-
-async function decode<TPayload>(
-    ctx: Context,
-    { token }: JwtDecodeParams,
-): Promise<TPayload> {
-    const encryptionSecret = await getDerivedEncryptionKey(ctx)
-
-    const { payload } = await jwtDecrypt(token, encryptionSecret, {
-        clockTolerance: 15,
-    })
-
-    return payload as TPayload
-}
-
-async function getDerivedEncryptionKey(ctx: Context): Promise<Uint8Array> {
+async function getDerivedEncryptionKey(config: Config): Promise<Uint8Array> {
     const key = await hkdf(
         'sha256',
-        ctx.config.jwtSecret,
+        config.jwtSecret,
         '',
-        `${ctx.config.projectName} Generated Encryption Key`,
+        `${config.projectName} generated encryption key`,
         32,
     )
 
     return key
 }
 
-export const jwt = {
-    decode,
-    encode,
+export async function encodeJwt<TPayload extends Record<string, unknown>>(
+    config: Config,
+    { maxAge = DEFAULT_MAX_AGE, payload }: JwtEncodeParams<TPayload>,
+): Promise<string> {
+    const encryptionSecret = await getDerivedEncryptionKey(config)
+
+    const jwt = await new EncryptJWT(payload)
+        .setProtectedHeader({ alg: 'dir', enc: 'A256GCM' })
+        .setIssuer(config.projectName)
+        .setIssuedAt()
+        .setExpirationTime(nowSeconds() + maxAge)
+        .setJti(randomUUID())
+        .encrypt(encryptionSecret)
+
+    return jwt
+}
+
+export async function decodeJwt<TPayload>(
+    config: Config,
+    { token }: JwtDecodeParams,
+): Promise<TPayload> {
+    const encryptionSecret = await getDerivedEncryptionKey(config)
+
+    const { payload } = await jwtDecrypt(token, encryptionSecret, {
+        clockTolerance: 15,
+    })
+
+    return payload as TPayload
 }

@@ -1,7 +1,6 @@
 import type { Config } from '../config.js'
 import type { MySqlConnection } from '../db/mysql/connection.js'
 import type { Logger } from '../logger.js'
-import type { UserJwt } from '../modules/user/jwt.js'
 import type { createRedirect, createResponse } from './controller.js'
 import type { OAuth2Namespace, Server, ServerRequest } from './server.js'
 
@@ -17,7 +16,6 @@ export interface Context extends DatabaseConnections {
 export interface ControllerContext extends Context {
     server: Server
     request: ServerRequest
-    user: UserJwt
     auth: {
         github: OAuth2Namespace
     }

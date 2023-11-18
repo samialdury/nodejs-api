@@ -1,23 +1,13 @@
-import type { Controller, Cookies } from '../../../../api/controller.js'
+import type { Controller } from '../../../../api/controller.js'
+import type { AuthModuleContext } from '../../context.js'
 import type { schema } from './schema.js'
 import { ConflictError } from '../../../../api/errors/http-errors.js'
-import { userService } from '../../../user/service.js'
 import { getGithubUserInfo } from '../../service/github.js'
 
-function setAccessTokenCookie(accessToken: string): Cookies {
-    return {
-        accessToken: {
-            options: {
-                // Expires in 30 days
-                expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-                maxAge: 30 * 24 * 60 * 60,
-            },
-            value: accessToken,
-        },
-    }
-}
-
-export const controller: Controller<typeof schema> = async ({ s, ctx }) => {
+export const controller: Controller<AuthModuleContext, typeof schema> = async ({
+    s,
+    ctx,
+}) => {
     const { token } =
         await ctx.auth.github.getAccessTokenFromAuthorizationCodeFlow(
             ctx.request,
@@ -29,23 +19,19 @@ export const controller: Controller<typeof schema> = async ({ s, ctx }) => {
 
     ctx.logger.debug(githubUser, 'Received user info from GitHub')
 
-    const user = await userService.getByExternalId(
-        ctx,
-        githubUser.id.toString(),
-    )
+    const user = await ctx.userService.getByExternalId(githubUser.id.toString())
 
     if (user) {
-        const accessToken = await userService.createJwt(ctx, user)
+        const accessToken = await ctx.userService.createJwt(user)
 
         return ctx.response(s.OK, {
             body: {
                 accessToken,
             },
-            cookies: setAccessTokenCookie(accessToken),
         })
     }
 
-    const userByEmail = await userService.getByEmail(ctx, githubUser.email)
+    const userByEmail = await ctx.userService.getByEmail(githubUser.email)
 
     if (userByEmail) {
         ctx.logger.debug(
@@ -61,19 +47,18 @@ export const controller: Controller<typeof schema> = async ({ s, ctx }) => {
 
     ctx.logger.debug('User not found, creating new user')
 
-    const newUser = await userService.create(ctx, 'github', {
+    const newUser = await ctx.userService.create('github', {
         email: githubUser.email,
         externalId: githubUser.id.toString(),
         name: githubUser.name,
         profileImageUrl: githubUser.profileImageUrl,
     })
 
-    const accessToken = await userService.createJwt(ctx, newUser)
+    const accessToken = await ctx.userService.createJwt(newUser)
 
     return ctx.response(s.OK, {
         body: {
             accessToken,
         },
-        cookies: setAccessTokenCookie(accessToken),
     })
 }
