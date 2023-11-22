@@ -20,11 +20,20 @@ async function main() {
 
     const envFile = await fs.readFile(testEnvFileLocation, 'utf8')
 
-    const [mySqlRPassword, mySqlUser, mySqlPassword, mySqlDb] = [
+    const [
+        mySqlRPassword,
+        mySqlUser,
+        mySqlPassword,
+        mySqlDb,
+        jwtSecret,
+        cookieSecret,
+    ] = [
         `rpw_${getRandomString()}`,
         `u_${getRandomString()}`,
         `pw_${getRandomString()}`,
         `db_${getRandomString()}`,
+        `jwt_${getRandomString()}`,
+        `cs_${getRandomString()}`,
     ]
 
     const replacedEnvFile = envFile
@@ -35,6 +44,8 @@ async function main() {
         .replaceAll('MYSQL_USER=""', `MYSQL_USER="${mySqlUser}"`)
         .replaceAll('MYSQL_PASSWORD=""', `MYSQL_PASSWORD="${mySqlPassword}"`)
         .replaceAll('MYSQL_DATABASE=""', `MYSQL_DATABASE="${mySqlDb}"`)
+        .replaceAll('JWT_SECRET=""', `JWT_SECRET="${jwtSecret}"`)
+        .replaceAll('COOKIE_SECRET=""', `COOKIE_SECRET="${cookieSecret}"`)
         .replaceAll(
             'MYSQL_DATABASE_URL="mysql://"',
             `MYSQL_DATABASE_URL="mysql://${mySqlUser}:${mySqlPassword}@mysql:3306/${mySqlDb}"`,
