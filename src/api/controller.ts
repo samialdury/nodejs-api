@@ -1,6 +1,7 @@
 import type { CookieSerializeOptions } from '@fastify/cookie'
 import type { Static } from '@sinclair/typebox'
 import { Type } from '@sinclair/typebox'
+import type { Prettify } from '../types/util.js'
 import type { ControllerContext } from './context.js'
 import type {
     ControllerSchema,
@@ -52,7 +53,7 @@ export type Controller<
             query: Readonly<GetStatic<TSchema, 'querystring'>>
             s: typeof Status
         } & {
-            ctx: ControllerContext & TContext
+            ctx: Prettify<ControllerContext & TContext>
         }
     >,
 ) => Promise<ResponseType<TSchema, TStatus>> | ResponseType<TSchema, TStatus>
