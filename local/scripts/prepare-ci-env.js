@@ -10,7 +10,7 @@ function getTestEnvFileLocation(dirname) {
     return path.join(dirname, '..', 'test', '.test.env')
 }
 
-function getRandomString(size = 16) {
+function getRandomString(size = 8) {
     return crypto.randomBytes(size).toString('hex')
 }
 

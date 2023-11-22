@@ -22,6 +22,7 @@ services:
     mysql:
         image: mysql:8
         container_name: mysql_nodejs-api_test
+        command: --default-authentication-plugin=caching_sha2_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
         restart: unless-stopped
         healthcheck:
             test: "mysql -uroot -p$$MYSQL_ROOT_PASSWORD -e 'SELECT 1'"
