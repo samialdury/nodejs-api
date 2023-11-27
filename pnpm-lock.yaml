@@ -24,11 +24,11 @@ dependencies:
     specifier: 2.2.2
     version: 2.2.2
   '@sinclair/typebox':
-    specifier: 0.31.27
-    version: 0.31.27
+    specifier: 0.31.28
+    version: 0.31.28
   drizzle-orm:
     specifier: 0.29.0
-    version: 0.29.0(@opentelemetry/api@1.6.0)(mysql2@3.6.3)
+    version: 0.29.0(@opentelemetry/api@1.6.0)(mysql2@3.6.5)
   envey:
     specifier: 2.2.1
     version: 2.2.1(zod@3.22.4)
@@ -48,8 +48,8 @@ dependencies:
     specifier: 5.1.1
     version: 5.1.1
   mysql2:
-    specifier: 3.6.3
-    version: 3.6.3
+    specifier: 3.6.5
+    version: 3.6.5
   octokit:
     specifier: 3.1.2
     version: 3.1.2
@@ -62,8 +62,8 @@ dependencies:
 
 devDependencies:
   '@commitlint/cli':
-    specifier: 18.4.2
-    version: 18.4.2(typescript@5.2.2)
+    specifier: 18.4.3
+    version: 18.4.3(typescript@5.2.2)
   '@esbuild/darwin-arm64':
     specifier: 0.18.20
     version: 0.18.20
@@ -72,7 +72,7 @@ devDependencies:
     version: 0.18.20
   '@fastify/type-provider-typebox':
     specifier: 3.5.0
-    version: 3.5.0(@sinclair/typebox@0.31.27)
+    version: 3.5.0(@sinclair/typebox@0.31.28)
   '@pulumi/hcloud':
     specifier: 1.16.2
     version: 1.16.2
@@ -81,7 +81,7 @@ devDependencies:
     version: 3.94.2
   '@samialdury/config':
     specifier: 6.2.0
-    version: 6.2.0(@commitlint/cli@18.4.2)(eslint@8.54.0)(lint-staged@15.1.0)(prettier@3.1.0)(semantic-release@22.0.8)(typescript@5.2.2)
+    version: 6.2.0(@commitlint/cli@18.4.3)(eslint@8.54.0)(lint-staged@15.1.0)(prettier@3.1.0)(semantic-release@22.0.8)(typescript@5.2.2)
   '@total-typescript/ts-reset':
     specifier: 0.5.1
     version: 0.5.1
@@ -209,16 +209,16 @@ packages:
     dev: true
     optional: true
 
-  /@commitlint/cli@18.4.2(typescript@5.2.2):
-    resolution: {integrity: sha512-dDfb2+wzeQe6ogdHNHOy0J0nraok+La0BoxamNMhBOng9/5GoESPDmKUJ1Lt1oivh5MfIgZh0Vm6f0rxkB8CoA==}
+  /@commitlint/cli@18.4.3(typescript@5.2.2):
+    resolution: {integrity: sha512-zop98yfB3A6NveYAZ3P1Mb6bIXuCeWgnUfVNkH4yhIMQpQfzFwseadazOuSn0OOfTt0lWuFauehpm9GcqM5lww==}
     engines: {node: '>=v18'}
     hasBin: true
     dependencies:
-      '@commitlint/format': 18.4.0
+      '@commitlint/format': 18.4.3
       '@commitlint/lint': 18.4.3
       '@commitlint/load': 18.4.3(typescript@5.2.2)
-      '@commitlint/read': 18.4.0
-      '@commitlint/types': 18.4.0
+      '@commitlint/read': 18.4.3
+      '@commitlint/types': 18.4.3
       execa: 5.1.1
       lodash.isfunction: 3.0.9
       resolve-from: 5.0.0
@@ -260,11 +260,11 @@ packages:
     engines: {node: '>=v18'}
     dev: true
 
-  /@commitlint/format@18.4.0:
-    resolution: {integrity: sha512-MiAe4D5/ahty38CzULdQbpRa3ReKZtx0kyigOWcntq+N5uqez+Ac4/MO7H+3j1kC4G7nfJVfBu6TqcXeyNvhCQ==}
+  /@commitlint/format@18.4.3:
+    resolution: {integrity: sha512-8b+ItXYHxAhRAXFfYki5PpbuMMOmXYuzLxib65z2XTqki59YDQJGpJ/wB1kEE5MQDgSTQWtKUrA8n9zS/1uIDQ==}
     engines: {node: '>=v18'}
     dependencies:
-      '@commitlint/types': 18.4.0
+      '@commitlint/types': 18.4.3
       chalk: 4.1.2
     dev: true
 
@@ -320,12 +320,12 @@ packages:
       conventional-commits-parser: 5.0.0
     dev: true
 
-  /@commitlint/read@18.4.0:
-    resolution: {integrity: sha512-IpnABCbDeOw5npZ09SZZGLfd3T7cFtsxUYm6wT3aGmIB2fXKE3fMeuj3jxXjMibiGIyA3Z5voCMuOcKWpkNySA==}
+  /@commitlint/read@18.4.3:
+    resolution: {integrity: sha512-H4HGxaYA6OBCimZAtghL+B+SWu8ep4X7BwgmedmqWZRHxRLcX2q0bWBtUm5FsMbluxbOfrJwOs/Z0ah4roP/GQ==}
     engines: {node: '>=v18'}
     dependencies:
-      '@commitlint/top-level': 18.4.0
-      '@commitlint/types': 18.4.0
+      '@commitlint/top-level': 18.4.3
+      '@commitlint/types': 18.4.3
       fs-extra: 11.1.1
       git-raw-commits: 2.0.11
       minimist: 1.2.8
@@ -359,18 +359,11 @@ packages:
     engines: {node: '>=v18'}
     dev: true
 
-  /@commitlint/top-level@18.4.0:
-    resolution: {integrity: sha512-TfulcA8UHF7MZ6tm4Ci3aqZgMBZa1OoCg4prccWHvwG/hsHujZ7+0FKbeKqDbcSli/YWm4NJwEjl4uh5itIJeA==}
+  /@commitlint/top-level@18.4.3:
+    resolution: {integrity: sha512-E6fJPBLPFL5R8+XUNSYkj4HekIOuGMyJo3mIx2PkYc3clel+pcWQ7TConqXxNWW4x1ugigiIY2RGot55qUq1hw==}
     engines: {node: '>=v18'}
     dependencies:
       find-up: 5.0.0
-    dev: true
-
-  /@commitlint/types@18.4.0:
-    resolution: {integrity: sha512-MKeaFxt0I9fhqUb2E+YIzX/gZtmkuodJET/XKiZIMvXUff8Ee4Ih86eLg+yAm2jf1pwGBmU02uNOp0y094w2Uw==}
-    engines: {node: '>=v18'}
-    dependencies:
-      chalk: 4.1.2
     dev: true
 
   /@commitlint/types@18.4.3:
@@ -909,12 +902,12 @@ packages:
       - supports-color
     dev: false
 
-  /@fastify/type-provider-typebox@3.5.0(@sinclair/typebox@0.31.27):
+  /@fastify/type-provider-typebox@3.5.0(@sinclair/typebox@0.31.28):
     resolution: {integrity: sha512-f48uGzvLflE/y4pvXOS8qjAC+mZmlqev9CPHnB8NDsBSL4EbeydO61IgPuzOkeNlAYeRP9Y56UOKj1XWFibgMw==}
     peerDependencies:
       '@sinclair/typebox': '>=0.26 <=0.31'
     dependencies:
-      '@sinclair/typebox': 0.31.27
+      '@sinclair/typebox': 0.31.28
     dev: true
 
   /@grpc/grpc-js@1.9.6:
@@ -1580,7 +1573,7 @@ packages:
     resolution: {integrity: sha512-xfo+yLRM2zVjVEA4p23IjQWzyWl1ZhWOGobsBqRpIarzLvwNH/RAGaoehdxlhx4X92302DrpdIFgTICMN4P38w==}
     dev: true
 
-  /@samialdury/config@6.2.0(@commitlint/cli@18.4.2)(eslint@8.54.0)(lint-staged@15.1.0)(prettier@3.1.0)(semantic-release@22.0.8)(typescript@5.2.2):
+  /@samialdury/config@6.2.0(@commitlint/cli@18.4.3)(eslint@8.54.0)(lint-staged@15.1.0)(prettier@3.1.0)(semantic-release@22.0.8)(typescript@5.2.2):
     resolution: {integrity: sha512-cnIvoUelX439hl10C6Wv/+SAn6ram2Rznn9eS3lFwAhy6X+JUBbjhRcSTL88pKojFYb0fjZsEl5i7WWLIBmtJA==}
     peerDependencies:
       '@commitlint/cli': ^18.0.0
@@ -1589,7 +1582,7 @@ packages:
       prettier: ^3.0.0
       semantic-release: ^22.0.0
     dependencies:
-      '@commitlint/cli': 18.4.2(typescript@5.2.2)
+      '@commitlint/cli': 18.4.3(typescript@5.2.2)
       '@commitlint/config-conventional': 18.1.0
       '@eslint/js': 8.53.0
       '@next/eslint-plugin-next': 14.0.2
@@ -1785,8 +1778,8 @@ packages:
     resolution: {integrity: sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==}
     dev: false
 
-  /@sinclair/typebox@0.31.27:
-    resolution: {integrity: sha512-Gf/P/hssx1ew6VNA5yLw3eLQb+fuuo63mlobVUSQHNCrQLXx4OzRa7Yt/mTZNGImBSrJo1a0bWR1NmpVjrU6xw==}
+  /@sinclair/typebox@0.31.28:
+    resolution: {integrity: sha512-/s55Jujywdw/Jpan+vsy6JZs1z2ZTGxTmbZTPiuSL2wz9mfzA2gN1zzaqmvfi4pq+uOt7Du85fkiwv5ymW84aQ==}
 
   /@sindresorhus/is@3.1.2:
     resolution: {integrity: sha512-JiX9vxoKMmu8Y3Zr2RVathBL1Cdu4Nt4MuNWemt1Nc06A0RAin9c5FArkhGsyMBWfCu4zj+9b+GxtjAnE4qqLQ==}
@@ -3091,7 +3084,7 @@ packages:
       - utf-8-validate
     dev: true
 
-  /drizzle-orm@0.29.0(@opentelemetry/api@1.6.0)(mysql2@3.6.3):
+  /drizzle-orm@0.29.0(@opentelemetry/api@1.6.0)(mysql2@3.6.5):
     resolution: {integrity: sha512-AC+CuW4GezVjsZDGU9u9B4HyikudOyYVhjm6he3Xn1D6Kky7bHGKob97MMX2piO+t9b6UuajLzlii/T/lu1qwA==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
@@ -3154,7 +3147,7 @@ packages:
         optional: true
     dependencies:
       '@opentelemetry/api': 1.6.0
-      mysql2: 3.6.3
+      mysql2: 3.6.5
     dev: false
 
   /duplexer2@0.1.4:
@@ -5458,8 +5451,8 @@ packages:
     resolution: {integrity: sha512-kMbrH0EObaKmK3nVRKUIIya1dpASHIEusM13S4V1ViHFuxuNxCo+arxoa6j/dbV22YBGjl7UKJm9QQKJ2Crzhg==}
     dev: true
 
-  /mysql2@3.6.3:
-    resolution: {integrity: sha512-qYd/1CDuW1KYZjD4tzg2O8YS3X/UWuGH8ZMHyMeggMTXL3yOdMisbwZ5SNkHzDGlZXKYLAvV8tMrEH+NUMz3fw==}
+  /mysql2@3.6.5:
+    resolution: {integrity: sha512-pS/KqIb0xlXmtmqEuTvBXTmLoQ5LmAz5NW/r8UyQ1ldvnprNEj3P9GbmuQQ2J0A4LO+ynotGi6TbscPa8OUb+w==}
     engines: {node: '>= 8.0'}
     dependencies:
       denque: 2.1.0
