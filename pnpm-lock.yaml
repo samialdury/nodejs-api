@@ -113,14 +113,14 @@ devDependencies:
     specifier: 22.0.8
     version: 22.0.8(typescript@5.3.2)
   tsx:
-    specifier: 4.4.0
-    version: 4.4.0
+    specifier: 4.6.1
+    version: 4.6.1
   typescript:
     specifier: 5.3.2
     version: 5.3.2
   undici:
-    specifier: 5.27.2
-    version: 5.27.2
+    specifier: 5.28.2
+    version: 5.28.2
 
 packages:
 
@@ -5608,7 +5608,7 @@ packages:
       glob-to-regexp: 0.4.1
       source-map-support: 0.5.21
       stoppable: 1.1.0
-      undici: 5.27.2
+      undici: 5.28.2
       workerd: 1.20231025.0
       ws: 8.14.2
       youch: 3.3.3
@@ -7526,8 +7526,8 @@ packages:
       typescript: 5.3.2
     dev: true
 
-  /tsx@4.4.0:
-    resolution: {integrity: sha512-4fwcEjRUxW20ciSaMB8zkpGwCPxuRGnadDuj/pBk5S9uT29zvWz15PK36GrKJo45mSJomDxVejZ73c6lr3811Q==}
+  /tsx@4.6.1:
+    resolution: {integrity: sha512-OQ4TAPHXAPUo/NZAmmIybl0o8LFOTlycQxFepLBAp6EV87U88fOKYGCQI2viGAEOVU9UW/cgQcxcOMnfEKVY3Q==}
     engines: {node: '>=18.0.0'}
     hasBin: true
     dependencies:
@@ -7662,8 +7662,8 @@ packages:
   /undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
-  /undici@5.27.2:
-    resolution: {integrity: sha512-iS857PdOEy/y3wlM3yRp+6SNQQ6xU0mmZcwRSriqk+et/cwWAtwmIGf6WkoDN2EK/AMdCO/dfXzIwi+rFMrjjQ==}
+  /undici@5.28.2:
+    resolution: {integrity: sha512-wh1pHJHnUeQV5Xa8/kyQhO7WFa8M34l026L5P/+2TYiakvGy5Rdc8jWZVyG7ieht/0WgJLEd3kcU5gKx+6GC8w==}
     engines: {node: '>=14.0'}
     dependencies:
       '@fastify/busboy': 2.0.0
