@@ -33,8 +33,8 @@ dependencies:
     specifier: 2.2.1
     version: 2.2.1(zod@3.22.4)
   fastify:
-    specifier: 4.24.3
-    version: 4.24.3
+    specifier: 4.25.0
+    version: 4.25.0
   fastify-plugin:
     specifier: 4.5.1
     version: 4.5.1
@@ -54,8 +54,8 @@ dependencies:
     specifier: 3.1.2
     version: 3.1.2
   pino:
-    specifier: 8.16.2
-    version: 8.16.2
+    specifier: 8.17.1
+    version: 8.17.1
   zod:
     specifier: 3.22.4
     version: 3.22.4
@@ -77,8 +77,8 @@ devDependencies:
     specifier: 1.16.2
     version: 1.16.2
   '@pulumi/pulumi':
-    specifier: 3.96.2
-    version: 3.96.2
+    specifier: 3.97.0
+    version: 3.97.0
   '@samialdury/config':
     specifier: 6.2.0
     version: 6.2.0(@commitlint/cli@18.4.3)(eslint@8.55.0)(lint-staged@15.2.0)(prettier@3.1.1)(semantic-release@22.0.12)(typescript@5.3.3)
@@ -104,8 +104,8 @@ devDependencies:
     specifier: 15.2.0
     version: 15.2.0
   pino-pretty:
-    specifier: 10.2.3
-    version: 10.2.3
+    specifier: 10.3.0
+    version: 10.3.0
   prettier:
     specifier: 3.1.1
     version: 3.1.1
@@ -1731,13 +1731,13 @@ packages:
   /@pulumi/hcloud@1.16.2:
     resolution: {integrity: sha512-bHv9zid/G8htdaD6fAg/fsdzpA7ty14uLv1gdubz/kwdkuo+WzGKTUSmQzV2vfoDHWNKhoz//KdFdZdMaF0eIw==}
     dependencies:
-      '@pulumi/pulumi': 3.96.2
+      '@pulumi/pulumi': 3.97.0
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@pulumi/pulumi@3.96.2:
-    resolution: {integrity: sha512-zYKCArkjF8YbdrJd4Ka6uCiHq+m3uDp2whA0jIQs/SgTT6m37z1v9sM7sOsdw8qK9N9hayqbLsrtqGdTYP65eg==}
+  /@pulumi/pulumi@3.97.0:
+    resolution: {integrity: sha512-yPtC/RUHHV8FgcRmq/l05ZyVwcIjLIA+7F+sCceKSNga0NOno6D/VD3PRU/TkApTseKRce4NQgdshXDumh+mdA==}
     engines: {node: '>=8.13.0 || >=10.10.0'}
     dependencies:
       '@grpc/grpc-js': 1.9.6
@@ -4122,8 +4122,8 @@ packages:
     resolution: {integrity: sha512-stRHYGeuqpEZTL1Ef0Ovr2ltazUT9g844X5z/zEBFLG8RYlpDiOCIG+ATvYEp+/zmc7sN29mcIMp8gvYplYPIQ==}
     dev: false
 
-  /fastify@4.24.3:
-    resolution: {integrity: sha512-6HHJ+R2x2LS3y1PqxnwEIjOTZxFl+8h4kSC/TuDPXtA+v2JnV9yEtOsNSKK1RMD7sIR2y1ZsA4BEFaid/cK5pg==}
+  /fastify@4.25.0:
+    resolution: {integrity: sha512-2XANZZDadl/PccnVbmrIC8BmUtb16MO5Hyfnqv1cZIslvf7GYTVwlPuVxLKL23NNxWRc5BikY8HyhWj+NJvokA==}
     dependencies:
       '@fastify/ajv-compiler': 3.5.0
       '@fastify/error': 3.4.0
@@ -4134,8 +4134,8 @@ packages:
       fast-json-stringify: 5.8.0
       find-my-way: 7.7.0
       light-my-request: 5.11.0
-      pino: 8.16.2
-      process-warning: 2.2.0
+      pino: 8.17.1
+      process-warning: 3.0.0
       proxy-addr: 2.0.7
       rfdc: 1.3.0
       secure-json-parse: 2.7.0
@@ -4614,11 +4614,8 @@ packages:
     resolution: {integrity: sha512-2bsegYkkHO+h/9MGbn6KWcE45cHZgPANo5LXF7EvWdT0yT2EguSVO1nDgU5c8+ZOPwp2vMNa7YFsJhVcDR9Sdg==}
     dev: true
 
-  /help-me@4.2.0:
-    resolution: {integrity: sha512-TAOnTB8Tz5Dw8penUuzHVrKNKlCIbwwbHnXraNJxPwf8LRtE2HlM84RYuezMFcwOJmoYOCWVDyJ8TQGxn9PgxA==}
-    dependencies:
-      glob: 8.1.0
-      readable-stream: 3.6.2
+  /help-me@5.0.0:
+    resolution: {integrity: sha512-7xgomUX6ADmcYzFik0HzAxh/73YlKR9bmFzf51CZwR+b6YtzU2m0u49hQCqV6SvlqIqsaxovfwdvbnsw3b/zpg==}
     dev: true
 
   /hook-std@3.0.0:
@@ -6290,15 +6287,15 @@ packages:
       readable-stream: 4.4.2
       split2: 4.2.0
 
-  /pino-pretty@10.2.3:
-    resolution: {integrity: sha512-4jfIUc8TC1GPUfDyMSlW1STeORqkoxec71yhxIpLDQapUu8WOuoz2TTCoidrIssyz78LZC69whBMPIKCMbi3cw==}
+  /pino-pretty@10.3.0:
+    resolution: {integrity: sha512-JthvQW289q3454mhM3/38wFYGWPiBMR28T3CpDNABzoTQOje9UKS7XCJQSnjWF9LQGQkGd8D7h0oq+qwiM3jFA==}
     hasBin: true
     dependencies:
       colorette: 2.0.20
       dateformat: 4.6.3
       fast-copy: 3.0.1
       fast-safe-stringify: 2.1.1
-      help-me: 4.2.0
+      help-me: 5.0.0
       joycon: 3.1.1
       minimist: 1.2.8
       on-exit-leak-free: 2.1.0
@@ -6306,7 +6303,7 @@ packages:
       pump: 3.0.0
       readable-stream: 4.4.2
       secure-json-parse: 2.7.0
-      sonic-boom: 3.3.0
+      sonic-boom: 3.7.0
       strip-json-comments: 3.1.1
     dev: true
 
@@ -6314,8 +6311,8 @@ packages:
     resolution: {integrity: sha512-cHjPPsE+vhj/tnhCy/wiMh3M3z3h/j15zHQX+S9GkTBgqJuTuJzYJ4gUyACLhDaJ7kk9ba9iRDmbH2tJU03OiA==}
     dev: false
 
-  /pino@8.16.2:
-    resolution: {integrity: sha512-2advCDGVEvkKu9TTVSa/kWW7Z3htI/sBKEZpqiHk6ive0i/7f5b1rsU8jn0aimxqfnSz5bj/nOYkwhBUn5xxvg==}
+  /pino@8.17.1:
+    resolution: {integrity: sha512-YoN7/NJgnsJ+fkADZqjhRt96iepWBndQHeClmSBH0sQWCb8zGD74t00SK4eOtKFi/f8TUmQnfmgglEhd2kI1RQ==}
     hasBin: true
     dependencies:
       atomic-sleep: 1.0.0
@@ -6474,6 +6471,10 @@ packages:
 
   /process-warning@2.2.0:
     resolution: {integrity: sha512-/1WZ8+VQjR6avWOgHeEPd7SDQmFQ1B5mC1eRXsCm5TarlNmx/wCsa5GEaxGm05BORRtyG/Ex/3xq3TuRvq57qg==}
+    dev: false
+
+  /process-warning@3.0.0:
+    resolution: {integrity: sha512-mqn0kFRl0EoqhnL0GQ0veqFHyIN1yig9RHh/InzORTUiZHFRAur+aMtRkELNwGs9aNwKS6tg/An4NYBPGwvtzQ==}
     dev: false
 
   /process@0.11.10:
@@ -7126,17 +7127,10 @@ packages:
       is-fullwidth-code-point: 5.0.0
     dev: true
 
-  /sonic-boom@3.3.0:
-    resolution: {integrity: sha512-LYxp34KlZ1a2Jb8ZQgFCK3niIHzibdwtwNUWKg0qQRzsDoJ3Gfgkf8KdBTFU3SkejDEIlWwnSnpVdOZIhFMl/g==}
-    dependencies:
-      atomic-sleep: 1.0.0
-    dev: true
-
   /sonic-boom@3.7.0:
     resolution: {integrity: sha512-IudtNvSqA/ObjN97tfgNmOKyDOs4dNcg4cUUsHDebqsgb8wGBBwb31LIgShNO8fye0dFI52X1+tFoKKI6Rq1Gg==}
     dependencies:
       atomic-sleep: 1.0.0
-    dev: false
 
   /sort-object-keys@1.1.3:
     resolution: {integrity: sha512-855pvK+VkU7PaKYPc+Jjnmt4EzejQHyhhF33q31qG8x7maDzkeFhAAThdCYay11CISO+qAMwjOBP+fPZe0IPyg==}
