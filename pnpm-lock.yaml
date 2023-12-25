@@ -33,8 +33,8 @@ dependencies:
     specifier: 2.2.1
     version: 2.2.1(zod@3.22.4)
   fastify:
-    specifier: 4.25.0
-    version: 4.25.0
+    specifier: 4.25.1
+    version: 4.25.1
   fastify-plugin:
     specifier: 4.5.1
     version: 4.5.1
@@ -89,8 +89,8 @@ devDependencies:
     specifier: 20.10.4
     version: 20.10.4
   drizzle-kit:
-    specifier: 0.20.6
-    version: 0.20.6
+    specifier: 0.20.7
+    version: 0.20.7
   eslint:
     specifier: 8.55.0
     version: 8.55.0
@@ -3266,8 +3266,8 @@ packages:
       wordwrap: 1.0.0
     dev: true
 
-  /drizzle-kit@0.20.6:
-    resolution: {integrity: sha512-+AYQY+tJUnfMJYIeh6aEjI21mpMCekqz0LEu2QdFdc/3zSmjyfEhH5dkXlRFME8v1rtisiHfp7bP+gVVKDPiUg==}
+  /drizzle-kit@0.20.7:
+    resolution: {integrity: sha512-3LjTvgVAI1jd3JHLG2tMW5ew49NuD7SMymRv+h9xUxb/geS+U/O1yENni0HhyjZH+Gc8hdStL9v1xY9Ob3s3/g==}
     hasBin: true
     dependencies:
       '@drizzle-team/studio': 0.0.35
@@ -4122,8 +4122,8 @@ packages:
     resolution: {integrity: sha512-stRHYGeuqpEZTL1Ef0Ovr2ltazUT9g844X5z/zEBFLG8RYlpDiOCIG+ATvYEp+/zmc7sN29mcIMp8gvYplYPIQ==}
     dev: false
 
-  /fastify@4.25.0:
-    resolution: {integrity: sha512-2XANZZDadl/PccnVbmrIC8BmUtb16MO5Hyfnqv1cZIslvf7GYTVwlPuVxLKL23NNxWRc5BikY8HyhWj+NJvokA==}
+  /fastify@4.25.1:
+    resolution: {integrity: sha512-D8d0rv61TwqoAS7lom2tvIlgVMlx88lLsiwXyWNjA7CU/LC/mx/Gp2WAlC0S/ABq19U+y/aRvYFG5xLUu2aMrg==}
     dependencies:
       '@fastify/ajv-compiler': 3.5.0
       '@fastify/error': 3.4.0
