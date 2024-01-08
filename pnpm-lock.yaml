@@ -71,8 +71,8 @@ devDependencies:
     specifier: 0.18.20
     version: 0.18.20
   '@fastify/type-provider-typebox':
-    specifier: 3.6.0
-    version: 3.6.0(@sinclair/typebox@0.32.4)
+    specifier: 4.0.0
+    version: 4.0.0(@sinclair/typebox@0.32.4)
   '@pulumi/hcloud':
     specifier: 1.16.2
     version: 1.16.2
@@ -2617,8 +2617,8 @@ packages:
       - supports-color
     dev: false
 
-  /@fastify/type-provider-typebox@3.6.0(@sinclair/typebox@0.32.4):
-    resolution: {integrity: sha512-HTeOLvirfGg0u1KGao3iXn5rZpYNqlrOmyDnXSXAbWVPa+mDQTTBNs/x5uZzOB6vFAqr0Xcf7x1lxOamNSYKjw==}
+  /@fastify/type-provider-typebox@4.0.0(@sinclair/typebox@0.32.4):
+    resolution: {integrity: sha512-kTlN0saC/+xhcQPyBjb3YONQAMjiD/EHlCRjQjsr5E3NFjS5K8ZX5LGzXYDRjSa+sV4y8gTL5Q7FlObePv4iTA==}
     peerDependencies:
       '@sinclair/typebox': '>=0.26 <=0.32'
     dependencies:
