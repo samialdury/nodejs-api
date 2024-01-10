@@ -10,6 +10,7 @@ import type {
     Server,
 } from './server.js'
 import { Status } from './constants.js'
+import { httpErrorSchema, validationErrorSchema } from './errors/http-errors.js'
 
 // @ts-expect-error - We're sure that it's a valid key
 type GetStatic<S, K extends keyof S> = Static<S[K]>
@@ -102,8 +103,50 @@ export function createRedirect(params: {
 
 export function createSchema<TSchema extends ControllerSchema>(
     schema: (s: typeof Status, t: typeof Type) => TSchema,
+    {
+        withAuthorization = true,
+        withInternal = true,
+    }: {
+        withAuthorization?: boolean
+        withInternal?: boolean
+    } = {},
 ): TSchema {
-    return schema(Status, Type)
+    const result = schema(Status, Type)
+
+    const hasValidation = !!(
+        result.params ??
+        result.querystring ??
+        result.body ??
+        result.headers
+    )
+
+    return {
+        ...result,
+        response: {
+            ...(hasValidation && {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                [Status.BAD_REQUEST]: Type.Ref(validationErrorSchema.$id!, {
+                    title: 'Validation error',
+                    description: 'Error in request validation',
+                }),
+            }),
+            ...(withAuthorization && {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                [Status.UNAUTHORIZED]: Type.Ref(httpErrorSchema.$id!, {
+                    title: 'Unauthorized',
+                    description: 'Missing or invalid access token',
+                }),
+            }),
+            ...(withInternal && {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                [Status.INTERNAL_SERVER_ERROR]: Type.Ref(httpErrorSchema.$id!, {
+                    title: 'Internal server error',
+                    description: 'Unknown server error',
+                }),
+            }),
+            ...(result.response as Record<string, unknown> | undefined),
+        },
+    }
 }
 
 export function createController<

@@ -5,6 +5,7 @@ import {
 } from '@fastify/bearer-auth'
 import { fastifyOauth2 } from '@fastify/oauth2'
 import { GITHUB_AUTH_NS } from '../../api/constants.js'
+import { schemaTags } from '../../api/docs.js'
 import { serverPlugin } from '../../api/server.js'
 import { verifyUserJwt } from './middleware.js'
 
@@ -49,6 +50,9 @@ export const authPlugin = serverPlugin(
             name: GITHUB_AUTH_NS,
             scope: ['read:user', 'user:email'],
             startRedirectPath: server.ctx.config.githubLoginPath,
+            schema: {
+                tags: [schemaTags.auth.name],
+            },
         })
     },
     {

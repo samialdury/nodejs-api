@@ -33,6 +33,7 @@ make prepare name=your-project-name
 - GitHub Actions & GitHub Container Registry
 - REST
 - MySQL
+- OpenAPI 3 & Swagger UI
 - OAuth2 & JWT (**work in progress**)
 - Pulumi IaC
 - local HTTPS

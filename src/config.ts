@@ -74,6 +74,10 @@ const schema = {
         env: 'PORT',
         format: z.coerce.number().int().min(1024).max(65_535).default(8080),
     },
+    requestBodyLimitBytes: {
+        env: 'REQUEST_BODY_LIMIT_BYTES',
+        format: z.coerce.number().int().min(1).default(1_048_576), // 1 MiB
+    },
     publicHost: {
         env: 'PUBLIC_HOST',
         format: z.string(),

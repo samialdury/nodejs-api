@@ -1,5 +1,57 @@
+import { Type } from '@sinclair/typebox'
 import { Reason, Status } from '../../api/constants.js'
 import { BaseError } from '../../errors/base-error.js'
+
+export const httpErrorSchema = Type.Object(
+    {
+        statusCode: Type.Integer({
+            description: 'HTTP status code',
+        }),
+        type: Type.String({
+            description: 'HTTP reason phrase',
+        }),
+        code: Type.String({
+            description: 'Internal error code',
+        }),
+        message: Type.String({
+            description: 'Description of the error',
+        }),
+    },
+    {
+        $id: 'http-error',
+        title: 'Error',
+    },
+)
+
+export const validationErrorSchema = Type.Object(
+    {
+        statusCode: Type.Literal(Status.BAD_REQUEST, {
+            description: 'HTTP status code',
+        }),
+        type: Type.Literal(Reason.BAD_REQUEST, {
+            description: 'HTTP reason phrase',
+        }),
+        code: Type.Literal('validation', {
+            description: 'Internal error code',
+        }),
+        message: Type.String({
+            description: 'Description of the error',
+        }),
+        errors: Type.Array(
+            Type.Object({
+                keyword: Type.String(),
+                instancePath: Type.String(),
+                schemaPath: Type.String(),
+                params: Type.Object({}, { additionalProperties: true }),
+                message: Type.Optional(Type.String()),
+            }),
+        ),
+    },
+    {
+        $id: 'validation-error',
+        title: 'Validation error',
+    },
+)
 
 export interface HttpErrorObject {
     code: string

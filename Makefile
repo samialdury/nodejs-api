@@ -84,7 +84,7 @@ dev-prepare: ## prepare the dev environment
 
 .PHONY: dev-local
 dev-local: ## run TS and watch for changes
-	@node --env-file $(DEV)/.dev.env --no-warnings --import tsx --watch --watch-preserve-output $(SRC_DIR)/main.ts
+	@node --env-file $(DEV_DIR)/.dev.env --no-warnings --import tsx --watch --watch-preserve-output $(SRC_DIR)/main.ts
 
 .PHONY: dev
 dev: ## run TS and watch for changes (Docker)
@@ -112,7 +112,7 @@ ifeq ($(name),)
 	@exit 1
 else
 	@$(RUN_IN_DOCKER) $(or $(compose), $(DEV_COMPOSE_FILE)) \
-		'node --env-file $(DEV)/.dev.env --no-warnings --import tsx $(MYSQL_SEEDS_DIR)/$(name).ts'
+		'node --env-file $(DEV_DIR)/.dev.env --no-warnings --import tsx $(MYSQL_SEEDS_DIR)/$(name).ts'
 endif
 
 ##@ Build

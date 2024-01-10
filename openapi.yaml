@@ -1,0 +1,194 @@
+openapi: 3.0.3
+info:
+    title: nodejs-api
+    version: dev
+components:
+    schemas:
+        http-error:
+            title: Error
+            type: object
+            properties:
+                statusCode:
+                    description: HTTP status code
+                    type: integer
+                type:
+                    description: HTTP reason phrase
+                    type: string
+                code:
+                    description: Internal error code
+                    type: string
+                message:
+                    description: Description of the error
+                    type: string
+            required:
+                - statusCode
+                - type
+                - code
+                - message
+        validation-error:
+            title: Validation error
+            type: object
+            properties:
+                statusCode:
+                    description: HTTP status code
+                    type: number
+                    enum:
+                        - 400
+                type:
+                    description: HTTP reason phrase
+                    type: string
+                    enum:
+                        - Bad Request
+                code:
+                    description: Internal error code
+                    type: string
+                    enum:
+                        - validation
+                message:
+                    description: Description of the error
+                    type: string
+                errors:
+                    type: array
+                    items:
+                        type: object
+                        properties:
+                            keyword:
+                                type: string
+                            instancePath:
+                                type: string
+                            schemaPath:
+                                type: string
+                            params:
+                                additionalProperties: true
+                                type: object
+                                properties: {}
+                            message:
+                                type: string
+                        required:
+                            - keyword
+                            - instancePath
+                            - schemaPath
+                            - params
+            required:
+                - statusCode
+                - type
+                - code
+                - message
+                - errors
+paths:
+    /login/github:
+        get:
+            tags:
+                - Auth
+            responses:
+                '200':
+                    description: Default Response
+    /status:
+        get:
+            tags:
+                - Healthcheck
+            responses:
+                '200':
+                    description: Returns info about the service
+                    content:
+                        application/json:
+                            schema:
+                                title: Success
+                                description: Returns info about the service
+                                type: object
+                                properties:
+                                    project:
+                                        type: string
+                                    version:
+                                        type: string
+                                required:
+                                    - project
+                                    - version
+                '500':
+                    description: Unknown server error
+                    content:
+                        application/json:
+                            schema:
+                                title: Internal server error
+                                description: Unknown server error
+                                $ref: '#/components/schemas/http-error'
+    /login/github/callback:
+        get:
+            tags:
+                - Auth
+            responses:
+                '200':
+                    description: Returns the access token
+                    content:
+                        application/json:
+                            schema:
+                                title: Success
+                                description: Returns the access token
+                                type: object
+                                properties:
+                                    accessToken:
+                                        type: string
+                                required:
+                                    - accessToken
+                '500':
+                    description: Unknown server error
+                    content:
+                        application/json:
+                            schema:
+                                title: Internal server error
+                                description: Unknown server error
+                                $ref: '#/components/schemas/http-error'
+    /users/me:
+        get:
+            tags:
+                - User
+            responses:
+                '200':
+                    description: Returns the user information
+                    content:
+                        application/json:
+                            schema:
+                                title: Success
+                                description: Returns the user information
+                                type: object
+                                properties:
+                                    email:
+                                        type: string
+                                    id:
+                                        type: string
+                                    name:
+                                        type: string
+                                    profileImageUrl:
+                                        anyOf:
+                                            - type: string
+                                            - type: 'null'
+                                required:
+                                    - email
+                                    - id
+                                    - name
+                                    - profileImageUrl
+                '401':
+                    description: Missing or invalid access token
+                    content:
+                        application/json:
+                            schema:
+                                title: Unauthorized
+                                description: Missing or invalid access token
+                                $ref: '#/components/schemas/http-error'
+                '500':
+                    description: Unknown server error
+                    content:
+                        application/json:
+                            schema:
+                                title: Internal server error
+                                description: Unknown server error
+                                $ref: '#/components/schemas/http-error'
+servers:
+    - url: https://nodejs-api.dev.sami.codes
+      description: Docker development environment
+    - url: http://localhost:8080
+      description: Local development environment
+tags:
+    - name: Healthcheck
+    - name: Auth
+    - name: User
