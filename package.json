@@ -27,7 +27,7 @@
         "@commitlint/cli": "18.4.4",
         "@esbuild/darwin-arm64": "0.18.20",
         "@esbuild/linux-arm64": "0.18.20",
-        "@fastify/type-provider-typebox": "3.6.0",
+        "@fastify/type-provider-typebox": "4.0.0",
         "@pulumi/hcloud": "1.16.2",
         "@pulumi/pulumi": "3.100.0",
         "@samialdury/config": "6.2.0",
