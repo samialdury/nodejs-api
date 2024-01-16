@@ -10,7 +10,7 @@ import type {
     Server,
 } from './server.js'
 import { Status } from './constants.js'
-import { httpErrorSchema, validationErrorSchema } from './errors/http-errors.js'
+import { errorSchema, validationErrorSchema } from './errors/http-errors.js'
 
 // @ts-expect-error - We're sure that it's a valid key
 type GetStatic<S, K extends keyof S> = Static<S[K]>
@@ -132,14 +132,14 @@ export function createSchema<TSchema extends ControllerSchema>(
             }),
             ...(withAuthorization && {
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                [Status.UNAUTHORIZED]: Type.Ref(httpErrorSchema.$id!, {
+                [Status.UNAUTHORIZED]: Type.Ref(errorSchema.$id!, {
                     title: 'Unauthorized',
                     description: 'Missing or invalid access token',
                 }),
             }),
             ...(withInternal && {
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                [Status.INTERNAL_SERVER_ERROR]: Type.Ref(httpErrorSchema.$id!, {
+                [Status.INTERNAL_SERVER_ERROR]: Type.Ref(errorSchema.$id!, {
                     title: 'Internal server error',
                     description: 'Unknown server error',
                 }),

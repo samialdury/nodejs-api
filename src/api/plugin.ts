@@ -4,8 +4,12 @@ import { authPlugin } from '../modules/auth/plugin.js'
 import { authRouter } from '../modules/auth/router.js'
 import { statusRouter } from '../modules/status/router.js'
 import { userRouter } from '../modules/user/router.js'
+import { errorSchema, validationErrorSchema } from './errors/http-errors.js'
 
 export const apiPlugin: ServerPlugin = async (server) => {
+    server.addSchema(errorSchema)
+    server.addSchema(validationErrorSchema)
+
     await server.register(fastifyCookie, {
         logLevel: 'warn',
         parseOptions: {

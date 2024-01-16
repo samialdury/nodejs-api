@@ -36,7 +36,7 @@ export async function initApi(
     })
 
     if (config.debugMode) {
-        await server.register(fastifySwagger, getSwaggerOptions(server, config))
+        await server.register(fastifySwagger, getSwaggerOptions(config))
         await server.register(fastifySwaggerUi, getSwaggerUiOptions())
     }
 

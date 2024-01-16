@@ -2,7 +2,7 @@ import { Type } from '@sinclair/typebox'
 import { Reason, Status } from '../../api/constants.js'
 import { BaseError } from '../../errors/base-error.js'
 
-export const httpErrorSchema = Type.Object(
+export const errorSchema = Type.Object(
     {
         statusCode: Type.Integer({
             description: 'HTTP status code',
@@ -18,7 +18,7 @@ export const httpErrorSchema = Type.Object(
         }),
     },
     {
-        $id: 'http-error',
+        $id: 'error',
         title: 'Error',
     },
 )

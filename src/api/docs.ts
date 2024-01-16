@@ -2,8 +2,6 @@ import type { FastifyDynamicSwaggerOptions } from '@fastify/swagger'
 import type { FastifySwaggerUiOptions } from '@fastify/swagger-ui'
 import { writeFile } from 'node:fs/promises'
 import type { Config } from '../config.js'
-import type { Server } from './server.js'
-import { httpErrorSchema, validationErrorSchema } from './errors/http-errors.js'
 
 export const schemaTags = {
     health: {
@@ -18,12 +16,8 @@ export const schemaTags = {
 } as const
 
 export function getSwaggerOptions(
-    server: Server,
     config: Config,
 ): FastifyDynamicSwaggerOptions {
-    server.addSchema(httpErrorSchema)
-    server.addSchema(validationErrorSchema)
-
     return {
         mode: 'dynamic',
         refResolver: {
