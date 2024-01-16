@@ -30,8 +30,8 @@ dependencies:
     specifier: 2.2.2
     version: 2.2.2
   '@sinclair/typebox':
-    specifier: 0.32.4
-    version: 0.32.4
+    specifier: 0.32.9
+    version: 0.32.9
   drizzle-orm:
     specifier: 0.29.3
     version: 0.29.3(@opentelemetry/api@1.6.0)(mysql2@3.7.0)
@@ -78,7 +78,7 @@ devDependencies:
     version: 0.19.10
   '@fastify/type-provider-typebox':
     specifier: 4.0.0
-    version: 4.0.0(@sinclair/typebox@0.32.4)
+    version: 4.0.0(@sinclair/typebox@0.32.9)
   '@pulumi/hcloud':
     specifier: 1.17.0
     version: 1.17.0
@@ -95,8 +95,8 @@ devDependencies:
     specifier: 20.10.8
     version: 20.10.8
   drizzle-kit:
-    specifier: 0.20.9
-    version: 0.20.9
+    specifier: 0.20.12
+    version: 0.20.12
   eslint:
     specifier: 8.56.0
     version: 8.56.0
@@ -903,12 +903,12 @@ packages:
       - supports-color
     dev: false
 
-  /@fastify/type-provider-typebox@4.0.0(@sinclair/typebox@0.32.4):
+  /@fastify/type-provider-typebox@4.0.0(@sinclair/typebox@0.32.9):
     resolution: {integrity: sha512-kTlN0saC/+xhcQPyBjb3YONQAMjiD/EHlCRjQjsr5E3NFjS5K8ZX5LGzXYDRjSa+sV4y8gTL5Q7FlObePv4iTA==}
     peerDependencies:
       '@sinclair/typebox': '>=0.26 <=0.32'
     dependencies:
-      '@sinclair/typebox': 0.32.4
+      '@sinclair/typebox': 0.32.9
     dev: true
 
   /@grpc/grpc-js@1.9.6:
@@ -1785,8 +1785,8 @@ packages:
     resolution: {integrity: sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==}
     dev: false
 
-  /@sinclair/typebox@0.32.4:
-    resolution: {integrity: sha512-Q2Pex6H+HGuyxIGuFadkpqwtjZFXiVZlvy1rVX9XgAzUrDmUDEM69M2c4CkWUgMJ1NaFPvUf+cMBljY96GJVNQ==}
+  /@sinclair/typebox@0.32.9:
+    resolution: {integrity: sha512-6oeJJPTIb0y3cs713HmXmXSx3WRWgid74KICYL9blOhNFuAcAB18dDWfATgcgzynfpF5xDzHGxEVbDYYr6nvgg==}
 
   /@sindresorhus/is@3.1.2:
     resolution: {integrity: sha512-JiX9vxoKMmu8Y3Zr2RVathBL1Cdu4Nt4MuNWemt1Nc06A0RAin9c5FArkhGsyMBWfCu4zj+9b+GxtjAnE4qqLQ==}
@@ -3017,8 +3017,8 @@ packages:
       wordwrap: 1.0.0
     dev: true
 
-  /drizzle-kit@0.20.9:
-    resolution: {integrity: sha512-5oIbPFdfEEfzVSOB3MWGt70VSHv6W7qMAWCJ5xc6W1BxgGASipxuAuyXD59fx9S6QYTNNnuSuQFoIdnNTRWY2A==}
+  /drizzle-kit@0.20.12:
+    resolution: {integrity: sha512-JWJposyEO6QvGIdvj0CmnJK5sMWW9j5HPiGnRIKvYNaAfZEHbmWlemxV2np7g2FZzSvuzwpa9EGmO20PaPeUmA==}
     hasBin: true
     dependencies:
       '@drizzle-team/studio': 0.0.37
