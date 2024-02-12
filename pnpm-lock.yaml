@@ -51,8 +51,8 @@ dependencies:
     specifier: 2.3.0
     version: 2.3.0
   jose:
-    specifier: 5.2.0
-    version: 5.2.0
+    specifier: 5.2.1
+    version: 5.2.1
   mysql2:
     specifier: 3.9.1
     version: 3.9.1
@@ -83,11 +83,11 @@ devDependencies:
     specifier: 1.17.0
     version: 1.17.0
   '@pulumi/pulumi':
-    specifier: 3.104.2
-    version: 3.104.2
+    specifier: 3.104.3
+    version: 3.104.3
   '@samialdury/config':
     specifier: 6.5.1
-    version: 6.5.1(@commitlint/cli@18.6.0)(@remix-run/dev@1.19.3)(eslint@8.56.0)(lint-staged@15.2.1)(prettier@3.2.4)(semantic-release@22.0.12)(typescript@5.3.3)
+    version: 6.5.1(@commitlint/cli@18.6.0)(@remix-run/dev@1.19.3)(eslint@8.56.0)(lint-staged@15.2.2)(prettier@3.2.4)(semantic-release@22.0.12)(typescript@5.3.3)
   '@total-typescript/ts-reset':
     specifier: 0.5.1
     version: 0.5.1
@@ -107,8 +107,8 @@ devDependencies:
     specifier: 8.0.3
     version: 8.0.3
   lint-staged:
-    specifier: 15.2.1
-    version: 15.2.1
+    specifier: 15.2.2
+    version: 15.2.2
   pino-pretty:
     specifier: 10.3.1
     version: 10.3.1
@@ -125,8 +125,8 @@ devDependencies:
     specifier: 5.3.3
     version: 5.3.3
   undici:
-    specifier: 6.6.0
-    version: 6.6.0
+    specifier: 6.6.2
+    version: 6.6.2
 
 packages:
 
@@ -3009,13 +3009,13 @@ packages:
   /@pulumi/hcloud@1.17.0:
     resolution: {integrity: sha512-fcCFdIoW0mF5ddlQHxVpRrzsjEG6URuOlh7OA5XUPTv4eWGmmi8hHVwWyrJE4y9msT7HkgR9dC6b9P4tSNS3aA==}
     dependencies:
-      '@pulumi/pulumi': 3.104.2
+      '@pulumi/pulumi': 3.104.3
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@pulumi/pulumi@3.104.2:
-    resolution: {integrity: sha512-Ljl1JaMFjcfse4M4bFQDadU5FTM4R404DZwM7fegcE0KvWJY2RPZj0TzBazv1vbwSlhDvzmuxQhHN1+U9y+EvQ==}
+  /@pulumi/pulumi@3.104.3:
+    resolution: {integrity: sha512-nhkINwiAs6RKEYjpv09L4lv/jGwOoVMtjUE+k2U0vOig8Mf/UnunIhhIdWO8y/5tjePtLApQXoitJ79nb+ZXbw==}
     engines: {node: '>=8.13.0 || >=10.10.0'}
     dependencies:
       '@grpc/grpc-js': 1.9.14
@@ -3265,7 +3265,7 @@ packages:
     dev: true
     optional: true
 
-  /@samialdury/config@6.5.1(@commitlint/cli@18.6.0)(@remix-run/dev@1.19.3)(eslint@8.56.0)(lint-staged@15.2.1)(prettier@3.2.4)(semantic-release@22.0.12)(typescript@5.3.3):
+  /@samialdury/config@6.5.1(@commitlint/cli@18.6.0)(@remix-run/dev@1.19.3)(eslint@8.56.0)(lint-staged@15.2.2)(prettier@3.2.4)(semantic-release@22.0.12)(typescript@5.3.3):
     resolution: {integrity: sha512-uVI+eGV+Ue8SkoqG0Mxx6Y5NF0bk1DlCD5N02GMImk7niuPUhjeMBJInVhqNB5Fvs9M0aMlnShdI7P9FH+cxuQ==}
     peerDependencies:
       '@commitlint/cli': ^18.0.0
@@ -3295,7 +3295,7 @@ packages:
       eslint-plugin-remix-react-routes: 1.0.5(@remix-run/dev@1.19.3)(eslint@8.56.0)(typescript@5.3.3)
       eslint-plugin-unicorn: 50.0.1(eslint@8.56.0)
       globals: 13.24.0
-      lint-staged: 15.2.1
+      lint-staged: 15.2.2
       prettier: 3.2.4
       prettier-plugin-autocorrect: 0.4.1(prettier@3.2.4)
       prettier-plugin-packagejson: 2.4.9(prettier@3.2.4)
@@ -3651,10 +3651,6 @@ packages:
       '@types/node': 20.11.16
     dev: true
 
-  /@types/semver@7.5.4:
-    resolution: {integrity: sha512-MMzuxN3GdFwskAnb6fz0orFvhfqi752yjaXylr0Rp4oDg5H0Zn1IuyRhDVvYOwAXoJirx2xuS16I3WjxnAIHiQ==}
-    dev: true
-
   /@types/semver@7.5.6:
     resolution: {integrity: sha512-dn1l8LaMea/IjDoHNd9J52uBbInB796CDffS6VdIxvqYCPSG0V0DzHp76GpaWnlhg88uYyPbXCDIowa86ybd5A==}
     dev: true
@@ -3849,7 +3845,7 @@ packages:
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@8.56.0)
       '@types/json-schema': 7.0.14
-      '@types/semver': 7.5.4
+      '@types/semver': 7.5.6
       '@typescript-eslint/scope-manager': 5.62.0
       '@typescript-eslint/types': 5.62.0
       '@typescript-eslint/typescript-estree': 5.62.0(typescript@5.3.3)
@@ -3869,7 +3865,7 @@ packages:
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@8.56.0)
       '@types/json-schema': 7.0.14
-      '@types/semver': 7.5.4
+      '@types/semver': 7.5.6
       '@typescript-eslint/scope-manager': 6.19.0
       '@typescript-eslint/types': 6.19.0
       '@typescript-eslint/typescript-estree': 6.19.0(typescript@5.3.3)
@@ -3888,7 +3884,7 @@ packages:
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@8.56.0)
       '@types/json-schema': 7.0.14
-      '@types/semver': 7.5.4
+      '@types/semver': 7.5.6
       '@typescript-eslint/scope-manager': 6.19.1
       '@typescript-eslint/types': 6.19.1
       '@typescript-eslint/typescript-estree': 6.19.1(typescript@5.3.3)
@@ -7816,8 +7812,8 @@ packages:
       '@sideway/pinpoint': 2.0.0
     dev: false
 
-  /jose@5.2.0:
-    resolution: {integrity: sha512-oW3PCnvyrcm1HMvGTzqjxxfnEs9EoFOFWi2HsEGhlFVOXxTE3K9GKWVMFoFw06yPUqwpvEWic1BmtUZBI/tIjw==}
+  /jose@5.2.1:
+    resolution: {integrity: sha512-qiaQhtQRw6YrOaOj0v59h3R6hUY9NvxBmmnMfKemkqYmBB0tEc97NbLP7ix44VP5p9/0YHG8Vyhzuo5YBNwviA==}
     dev: false
 
   /joycon@3.1.1:
@@ -8046,8 +8042,8 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: true
 
-  /lint-staged@15.2.1:
-    resolution: {integrity: sha512-dhwAPnM85VdshybV9FWI/9ghTvMLoQLEXgVMx+ua2DN7mdfzd/tRfoU2yhMcBac0RHkofoxdnnJUokr8s4zKmQ==}
+  /lint-staged@15.2.2:
+    resolution: {integrity: sha512-TiTt93OPh1OZOsb5B7k96A/ATl2AjIZo+vnzFZ6oHK5FuTk63ByDtxGQpHm+kFETjEWqgkF95M8FRXKR/LEBcw==}
     engines: {node: '>=18.12.0'}
     hasBin: true
     dependencies:
@@ -11675,8 +11671,8 @@ packages:
   /undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
-  /undici@6.6.0:
-    resolution: {integrity: sha512-p8VvLAgnx6g9pydV0GG/kciSx3ZCq5PLeEU4yefjoZCc1HSeiMxbrFzYIZlgSMrX3l0CoTJ37C6edu13acE40A==}
+  /undici@6.6.2:
+    resolution: {integrity: sha512-vSqvUE5skSxQJ5sztTZ/CdeJb1Wq0Hf44hlYMciqHghvz+K88U0l7D6u1VsndoFgskDcnU+nG3gYmMzJVzd9Qg==}
     engines: {node: '>=18.0'}
     dependencies:
       '@fastify/busboy': 2.0.0
