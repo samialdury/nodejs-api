@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@fastify/auth':
-    specifier: 4.4.0
-    version: 4.4.0
+    specifier: 4.5.0
+    version: 4.5.0
   '@fastify/bearer-auth':
     specifier: 9.3.0
     version: 9.3.0
@@ -83,8 +83,8 @@ devDependencies:
     specifier: 1.17.0
     version: 1.17.0
   '@pulumi/pulumi':
-    specifier: 3.104.3
-    version: 3.104.3
+    specifier: 3.105.0
+    version: 3.105.0
   '@samialdury/config':
     specifier: 6.5.1
     version: 6.5.1(@commitlint/cli@18.6.0)(@remix-run/dev@1.19.3)(eslint@8.56.0)(lint-staged@15.2.2)(prettier@3.2.4)(semantic-release@22.0.12)(typescript@5.3.3)
@@ -2216,8 +2216,8 @@ packages:
       fast-uri: 2.2.0
     dev: false
 
-  /@fastify/auth@4.4.0:
-    resolution: {integrity: sha512-gGFicD/q1MSEPA+qiJAc+egZzzUH6LKJHDdLWQ5TfcgGxfszNMa+Dbx3ehKtGRpB2fOQF41/+yfFv8C12xoBHQ==}
+  /@fastify/auth@4.5.0:
+    resolution: {integrity: sha512-Gx0lnXbgjJ5Wew5QPhjViqb/GcB23kQ6steDxdeCItWjyC1xGoY1+Qz9HuzFentNfZ+ZoLoS2dmH+phWx+/c8Q==}
     dependencies:
       fastify-plugin: 4.5.1
       reusify: 1.0.4
@@ -3009,13 +3009,13 @@ packages:
   /@pulumi/hcloud@1.17.0:
     resolution: {integrity: sha512-fcCFdIoW0mF5ddlQHxVpRrzsjEG6URuOlh7OA5XUPTv4eWGmmi8hHVwWyrJE4y9msT7HkgR9dC6b9P4tSNS3aA==}
     dependencies:
-      '@pulumi/pulumi': 3.104.3
+      '@pulumi/pulumi': 3.105.0
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@pulumi/pulumi@3.104.3:
-    resolution: {integrity: sha512-nhkINwiAs6RKEYjpv09L4lv/jGwOoVMtjUE+k2U0vOig8Mf/UnunIhhIdWO8y/5tjePtLApQXoitJ79nb+ZXbw==}
+  /@pulumi/pulumi@3.105.0:
+    resolution: {integrity: sha512-myvfY70VVJWtrcsm2es7mXj7obsHrI2HxdXJnP1LGb9RX3p5tq/JjRfYOZAONldksDjizaU9PNicuz6CQ2FWsg==}
     engines: {node: '>=8.13.0 || >=10.10.0'}
     dependencies:
       '@grpc/grpc-js': 1.9.14
