@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@fastify/auth':
-    specifier: 4.5.0
-    version: 4.5.0
+    specifier: 4.6.0
+    version: 4.6.0
   '@fastify/bearer-auth':
     specifier: 9.3.0
     version: 9.3.0
@@ -2216,8 +2216,8 @@ packages:
       fast-uri: 2.2.0
     dev: false
 
-  /@fastify/auth@4.5.0:
-    resolution: {integrity: sha512-Gx0lnXbgjJ5Wew5QPhjViqb/GcB23kQ6steDxdeCItWjyC1xGoY1+Qz9HuzFentNfZ+ZoLoS2dmH+phWx+/c8Q==}
+  /@fastify/auth@4.6.0:
+    resolution: {integrity: sha512-dOnf0V35Vmw5wxOtUZaC798KmWQW7WqNoUbRQG6dN1RRLYPRkVav8EIpx1PDQpWACESKfE0fmLgDYUu3o50xPQ==}
     dependencies:
       fastify-plugin: 4.5.1
       reusify: 1.0.4
