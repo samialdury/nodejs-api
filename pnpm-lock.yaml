@@ -60,8 +60,8 @@ dependencies:
     specifier: 3.1.2
     version: 3.1.2
   pino:
-    specifier: 8.18.0
-    version: 8.18.0
+    specifier: 8.19.0
+    version: 8.19.0
   zod:
     specifier: 3.22.4
     version: 3.22.4
@@ -83,8 +83,8 @@ devDependencies:
     specifier: 1.17.0
     version: 1.17.0
   '@pulumi/pulumi':
-    specifier: 3.105.0
-    version: 3.105.0
+    specifier: 3.107.0
+    version: 3.107.0
   '@samialdury/config':
     specifier: 6.5.1
     version: 6.5.1(@commitlint/cli@18.6.1)(@remix-run/dev@1.19.3)(eslint@8.56.0)(lint-staged@15.2.2)(prettier@3.2.5)(semantic-release@22.0.12)(typescript@5.3.3)
@@ -2834,7 +2834,7 @@ packages:
       '@opentelemetry/api': 1.6.0
       '@opentelemetry/api-metrics': 0.32.0
       require-in-the-middle: 5.2.0
-      semver: 7.5.4
+      semver: 7.6.0
       shimmer: 1.2.1
     transitivePeerDependencies:
       - supports-color
@@ -2895,7 +2895,7 @@ packages:
       '@opentelemetry/propagator-b3': 1.17.1(@opentelemetry/api@1.6.0)
       '@opentelemetry/propagator-jaeger': 1.17.1(@opentelemetry/api@1.6.0)
       '@opentelemetry/sdk-trace-base': 1.17.1(@opentelemetry/api@1.6.0)
-      semver: 7.5.4
+      semver: 7.6.0
     dev: true
 
   /@opentelemetry/semantic-conventions@1.17.1:
@@ -3009,13 +3009,13 @@ packages:
   /@pulumi/hcloud@1.17.0:
     resolution: {integrity: sha512-fcCFdIoW0mF5ddlQHxVpRrzsjEG6URuOlh7OA5XUPTv4eWGmmi8hHVwWyrJE4y9msT7HkgR9dC6b9P4tSNS3aA==}
     dependencies:
-      '@pulumi/pulumi': 3.105.0
+      '@pulumi/pulumi': 3.107.0
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@pulumi/pulumi@3.105.0:
-    resolution: {integrity: sha512-myvfY70VVJWtrcsm2es7mXj7obsHrI2HxdXJnP1LGb9RX3p5tq/JjRfYOZAONldksDjizaU9PNicuz6CQ2FWsg==}
+  /@pulumi/pulumi@3.107.0:
+    resolution: {integrity: sha512-GTmm6F5OeOuPdwo5P6s2U38feO3l2GpM4SyEXpRr9d3QG03jAFAlqyuDQvcrTBVU/V5MtwQeRm2vTQSrXK3bvw==}
     engines: {node: '>=8.13.0 || >=10.10.0'}
     dependencies:
       '@grpc/grpc-js': 1.9.14
@@ -3042,7 +3042,7 @@ packages:
       pkg-dir: 7.0.0
       read-package-tree: 5.3.1
       require-from-string: 2.0.2
-      semver: 7.5.4
+      semver: 7.6.0
       source-map-support: 0.5.21
       tmp: 0.2.1
       ts-node: 7.0.1
@@ -3786,7 +3786,7 @@ packages:
       debug: 4.3.4
       globby: 11.1.0
       is-glob: 4.0.3
-      semver: 7.5.4
+      semver: 7.6.0
       tsutils: 3.21.0(typescript@5.3.3)
       typescript: 5.3.3
     transitivePeerDependencies:
@@ -3808,7 +3808,7 @@ packages:
       globby: 11.1.0
       is-glob: 4.0.3
       minimatch: 9.0.3
-      semver: 7.5.4
+      semver: 7.6.0
       ts-api-utils: 1.0.3(typescript@5.3.3)
       typescript: 5.3.3
     transitivePeerDependencies:
@@ -3830,7 +3830,7 @@ packages:
       globby: 11.1.0
       is-glob: 4.0.3
       minimatch: 9.0.3
-      semver: 7.5.4
+      semver: 7.6.0
       ts-api-utils: 1.0.3(typescript@5.3.3)
       typescript: 5.3.3
     transitivePeerDependencies:
@@ -3870,7 +3870,7 @@ packages:
       '@typescript-eslint/types': 6.19.0
       '@typescript-eslint/typescript-estree': 6.19.0(typescript@5.3.3)
       eslint: 8.56.0
-      semver: 7.5.4
+      semver: 7.6.0
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -3889,7 +3889,7 @@ packages:
       '@typescript-eslint/types': 6.19.1
       '@typescript-eslint/typescript-estree': 6.19.1(typescript@5.3.3)
       eslint: 8.56.0
-      semver: 7.5.4
+      semver: 7.6.0
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -4966,7 +4966,7 @@ packages:
       handlebars: 4.7.8
       json-stringify-safe: 5.0.1
       meow: 12.1.1
-      semver: 7.5.4
+      semver: 7.6.0
       split2: 4.2.0
     dev: true
 
@@ -6485,7 +6485,7 @@ packages:
       fast-json-stringify: 5.8.0
       find-my-way: 8.1.0
       light-my-request: 5.11.0
-      pino: 8.18.0
+      pino: 8.19.0
       process-warning: 3.0.0
       proxy-addr: 2.0.7
       rfdc: 1.3.0
@@ -7960,7 +7960,7 @@ packages:
       jws: 3.2.2
       lodash: 4.17.21
       ms: 2.1.3
-      semver: 7.5.4
+      semver: 7.6.0
     dev: false
 
   /jsox@1.2.118:
@@ -9127,7 +9127,7 @@ packages:
     dependencies:
       hosted-git-info: 4.1.0
       is-core-module: 2.13.1
-      semver: 7.5.4
+      semver: 7.6.0
       validate-npm-package-license: 3.0.4
     dev: true
 
@@ -9137,7 +9137,7 @@ packages:
     dependencies:
       hosted-git-info: 6.1.1
       is-core-module: 2.13.1
-      semver: 7.5.4
+      semver: 7.6.0
       validate-npm-package-license: 3.0.4
     dev: true
 
@@ -9147,7 +9147,7 @@ packages:
     dependencies:
       hosted-git-info: 7.0.0
       is-core-module: 2.13.1
-      semver: 7.5.4
+      semver: 7.6.0
       validate-npm-package-license: 3.0.4
     dev: true
 
@@ -9774,8 +9774,8 @@ packages:
     resolution: {integrity: sha512-cHjPPsE+vhj/tnhCy/wiMh3M3z3h/j15zHQX+S9GkTBgqJuTuJzYJ4gUyACLhDaJ7kk9ba9iRDmbH2tJU03OiA==}
     dev: false
 
-  /pino@8.18.0:
-    resolution: {integrity: sha512-Mz/gKiRyuXu4HnpHgi1YWdHQCoWMufapzooisvFn78zl4dZciAxS+YeRkUxXl1ee/SzU80YCz1zpECCh4oC6Aw==}
+  /pino@8.19.0:
+    resolution: {integrity: sha512-oswmokxkav9bADfJ2ifrvfHUwad6MLp73Uat0IkQWY3iAw5xTRoznXbXksZs8oaOUMpmhVWD+PZogNzllWpJaA==}
     hasBin: true
     dependencies:
       atomic-sleep: 1.0.0
@@ -10800,7 +10800,6 @@ packages:
     hasBin: true
     dependencies:
       lru-cache: 6.0.0
-    dev: true
 
   /send@0.18.0:
     resolution: {integrity: sha512-qqWzuOjSFOuqPjFe4NOsMLafToQQwBSOEpS+FwEt3A2V3vKubTquT3vmLTQpFgMXp8AlFWFuP1qKaJZOtPpVXg==}
