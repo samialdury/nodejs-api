@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@fastify/auth':
-    specifier: 4.6.0
-    version: 4.6.0
+    specifier: 4.6.1
+    version: 4.6.1
   '@fastify/bearer-auth':
     specifier: 9.3.0
     version: 9.3.0
@@ -34,7 +34,7 @@ dependencies:
     version: 0.32.14
   drizzle-orm:
     specifier: 0.29.4
-    version: 0.29.4(@opentelemetry/api@1.6.0)(mysql2@3.9.1)
+    version: 0.29.4(@opentelemetry/api@1.6.0)(mysql2@3.9.2)
   envey:
     specifier: 2.3.0
     version: 2.3.0(zod@3.22.4)
@@ -54,8 +54,8 @@ dependencies:
     specifier: 5.2.2
     version: 5.2.2
   mysql2:
-    specifier: 3.9.1
-    version: 3.9.1
+    specifier: 3.9.2
+    version: 3.9.2
   octokit:
     specifier: 3.1.2
     version: 3.1.2
@@ -2216,8 +2216,8 @@ packages:
       fast-uri: 2.2.0
     dev: false
 
-  /@fastify/auth@4.6.0:
-    resolution: {integrity: sha512-dOnf0V35Vmw5wxOtUZaC798KmWQW7WqNoUbRQG6dN1RRLYPRkVav8EIpx1PDQpWACESKfE0fmLgDYUu3o50xPQ==}
+  /@fastify/auth@4.6.1:
+    resolution: {integrity: sha512-J/UkZw6EYUX7aXu78YLV1uE1ESbHsGNKxyO+H82ixdC3AnzBT8qeBI6K19mqVHfJTICy5m9uspj7PjC7EvZQ/A==}
     dependencies:
       fastify-plugin: 4.5.1
       reusify: 1.0.4
@@ -5395,7 +5395,7 @@ packages:
       - supports-color
     dev: true
 
-  /drizzle-orm@0.29.4(@opentelemetry/api@1.6.0)(mysql2@3.9.1):
+  /drizzle-orm@0.29.4(@opentelemetry/api@1.6.0)(mysql2@3.9.2):
     resolution: {integrity: sha512-ZnSM8TAxFhzH7p1s3+w3pRE/eKaOeNkH9SKitm717pubDVVcV2I0BCDBPGKV+pe02+wMfw37ntlTcCyo2rA3IA==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
@@ -5467,7 +5467,7 @@ packages:
         optional: true
     dependencies:
       '@opentelemetry/api': 1.6.0
-      mysql2: 3.9.1
+      mysql2: 3.9.2
     dev: false
 
   /duplexer2@0.1.4:
@@ -9007,8 +9007,8 @@ packages:
     resolution: {integrity: sha512-kMbrH0EObaKmK3nVRKUIIya1dpASHIEusM13S4V1ViHFuxuNxCo+arxoa6j/dbV22YBGjl7UKJm9QQKJ2Crzhg==}
     dev: true
 
-  /mysql2@3.9.1:
-    resolution: {integrity: sha512-3njoWAAhGBYy0tWBabqUQcLtczZUxrmmtc2vszQUekg3kTJyZ5/IeLC3Fo04u6y6Iy5Sba7pIIa2P/gs8D3ZeQ==}
+  /mysql2@3.9.2:
+    resolution: {integrity: sha512-3Cwg/UuRkAv/wm6RhtPE5L7JlPB877vwSF6gfLAS68H+zhH+u5oa3AieqEd0D0/kC3W7qIhYbH419f7O9i/5nw==}
     engines: {node: '>= 8.0'}
     dependencies:
       denque: 2.1.0
