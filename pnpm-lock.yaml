@@ -30,17 +30,17 @@ dependencies:
     specifier: 2.2.2
     version: 2.2.2
   '@sinclair/typebox':
-    specifier: 0.32.14
-    version: 0.32.14
+    specifier: 0.32.15
+    version: 0.32.15
   drizzle-orm:
-    specifier: 0.29.4
-    version: 0.29.4(@opentelemetry/api@1.6.0)(mysql2@3.9.2)
+    specifier: 0.29.5
+    version: 0.29.5(@opentelemetry/api@1.6.0)(mysql2@3.9.2)
   envey:
     specifier: 2.3.0
     version: 2.3.0(zod@3.22.4)
   fastify:
-    specifier: 4.26.1
-    version: 4.26.1
+    specifier: 4.26.2
+    version: 4.26.2
   fastify-plugin:
     specifier: 4.5.1
     version: 4.5.1
@@ -51,8 +51,8 @@ dependencies:
     specifier: 2.3.0
     version: 2.3.0
   jose:
-    specifier: 5.2.2
-    version: 5.2.2
+    specifier: 5.2.3
+    version: 5.2.3
   mysql2:
     specifier: 3.9.2
     version: 3.9.2
@@ -78,7 +78,7 @@ devDependencies:
     version: 0.19.10
   '@fastify/type-provider-typebox':
     specifier: 4.0.0
-    version: 4.0.0(@sinclair/typebox@0.32.14)
+    version: 4.0.0(@sinclair/typebox@0.32.15)
   '@pulumi/hcloud':
     specifier: 1.17.0
     version: 1.17.0
@@ -2314,12 +2314,12 @@ packages:
       - supports-color
     dev: false
 
-  /@fastify/type-provider-typebox@4.0.0(@sinclair/typebox@0.32.14):
+  /@fastify/type-provider-typebox@4.0.0(@sinclair/typebox@0.32.15):
     resolution: {integrity: sha512-kTlN0saC/+xhcQPyBjb3YONQAMjiD/EHlCRjQjsr5E3NFjS5K8ZX5LGzXYDRjSa+sV4y8gTL5Q7FlObePv4iTA==}
     peerDependencies:
       '@sinclair/typebox': '>=0.26 <=0.32'
     dependencies:
-      '@sinclair/typebox': 0.32.14
+      '@sinclair/typebox': 0.32.15
     dev: true
 
   /@gar/promisify@1.1.3:
@@ -3440,7 +3440,7 @@ packages:
       read-pkg: 8.0.0
       registry-auth-token: 5.0.2
       semantic-release: 22.0.12(typescript@5.3.3)
-      semver: 7.5.4
+      semver: 7.6.0
       tempy: 3.1.0
     dev: true
 
@@ -3479,8 +3479,8 @@ packages:
     resolution: {integrity: sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==}
     dev: false
 
-  /@sinclair/typebox@0.32.14:
-    resolution: {integrity: sha512-EC77Mw8huT2z9YlYbWfpIQgN6shZE1tH4NP4/Trig8UBel9FZNMZRJ42ubJI8PLor2uIU+waLml1dce5ReCOPg==}
+  /@sinclair/typebox@0.32.15:
+    resolution: {integrity: sha512-5Lrwo7VOiWEBJBhHmqNmf3TPB9ll8gcEshvYJyAIJyCZ2PF48MFOtiDHJNj8+FsNcqImaQYmxVkKBCBlyAa/wg==}
 
   /@sindresorhus/is@3.1.2:
     resolution: {integrity: sha512-JiX9vxoKMmu8Y3Zr2RVathBL1Cdu4Nt4MuNWemt1Nc06A0RAin9c5FArkhGsyMBWfCu4zj+9b+GxtjAnE4qqLQ==}
@@ -3690,7 +3690,7 @@ packages:
       graphemer: 1.4.0
       ignore: 5.2.4
       natural-compare: 1.4.0
-      semver: 7.5.4
+      semver: 7.6.0
       ts-api-utils: 1.0.3(typescript@5.3.3)
       typescript: 5.3.3
     transitivePeerDependencies:
@@ -3856,7 +3856,7 @@ packages:
       '@typescript-eslint/typescript-estree': 5.62.0(typescript@5.3.3)
       eslint: 8.57.0
       eslint-scope: 5.1.1
-      semver: 7.5.4
+      semver: 7.6.0
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -5386,8 +5386,8 @@ packages:
       - supports-color
     dev: true
 
-  /drizzle-orm@0.29.4(@opentelemetry/api@1.6.0)(mysql2@3.9.2):
-    resolution: {integrity: sha512-ZnSM8TAxFhzH7p1s3+w3pRE/eKaOeNkH9SKitm717pubDVVcV2I0BCDBPGKV+pe02+wMfw37ntlTcCyo2rA3IA==}
+  /drizzle-orm@0.29.5(@opentelemetry/api@1.6.0)(mysql2@3.9.2):
+    resolution: {integrity: sha512-jS3+uyzTz4P0Y2CICx8FmRQ1eplURPaIMWDn/yq6k4ShRFj9V7vlJk67lSf2kyYPzQ60GkkNGXcJcwrxZ6QCRw==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
       '@cloudflare/workers-types': '>=3'
@@ -6053,7 +6053,7 @@ packages:
       '@typescript-eslint/utils': 5.62.0(eslint@8.57.0)(typescript@5.3.3)
       chokidar: 3.5.3
       eslint: 8.57.0
-      semver: 7.5.4
+      semver: 7.6.0
       synckit: 0.8.5
     transitivePeerDependencies:
       - supports-color
@@ -6081,7 +6081,7 @@ packages:
       read-pkg-up: 7.0.1
       regexp-tree: 0.1.27
       regjsparser: 0.10.0
-      semver: 7.5.4
+      semver: 7.6.0
       strip-indent: 3.0.0
     transitivePeerDependencies:
       - supports-color
@@ -6464,8 +6464,8 @@ packages:
     resolution: {integrity: sha512-stRHYGeuqpEZTL1Ef0Ovr2ltazUT9g844X5z/zEBFLG8RYlpDiOCIG+ATvYEp+/zmc7sN29mcIMp8gvYplYPIQ==}
     dev: false
 
-  /fastify@4.26.1:
-    resolution: {integrity: sha512-tznA/G55dsxzM5XChBfcvVSloG2ejeeotfPPJSFaWmHyCDVGMpvf3nRNbsCb/JTBF9RmQFBfuujWt3Nphjesng==}
+  /fastify@4.26.2:
+    resolution: {integrity: sha512-90pjTuPGrfVKtdpLeLzND5nyC4woXZN5VadiNQCicj/iJU4viNHKhsAnb7jmv1vu2IzkLXyBiCzdWuzeXgQ5Ug==}
     dependencies:
       '@fastify/ajv-compiler': 3.5.0
       '@fastify/error': 3.4.1
@@ -6481,7 +6481,7 @@ packages:
       proxy-addr: 2.0.7
       rfdc: 1.3.0
       secure-json-parse: 2.7.0
-      semver: 7.5.4
+      semver: 7.6.0
       toad-cache: 3.3.0
     transitivePeerDependencies:
       - supports-color
@@ -7797,8 +7797,8 @@ packages:
       '@sideway/pinpoint': 2.0.0
     dev: false
 
-  /jose@5.2.2:
-    resolution: {integrity: sha512-/WByRr4jDcsKlvMd1dRJnPfS1GVO3WuKyaurJ/vvXcOaUQO8rnNObCQMlv/5uCceVQIq5Q4WLF44ohsdiTohdg==}
+  /jose@5.2.3:
+    resolution: {integrity: sha512-KUXdbctm1uHVL8BYhnyHkgp3zDX5KW8ZhAKVFEfUbU2P8Alpzjb+48hHvjOdQIyPshoblhzsuqOwEEAbtHVirA==}
     dev: false
 
   /joycon@3.1.1:
@@ -10746,7 +10746,7 @@ packages:
     resolution: {integrity: sha512-0Ju4+6A8iOnpL/Thra7dZsSlOHYAHIeMxfhWQRI1/VLcT3WDBZKKtQt/QkBOsiIN9ZpuvHE6cGZ0x4glCMmfiA==}
     engines: {node: '>=12'}
     dependencies:
-      semver: 7.5.4
+      semver: 7.6.0
     dev: true
 
   /semver-regex@4.0.5:
@@ -10770,6 +10770,7 @@ packages:
     hasBin: true
     dependencies:
       lru-cache: 6.0.0
+    dev: true
 
   /semver@7.6.0:
     resolution: {integrity: sha512-EnwXhrlwXMk9gKu5/flx5sv/an57AkRplG3hTK68W7FRDN+k+OWBj65M7719OkA82XLBxrcX0KSHj+X5COhOVg==}
