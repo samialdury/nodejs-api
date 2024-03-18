@@ -83,8 +83,8 @@ devDependencies:
     specifier: 1.17.1
     version: 1.17.1
   '@pulumi/pulumi':
-    specifier: 3.109.0
-    version: 3.109.0
+    specifier: 3.110.0
+    version: 3.110.0
   '@samialdury/config':
     specifier: 6.5.1
     version: 6.5.1(@commitlint/cli@18.6.1)(@remix-run/dev@1.19.3)(eslint@8.57.0)(lint-staged@15.2.2)(prettier@3.2.5)(semantic-release@22.0.12)(typescript@5.4.2)
@@ -125,8 +125,8 @@ devDependencies:
     specifier: 5.4.2
     version: 5.4.2
   undici:
-    specifier: 6.7.1
-    version: 6.7.1
+    specifier: 6.9.0
+    version: 6.9.0
 
 packages:
 
@@ -3177,14 +3177,14 @@ packages:
   /@pulumi/hcloud@1.17.1:
     resolution: {integrity: sha512-4Xz6lR5iQabKqdZIa1Ihx36Dlkwa5UAOgAoHzxc8IxD4ZmgJe9wlx7rjqbittHAXQpCDUmSQfrPWFFpSiEfipg==}
     dependencies:
-      '@pulumi/pulumi': 3.109.0
+      '@pulumi/pulumi': 3.110.0
     transitivePeerDependencies:
       - bluebird
       - supports-color
     dev: true
 
-  /@pulumi/pulumi@3.109.0:
-    resolution: {integrity: sha512-occSKeffShJJXO0dNwwGRf3MAX9pFhBIK/2vmsOLgQr/12lG9y2d8hyW8FZ3i4mhOSKiyamDnH+1+vPJ2Hk+yQ==}
+  /@pulumi/pulumi@3.110.0:
+    resolution: {integrity: sha512-lWz6RYKplvWo6VTpN7SfTSXX8CcQTY2yRfiE1W6wOEgN+BOiKKeBEWrlnMImjqII8D3XXch6ViwYwd4r/eL6lQ==}
     engines: {node: '>=8.13.0 || >=10.10.0'}
     dependencies:
       '@grpc/grpc-js': 1.10.1
@@ -3203,13 +3203,14 @@ packages:
       '@types/semver': 7.5.6
       '@types/tmp': 0.2.6
       execa: 5.1.1
-      glob: 8.1.0
+      fdir: 6.1.1(picomatch@3.0.1)
       google-protobuf: 3.21.2
       got: 11.8.6
       ini: 2.0.0
       js-yaml: 3.14.1
       minimist: 1.2.8
       normalize-package-data: 6.0.0
+      picomatch: 3.0.1
       pkg-dir: 7.0.0
       require-from-string: 2.0.2
       semver: 7.6.0
@@ -6784,6 +6785,17 @@ packages:
       format: 0.2.2
     dev: true
 
+  /fdir@6.1.1(picomatch@3.0.1):
+    resolution: {integrity: sha512-QfKBVg453Dyn3mr0Q0O+Tkr1r79lOTAKSi9f/Ot4+qVEwxWhav2Z+SudrG9vQjM2aYRMQQZ2/Q1zdA8ACM1pDg==}
+    peerDependencies:
+      picomatch: 3.x
+    peerDependenciesMeta:
+      picomatch:
+        optional: true
+    dependencies:
+      picomatch: 3.0.1
+    dev: true
+
   /figures@2.0.0:
     resolution: {integrity: sha512-Oa2M9atig69ZkfwiApY8F2Yy+tzMbazyvqv21R0NsSC8floSOC09BbT1ITWAdoMGQvJ/aZnR1KMwdx9tvHnTNA==}
     engines: {node: '>=4'}
@@ -8603,7 +8615,7 @@ packages:
       cacache: 18.0.2
       http-cache-semantics: 4.1.1
       is-lambda: 1.0.1
-      minipass: 7.0.2
+      minipass: 7.0.4
       minipass-fetch: 3.0.4
       minipass-flush: 1.0.5
       minipass-pipeline: 1.2.4
@@ -9540,7 +9552,7 @@ packages:
     resolution: {integrity: sha512-UL7ELRVxYBHBgYEtZCXjxuD5vPxnmvMGq0jp/dGPKKrN7tfsBh2IY7TlJ15WWwdjRWD3RJbnsygUurTK3xkPkg==}
     engines: {node: ^16.14.0 || >=18.0.0}
     dependencies:
-      hosted-git-info: 7.0.0
+      hosted-git-info: 7.0.1
       is-core-module: 2.13.1
       semver: 7.6.0
       validate-npm-package-license: 3.0.4
@@ -9612,7 +9624,7 @@ packages:
     engines: {node: ^16.14.0 || >=18.0.0}
     dependencies:
       make-fetch-happen: 13.0.0
-      minipass: 7.0.2
+      minipass: 7.0.4
       minipass-fetch: 3.0.4
       minipass-json-stream: 1.0.1
       minizlib: 2.1.2
@@ -10030,7 +10042,7 @@ packages:
       '@npmcli/run-script': 7.0.4
       cacache: 18.0.2
       fs-minipass: 3.0.3
-      minipass: 7.0.2
+      minipass: 7.0.4
       npm-package-arg: 11.0.1
       npm-packlist: 8.0.2
       npm-pick-manifest: 9.0.0
@@ -10180,7 +10192,7 @@ packages:
     engines: {node: '>=16 || 14 >=14.17'}
     dependencies:
       lru-cache: 10.0.1
-      minipass: 7.0.2
+      minipass: 7.0.4
     dev: true
 
   /path-to-regexp@0.1.7:
@@ -10219,6 +10231,11 @@ packages:
   /picomatch@2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
+    dev: true
+
+  /picomatch@3.0.1:
+    resolution: {integrity: sha512-I3EurrIQMlRc9IaAZnqRR044Phh2DXY+55o7uJ0V+hYZAcQYSuFWsc9q5PvyDHUSCe1Qxn/iBz+78s86zWnGag==}
+    engines: {node: '>=10'}
     dev: true
 
   /pidtree@0.6.0:
@@ -12237,8 +12254,8 @@ packages:
   /undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
-  /undici@6.7.1:
-    resolution: {integrity: sha512-+Wtb9bAQw6HYWzCnxrPTMVEV3Q1QjYanI0E4q02ehReMuquQdLTEFEYbfs7hcImVYKcQkWSwT6buEmSVIiDDtQ==}
+  /undici@6.9.0:
+    resolution: {integrity: sha512-XPWfXzJedevUziHwun70EKNvGnxv4CnfraFZ4f/JV01+fcvMYzHE26r/j8AY/9c/70nkN4B1zX7E2Oyuqwz4+Q==}
     engines: {node: '>=18.0'}
     dev: true
 

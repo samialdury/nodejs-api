@@ -31,7 +31,7 @@
         "@esbuild/linux-arm64": "0.19.10",
         "@fastify/type-provider-typebox": "4.0.0",
         "@pulumi/hcloud": "1.17.1",
-        "@pulumi/pulumi": "3.109.0",
+        "@pulumi/pulumi": "3.110.0",
         "@samialdury/config": "6.5.1",
         "@total-typescript/ts-reset": "0.5.1",
         "@types/node": "20.11.27",
@@ -45,7 +45,7 @@
         "semantic-release": "22.0.12",
         "tsx": "4.7.1",
         "typescript": "5.4.2",
-        "undici": "6.7.1"
+        "undici": "6.9.0"
     },
     "engines": {
         "node": ">=20",
