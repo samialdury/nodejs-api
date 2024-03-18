@@ -33,8 +33,8 @@ dependencies:
     specifier: 0.32.15
     version: 0.32.15
   drizzle-orm:
-    specifier: 0.30.0
-    version: 0.30.0(@opentelemetry/api@1.6.0)(mysql2@3.9.2)
+    specifier: 0.30.2
+    version: 0.30.2(@opentelemetry/api@1.6.0)(mysql2@3.9.2)
   envey:
     specifier: 2.3.0
     version: 2.3.0(zod@3.22.4)
@@ -80,8 +80,8 @@ devDependencies:
     specifier: 4.0.0
     version: 4.0.0(@sinclair/typebox@0.32.15)
   '@pulumi/hcloud':
-    specifier: 1.17.0
-    version: 1.17.0
+    specifier: 1.17.1
+    version: 1.17.1
   '@pulumi/pulumi':
     specifier: 3.109.0
     version: 3.109.0
@@ -125,8 +125,8 @@ devDependencies:
     specifier: 5.4.2
     version: 5.4.2
   undici:
-    specifier: 6.7.0
-    version: 6.7.0
+    specifier: 6.7.1
+    version: 6.7.1
 
 packages:
 
@@ -2235,11 +2235,6 @@ packages:
       fastify-plugin: 4.5.1
     dev: false
 
-  /@fastify/busboy@2.0.0:
-    resolution: {integrity: sha512-JUFJad5lv7jxj926GPgymrWQxxjPYuJNiNjNMzqT+HiuP6Vl3dk5xzG+8sTX96np0ZAluvaMzPsjhHZ5rNuNQQ==}
-    engines: {node: '>=14'}
-    dev: true
-
   /@fastify/cookie@9.3.1:
     resolution: {integrity: sha512-h1NAEhB266+ZbZ0e9qUE6NnNR07i7DnNXWG9VbbZ8uC6O/hxHpl+Zoe5sw1yfdZ2U6XhToUGDnzQtWJdCaPwfg==}
     dependencies:
@@ -3179,8 +3174,8 @@ packages:
     resolution: {integrity: sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==}
     dev: true
 
-  /@pulumi/hcloud@1.17.0:
-    resolution: {integrity: sha512-fcCFdIoW0mF5ddlQHxVpRrzsjEG6URuOlh7OA5XUPTv4eWGmmi8hHVwWyrJE4y9msT7HkgR9dC6b9P4tSNS3aA==}
+  /@pulumi/hcloud@1.17.1:
+    resolution: {integrity: sha512-4Xz6lR5iQabKqdZIa1Ihx36Dlkwa5UAOgAoHzxc8IxD4ZmgJe9wlx7rjqbittHAXQpCDUmSQfrPWFFpSiEfipg==}
     dependencies:
       '@pulumi/pulumi': 3.109.0
     transitivePeerDependencies:
@@ -5657,13 +5652,14 @@ packages:
       - supports-color
     dev: true
 
-  /drizzle-orm@0.30.0(@opentelemetry/api@1.6.0)(mysql2@3.9.2):
-    resolution: {integrity: sha512-SupNouCdvosjzQpLinqnyIu7bBfsUKiaWXfUZ0IyDtwK8rWa2zQ4AOWCda86VJVxgb8xZ1l8vKvlLHyTBalB/g==}
+  /drizzle-orm@0.30.2(@opentelemetry/api@1.6.0)(mysql2@3.9.2):
+    resolution: {integrity: sha512-DNd3djg03o+WxZX3pGD8YD+qrWT8gbrbhaZ2W0PVb6yH4rtM/VTB92cTGvumcRh7SSd2KfV0NWYDB70BHIXQTg==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
       '@cloudflare/workers-types': '>=3'
       '@libsql/client': '*'
       '@neondatabase/serverless': '>=0.1'
+      '@op-engineering/op-sqlite': '>=2'
       '@opentelemetry/api': ^1.4.1
       '@planetscale/database': '>=1'
       '@types/better-sqlite3': '*'
@@ -5690,6 +5686,8 @@ packages:
       '@libsql/client':
         optional: true
       '@neondatabase/serverless':
+        optional: true
+      '@op-engineering/op-sqlite':
         optional: true
       '@opentelemetry/api':
         optional: true
@@ -12239,11 +12237,9 @@ packages:
   /undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
-  /undici@6.7.0:
-    resolution: {integrity: sha512-IcWssIyDN1gk6Mcae44q04oRoWTKrW8OKz0effVK1xdWwAgMPnfpxhn9RXUSL5JlwSikO18R7Ibk7Nukz6kxWA==}
+  /undici@6.7.1:
+    resolution: {integrity: sha512-+Wtb9bAQw6HYWzCnxrPTMVEV3Q1QjYanI0E4q02ehReMuquQdLTEFEYbfs7hcImVYKcQkWSwT6buEmSVIiDDtQ==}
     engines: {node: '>=18.0'}
-    dependencies:
-      '@fastify/busboy': 2.0.0
     dev: true
 
   /unicode-canonical-property-names-ecmascript@2.0.0:
