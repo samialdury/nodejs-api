@@ -5,7 +5,7 @@
     "type": "module",
     "dependencies": {
         "@fastify/auth": "4.6.1",
-        "@fastify/bearer-auth": "9.3.0",
+        "@fastify/bearer-auth": "9.4.0",
         "@fastify/cookie": "9.3.1",
         "@fastify/oauth2": "7.8.0",
         "@fastify/swagger": "8.14.0",
@@ -31,7 +31,7 @@
         "@esbuild/linux-arm64": "0.19.10",
         "@fastify/type-provider-typebox": "4.0.0",
         "@pulumi/hcloud": "1.17.1",
-        "@pulumi/pulumi": "3.110.0",
+        "@pulumi/pulumi": "3.111.1",
         "@samialdury/config": "6.5.1",
         "@total-typescript/ts-reset": "0.5.1",
         "@types/node": "20.11.30",
@@ -45,7 +45,7 @@
         "semantic-release": "22.0.12",
         "tsx": "4.7.1",
         "typescript": "5.4.2",
-        "undici": "6.9.0"
+        "undici": "6.10.1"
     },
     "engines": {
         "node": ">=20",
