@@ -34,7 +34,7 @@
         "@pulumi/pulumi": "3.112.0",
         "@samialdury/config": "6.5.1",
         "@total-typescript/ts-reset": "0.5.1",
-        "@types/node": "20.12.7",
+        "@types/node": "20.12.14",
         "drizzle-kit": "0.20.14",
         "eslint": "8.57.0",
         "glob": "10.3.12",
