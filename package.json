@@ -9,7 +9,7 @@
         "@fastify/cookie": "9.3.1",
         "@fastify/oauth2": "7.8.0",
         "@fastify/swagger": "8.14.0",
-        "@fastify/swagger-ui": "2.1.0",
+        "@fastify/swagger-ui": "4.0.0",
         "@panva/hkdf": "1.1.1",
         "@paralleldrive/cuid2": "2.2.2",
         "@sinclair/typebox": "0.32.20",
